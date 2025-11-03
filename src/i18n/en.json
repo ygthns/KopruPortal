@@ -1,0 +1,632 @@
+{
+  "common": {
+    "appName": "KöprüMezun",
+    "tagline": "Connect alumni, inspire mentorship, fuel lifelong belonging.",
+    "actions": {
+      "viewAll": "View all",
+      "learnMore": "Learn more",
+      "apply": "Apply",
+      "join": "Join",
+      "leave": "Leave",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close",
+      "confirm": "Confirm",
+      "submit": "Submit",
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete",
+      "filter": "Filter",
+      "clear": "Clear",
+      "register": "Register",
+      "bookDemo": "Book demo",
+      "start": "Get started",
+      "switchLanguage": "Switch language"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "draft": "Draft",
+      "published": "Published"
+    },
+    "language": {
+      "en": "English",
+      "tr": "Türkçe"
+    },
+    "labels": {
+      "search": "Search",
+      "filters": "Filters",
+      "all": "All",
+      "date": "Date",
+      "location": "Location",
+      "category": "Category"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "email": "Enter a valid email.",
+      "minCharacters": "Must be at least {{count}} characters.",
+      "url": "Enter a valid URL.",
+      "success": "Saved successfully."
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "feed": "Feed",
+    "forums": "Forums",
+    "messages": "Messages",
+    "directory": "Directory",
+    "groups": "Groups",
+    "mentoring": "Mentoring",
+    "careers": "Careers",
+    "events": "Events",
+    "fundraising": "Fundraising",
+    "analytics": "Analytics",
+    "admin": "Admin Console",
+    "premium": "Premium Groups",
+    "perks": "Perks",
+    "podcast": "Podcast & Blog",
+    "volunteer": "Volunteer",
+    "challenges": "Challenges",
+    "leaderboards": "Leaderboards",
+    "integrations": "Integrations",
+    "auth": "Sign In"
+  },
+  "footer": {
+    "aboutTitle": "About KöprüMezun",
+    "about": "KöprüMezun is a modern community platform that connects graduates, students, and mentors to communicate, form groups, run events, share opportunities, and support each other—built in Türkiye with data hosted domestically.",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "language": "Language"
+  },
+  "home": {
+    "hero": {
+      "title": "A bilingual alumni community platform designed for trust and momentum.",
+      "subtitle": "Launch white-label alumni, student, and mentor experiences with feed, forums, mentoring, jobs, analytics, and SSO—fully localized for Türkiye.",
+      "primaryCta": "Launch portal",
+      "secondaryCta": "Book demo",
+      "trust": [
+        "Data hosted in Türkiye",
+        "SOC2-ready controls",
+        "CASE-aligned analytics"
+      ],
+      "badges": [
+        "Multilingual by design",
+        "Mentoring & career suite",
+        "Premium affinity modules"
+      ]
+    },
+    "metrics": [
+      { "value": "98%", "label": "Member satisfaction" },
+      { "value": "12k", "label": "Active alumni & students" },
+      { "value": "2.4x", "label": "Event attendance growth" }
+    ],
+    "featureHighlights": [
+      {
+        "key": "feed",
+        "title": "Unified content feed",
+        "description": "Moderated, tagged, and translated conversations keep every cohort engaged in context."
+      },
+      {
+        "key": "mentoring",
+        "title": "Structured mentoring",
+        "description": "Match mentors and mentees with goals, progress tracking, and flash mentoring in one workspace."
+      },
+      {
+        "key": "analytics",
+        "title": "CASE-aligned analytics",
+        "description": "Real-time dashboards for engagement, giving, and volunteerism mapped to advancement KPIs."
+      }
+    ],
+    "workflows": [
+      {
+        "title": "Personalized onboarding journeys",
+        "description": "Segmented welcome flows, in-app nudges, and notifications tuned for alumni, students, and staff.",
+        "cta": "Preview journeys",
+        "href": "/admin"
+      },
+      {
+        "title": "Career intelligence",
+        "description": "Jobs board, resume analyzer, and alumni matching accelerate career outcomes without extra tooling.",
+        "cta": "See careers hub",
+        "href": "/careers"
+      },
+      {
+        "title": "Fundraising & stewardship",
+        "description": "Campaigns, progress visualizations, digital donor badges, and export-ready privacy controls.",
+        "cta": "Review fundraising",
+        "href": "/fundraising"
+      }
+    ],
+    "testimonialsHeading": "Trusted by alumni relations leaders",
+    "testimonials": [
+      {
+        "quote": "The bilingual experience and privacy controls let us consolidate dozens of tools into one alumni hub.",
+        "author": "Dr. Selin Aksoy",
+        "role": "Director of Alumni Relations"
+      },
+      {
+        "quote": "Mentoring matches, jobs, and volunteer boards run on autopilot—our team finally focuses on strategy.",
+        "author": "Başak Demir",
+        "role": "Associate Dean for Advancement"
+      }
+    ],
+    "notifications": "Notifications"
+  },
+  "feed": {
+    "title": "Community feed",
+    "subtitle": "Share updates, welcome new members, celebrate wins, and keep your alumni community active.",
+    "actions": {
+      "newPost": "Create post"
+    },
+    "placeholders": {
+      "content": "Share an update, ask a question, or drop a resource…",
+      "tags": "Add tags separated by commas (mentoring, job, event)",
+      "comment": "Add a supportive comment…"
+    },
+    "labels": {
+      "comments": "comments"
+    },
+    "toasts": {
+      "postPublished": "Post published with optimistic sync.",
+      "synced": "Post synced with mock API.",
+      "syncedDescription": "Feed data refreshed from MSW handler.",
+      "commentAdded": "Comment added and shared with the community."
+    },
+    "empty": "No posts match this filter yet—start the conversation!"
+  },
+  "forums": {
+    "title": "Ask-an-Alum forums",
+    "subtitle": "Pinned threads, verified insights, and asynchronous help across cohorts.",
+    "replies": "replies",
+    "placeholders": {
+      "reply": "Share advice and hit Ctrl+Enter to post…"
+    },
+    "hints": {
+      "shortcut": "Use Ctrl+Enter to send instantly."
+    },
+    "toasts": {
+      "replyPosted": "Reply published to the thread."
+    },
+    "actions": {
+      "newThread": "Start new thread"
+    },
+    "empty": "No threads yet. Kick off a new conversation!"
+  },
+  "messages": {
+    "title": "Direct messages",
+    "subtitle": "Secure alumni, mentor, and staff messaging with typing indicators.",
+    "typing": "typing…",
+    "secure": "End-to-end encrypted for demo",
+    "actions": {
+      "call": "Call",
+      "video": "Video"
+    },
+    "status": {
+      "seen": "Seen"
+    },
+    "placeholder": "Write a message and press Enter…",
+    "toasts": {
+      "sent": "Message sent",
+      "delivered": "Message delivered"
+    }
+  },
+  "directory": {
+    "title": "Member directory",
+    "subtitle": "Find alumni by class year, location, industry, and skills.",
+    "searchPlaceholder": "Search people, skills, or interests…",
+    "filters": {
+      "title": "Filter members",
+      "subtitle": "Layer filters to build targeted outreach lists.",
+      "classYear": "Class year",
+      "location": "Location",
+      "industry": "Industry",
+      "skill": "Skill"
+    },
+    "labels": {
+      "location": "Location",
+      "classYear": "Class year",
+      "skills": "Skills",
+      "interests": "Interests"
+    },
+    "actions": {
+      "viewProfile": "View profile",
+      "connect": "Request introduction"
+    },
+    "empty": "No members match these filters yet—try adjusting your search."
+  },
+  "groups": {
+    "title": "Affinity groups",
+    "subtitle": "Premium and open groups with dedicated feeds, events, and premium perks.",
+    "labels": {
+      "membership": "Premium",
+      "members": "members",
+      "upcomingEvents": "Upcoming events",
+      "recentPosts": "Recent feed highlights",
+      "premium": "Premium",
+      "standard": "Standard"
+    },
+    "feedDescription": "Exclusive feed, resources, and perks for {{group}}.",
+    "actions": {
+      "join": "Join group",
+      "leave": "Leave group",
+      "view": "View insights"
+    },
+    "toasts": {
+      "left": "Group access removed.",
+      "joined": "Welcome to {{group}}."
+    },
+    "emptyEvents": "No upcoming events—plan one now.",
+    "emptyFeed": "This group is ready for its first post.",
+    "empty": "Select a group to preview premium content.",
+    "success": {
+      "title": "Group access granted",
+      "subtitle": "Feed and event access unlocked.",
+      "access": "You now see exclusive posts, resources, and mentoring slots.",
+      "badge": "A premium badge has been added to your profile."
+    }
+  },
+  "mentoring": {
+    "title": "Mentoring hub",
+    "subtitle": "Blend structured mentoring with flash sessions and automated progress tracking.",
+    "labels": {
+      "availableMentors": "Available mentors",
+      "pickMentor": "Choose a mentor to request a match.",
+      "matchOverview": "Current mentoring match",
+      "flash15": "Flash mentoring",
+      "goals": "Growth milestones",
+      "smartSummary": "Smart summary generated from recent sessions.",
+      "requests": "Mentor requests",
+      "queue": "Auto-processing queue",
+      "flashTitle": "Flash mentoring slots",
+      "flashSubtitle": "10-minute bursts to unblock alumni or students.",
+      "startsAt": "Starts at {{time}}",
+      "match": "Mentor relationship",
+      "progress": "{{progress}}% completion"
+    },
+    "actions": {
+      "request": "Request mentor",
+      "flash": "Schedule flash session"
+    },
+    "goals": {
+      "strategy": {
+        "title": "Career strategy",
+        "description": "Clarify your next chapter with actionable milestones."
+      },
+      "network": {
+        "title": "Network expansion",
+        "description": "Warm introductions and accountability nudges."
+      },
+      "leadership": {
+        "title": "Leadership toolkit",
+        "description": "Communication, coaching, and influence sprints."
+      }
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "scheduled": "Scheduled"
+    },
+    "emptyRequests": "No pending mentor requests. Start one above.",
+    "toasts": {
+      "requested": "Mentor request sent.",
+      "matchConfirmed": "Mentor accepted—progress tracking unlocked.",
+      "flashScheduled": "Flash mentoring session scheduled."
+    }
+  },
+  "careers": {
+    "title": "Career center",
+    "subtitle": "Jobs, interns, resume intelligence, and alumni-led guidance.",
+    "labels": {
+      "openRoles": "Open roles",
+      "openRolesSubtitle": "Curated for your alumni and students.",
+      "roles": "roles",
+      "resume": "Smart resume analyzer",
+      "resumeSubtitle": "Upload a CV to score and receive guidance.",
+      "tracker": "Application tracker",
+      "trackerSubtitle": "Monitor statuses across roles."
+    },
+    "resume": {
+      "score": "Resume score",
+      "highlights": {
+        "title": "Highlights",
+        "impact": "Clear impact statements",
+        "community": "Mentoring & community involvement"
+      },
+      "suggestions": {
+        "title": "Suggestions",
+        "metrics": "Add measurable outcomes to experience.",
+        "keywords": "Include industry keywords for ATS scanning."
+      },
+      "empty": "Run the analyzer to unlock smart insights."
+    },
+    "actions": {
+      "uploadResume": "Upload résumé (mock)",
+      "apply": "Apply now",
+      "share": "Share",
+      "signin": "Sign in",
+      "signup": "Sign up"
+    },
+    "toasts": {
+      "resumeAnalyzed": "Resume analyzed—insights ready.",
+      "applicationSent": "Application submitted to hiring manager."
+    },
+    "status": {
+      "applied": "Applied",
+      "review": "In review",
+      "interview": "Interview",
+      "offer": "Offer"
+    },
+    "tracker": {
+      "empty": "Apply to a role to see your status timeline."
+    }
+  },
+  "events": {
+    "title": "Events & registrations",
+    "subtitle": "Hybrid-friendly calendar with registration, ticketing, and integrations.",
+    "views": {
+      "list": "List view",
+      "calendar": "Calendar view"
+    },
+    "actions": {
+      "register": "Register now",
+      "registered": "Registered",
+      "schedule": "Schedule with Calendly"
+    },
+    "labels": {
+      "location": "Location"
+    },
+    "integrations": {
+      "title": "Event integrations",
+      "subtitle": "Launch video rooms, scheduling, or SSO with one click.",
+      "connectTitle": "Connect integration",
+      "connectSubtitle": "Mock confirmation—no data leaves this demo.",
+      "placeholder": "Mock connection established with {{provider}}."
+    },
+    "toasts": {
+      "registered": "Registration confirmed."
+    }
+  },
+  "fundraising": {
+    "title": "Fundraising & giving",
+    "subtitle": "Campaigns, progress dashboards, donor badges, and compliance-ready exports.",
+    "actions": {
+      "launch": "Create campaign",
+      "donate": "Donate",
+      "confirmDonation": "Donate now"
+    },
+    "labels": {
+      "raised": "Raised ₺{{amount}}",
+      "goal": "Goal ₺{{goal}}",
+      "donors": "Donors"
+    },
+    "dialog": {
+      "title": "Donate to {{name}}",
+      "copy": "Mock payment form—enter an amount and confirm."
+    },
+    "admin": {
+      "title": "Launch new campaign",
+      "name": "Campaign name",
+      "description": "Impact description",
+      "goal": "Goal amount (TRY)",
+      "create": "Create campaign"
+    },
+    "toasts": {
+      "donated": "Donation recorded and progress updated.",
+      "campaignCreated": "Campaign created for admin preview."
+    }
+  },
+  "analytics": {
+    "title": "Engagement analytics",
+    "subtitle": "CASE-aligned dashboards with trendlines and benchmarks.",
+    "months": {
+      "0": "Jan",
+      "1": "Feb",
+      "2": "Mar",
+      "3": "Apr",
+      "4": "May",
+      "5": "Jun"
+    },
+    "charts": {
+      "engagement": {
+        "title": "Engagement velocity",
+        "subtitle": "Unique contributors per month"
+      },
+      "retention": {
+        "title": "Retention trends",
+        "subtitle": "Monthly active members (rolling)"
+      }
+    }
+  },
+  "admin": {
+    "title": "Admin console",
+    "subtitle": "Manage roles, branding, and data controls in one place.",
+    "tabs": {
+      "users": "Users",
+      "branding": "Branding",
+      "privacy": "Privacy"
+    },
+    "users": {
+      "title": "Role management",
+      "subtitle": "Approve mentors, assign admins, and elevate ambassadors.",
+      "actions": {
+        "upgrade": "Toggle role"
+      }
+    },
+    "moderation": {
+      "title": "Moderation queue",
+      "subtitle": "Resolve flagged items from the community feed.",
+      "placeholder": "Paste a flagged post URL…",
+      "actions": {
+        "resolve": "Mark resolved"
+      }
+    },
+    "branding": {
+      "title": "Theme & branding presets",
+      "subtitle": "Swap colors, fonts, and accents with one click."
+    },
+    "privacy": {
+      "title": "Data privacy controls",
+      "subtitle": "Export demo data or reset test users.",
+      "actions": {
+        "export": "Export data (JSON)",
+        "delete": "Reset demo user"
+      }
+    },
+    "toasts": {
+      "roleUpdated": "Role updated.",
+      "flagResolved": "Flagged content archived.",
+      "exported": "Export started—check your downloads.",
+      "userDeleted": "Demo user reset."
+    }
+  },
+  "premium": {
+    "title": "Premium group suite",
+    "subtitle": "Give affinity groups dedicated dashboards, perks, and analytics.",
+    "labels": {
+      "membership": "Premium access",
+      "members": "{{count}} members"
+    },
+    "actions": {
+      "manage": "Manage group"
+    },
+    "jobs": {
+      "title": "Premium jobs board",
+      "subtitle": "Exclusive roles for premium cohorts"
+    },
+    "stats": {
+      "title": "Insights & stats",
+      "subtitle": "Engagement metrics for premium members"
+    }
+  },
+  "perks": {
+    "title": "Perks marketplace",
+    "subtitle": "Claim alumni-founded discounts and partner benefits.",
+    "actions": {
+      "claim": "Claim perk",
+      "claimed": "Claimed"
+    },
+    "toasts": {
+      "claimed": "Perk claimed. Code ready to share."
+    }
+  },
+  "podcast": {
+    "title": "Podcast & blog",
+    "subtitle": "Weekly alumni interviews and written spotlights.",
+    "tabs": {
+      "podcast": "Podcast episodes",
+      "blog": "Blog articles"
+    },
+    "actions": {
+      "listen": "Listen now",
+      "read": "Read article"
+    }
+  },
+  "volunteer": {
+    "title": "Volunteer & charity board",
+    "subtitle": "Coordinate impact, record hours, and celebrate volunteers.",
+    "labels": {
+      "hours": "{{count}} volunteer hours logged",
+      "participants": "{{count}} participants",
+      "hoursShort": "{{count}} hrs"
+    },
+    "actions": {
+      "join": "Join opportunity",
+      "joined": "Registered"
+    },
+    "toasts": {
+      "registered": "Volunteer registration confirmed."
+    }
+  },
+  "challenges": {
+    "title": "Community challenges",
+    "subtitle": "Monthly themes that gamify engagement and giving.",
+    "labels": {
+      "participants": "{{count}} participants",
+      "goal": "Goal: {{prize}}",
+      "leaderboard": "Leaderboard"
+    },
+    "actions": {
+      "submit": "Submit proof"
+    },
+    "toasts": {
+      "submitted": "Submission received. Points updated."
+    }
+  },
+  "leaderboards": {
+    "title": "Leaderboards & badges",
+    "subtitle": "Gamify engagement with badges, segments, and scores.",
+    "labels": {
+      "topMembers": "Top members",
+      "engagement": "Engagement score",
+      "badges": "Recent badges",
+      "badgesSubtitle": "Automatic awards for key milestones"
+    }
+  },
+  "integrations": {
+    "title": "Integrations & SSO",
+    "subtitle": "Connect calendars, video tools, and university identity.",
+    "status": {
+      "connected": "Connected",
+      "available": "Available"
+    },
+    "actions": {
+      "connect": "Connect",
+      "disconnect": "Disconnect"
+    },
+    "providers": {
+      "linkedin": "Sync alumni updates and headlines automatically.",
+      "calendly": "Embed Calendly slots for mentoring and advising.",
+      "zoom": "Host virtual events with auto-generated links.",
+      "google": "Push events to Google Calendar instantly.",
+      "teams": "Manage Microsoft Teams live sessions.",
+      "sso": "Mock SSO flow for university credentials."
+    },
+    "toasts": {
+      "connected": "{{name}} connected for demo.",
+      "disconnected": "{{name}} disconnected."
+    }
+  },
+  "auth": {
+    "title": "Access the demo workspace",
+    "subtitle": "Mock authentication with bilingual copy and social sign-in.",
+    "tabs": {
+      "signin": "Sign in",
+      "signup": "Create account",
+      "forgot": "Forgot password"
+    },
+    "signin": {
+      "title": "Welcome back",
+      "subtitle": "Enter demo credentials to continue."
+    },
+    "signup": {
+      "title": "Create a demo profile",
+      "subtitle": "Experience onboarding in seconds."
+    },
+    "forgot": {
+      "title": "Reset password",
+      "subtitle": "Receive a mock reset link."
+    },
+    "labels": {
+      "password": "Password",
+      "fullName": "Full name"
+    },
+    "actions": {
+      "signin": "Sign in",
+      "signup": "Create account",
+      "reset": "Send reset link",
+      "google": "Continue with Google"
+    },
+    "toasts": {
+      "missing": "Please complete all required fields.",
+      "success": "Mock authentication succeeded."
+    }
+  },
+  "events.integrations": {},
+  "static": {
+    "contact": "Reach us at hello@koprumezun.com for bespoke demos and enablement services.",
+    "privacy": "KöprüMezun respects your privacy. This demo stores data locally and uses a mock API; no personal data leaves your browser.",
+    "terms": "This workspace is for demonstration purposes only. All content is fictional and designed to showcase key alumni workflows."
+  }
+}

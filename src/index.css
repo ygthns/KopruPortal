@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 46%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --primary: 200 82% 45%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 215 19% 68%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 180 71% 50%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 148 61% 45%;
+  --success-foreground: 210 40% 98%;
+  --warning: 42 94% 55%;
+  --warning-foreground: 222.2 47.4% 11.2%;
+  --ring: 200 82% 45%;
+  --radius: 1rem;
+  --focus-ring: 200 82% 45%;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: 222.2 47.4% 11.2%;
+  --foreground: 210 40% 98%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 16% 68%;
+  --popover: 222.2 47.4% 11.2%;
+  --popover-foreground: 210 40% 98%;
+  --border: 217 33% 17%;
+  --input: 217 33% 17%;
+  --card: 222.2 47.4% 11.2%;
+  --card-foreground: 210 40% 98%;
+  --primary: 200 82% 60%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217 22% 24%;
+  --secondary-foreground: 210 40% 98%;
+  --accent: 180 62% 55%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 62% 55%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 148 62% 60%;
+  --success-foreground: 222.2 47.4% 11.2%;
+  --warning: 42 94% 65%;
+  --warning-foreground: 222.2 47.4% 11.2%;
+  --ring: 200 82% 60%;
+}
+
+*,
+*::before,
+*::after {
+  @apply border-border;
+}
+
+body {
+  @apply min-h-screen bg-background font-body text-foreground antialiased;
+}
+
+main {
+  @apply flex-1;
+}
+
+.focus-ring {
+  @apply outline-none ring-2 ring-[--focus-ring] ring-offset-2 ring-offset-background;
+}
+
+.shadow-soft {
+  box-shadow: 0 20px 80px -40px rgba(15, 23, 42, 0.45);
+}
+
+.glass-panel {
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(90deg, rgba(148, 163, 184, 0.18) 1px, transparent 0),
+    linear-gradient(180deg, rgba(148, 163, 184, 0.18) 1px, transparent 0);
+  background-size: 48px 48px;
+}

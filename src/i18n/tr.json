@@ -1,0 +1,629 @@
+{
+  "common": {
+    "appName": "KöprüMezun",
+    "tagline": "Mezunları buluştur, mentorlukla ilham ver, ömür boyu aidiyeti güçlendir.",
+    "actions": {
+      "viewAll": "Tümünü gör",
+      "learnMore": "Detaylı bilgi",
+      "apply": "Başvur",
+      "join": "Katıl",
+      "leave": "Ayrıl",
+      "save": "Kaydet",
+      "cancel": "Vazgeç",
+      "close": "Kapat",
+      "confirm": "Onayla",
+      "submit": "Gönder",
+      "create": "Oluştur",
+      "edit": "Düzenle",
+      "delete": "Sil",
+      "filter": "Filtrele",
+      "clear": "Temizle",
+      "register": "Kayıt ol",
+      "bookDemo": "Demo planla",
+      "start": "Başla",
+      "switchLanguage": "Dili değiştir"
+    },
+    "status": {
+      "pending": "Beklemede",
+      "approved": "Onaylandı",
+      "rejected": "Reddedildi",
+      "draft": "Taslak",
+      "published": "Yayında"
+    },
+    "language": {
+      "en": "İngilizce",
+      "tr": "Türkçe"
+    },
+    "labels": {
+      "search": "Ara",
+      "filters": "Filtreler",
+      "all": "Tümü",
+      "date": "Tarih",
+      "location": "Konum",
+      "category": "Kategori"
+    },
+    "validation": {
+      "required": "Bu alan zorunludur.",
+      "email": "Geçerli bir e-posta girin.",
+      "minCharacters": "En az {{count}} karakter olmalı.",
+      "url": "Geçerli bir bağlantı girin.",
+      "success": "Başarıyla kaydedildi."
+    }
+  },
+  "nav": {
+    "home": "Ana sayfa",
+    "feed": "Akış",
+    "forums": "Forumlar",
+    "messages": "Mesajlar",
+    "directory": "Dizin",
+    "groups": "Gruplar",
+    "mentoring": "Mentorluk",
+    "careers": "Kariyer",
+    "events": "Etkinlikler",
+    "fundraising": "Bağış",
+    "analytics": "Analitik",
+    "admin": "Yönetim",
+    "premium": "Premium Gruplar",
+    "perks": "Ayrıcalıklar",
+    "podcast": "Podcast & Blog",
+    "volunteer": "Gönüllülük",
+    "challenges": "Meydan okumalar",
+    "leaderboards": "Liderlik",
+    "integrations": "Entegrasyonlar",
+    "auth": "Giriş"
+  },
+  "footer": {
+    "aboutTitle": "KöprüMezun Hakkında",
+    "about": "KöprüMezun; mezunları, öğrencileri ve mentorları tek ağda birleştiren; iletişim, grup, etkinlik, fırsat paylaşımı ve karşılıklı destek için modern bir platformdur. Türkiye’de geliştirilmiş olup veriler ülke içinde barındırılır.",
+    "contact": "İletişim",
+    "privacy": "Gizlilik",
+    "terms": "Koşullar",
+    "language": "Dil"
+  },
+  "home": {
+    "hero": {
+      "title": "Güven ve ivme için tasarlanmış iki dilli mezun platformu.",
+      "subtitle": "Akış, forum, mentorluk, kariyer, analitik ve SSO modülleriyle mezun, öğrenci ve personel deneyimini Türkiye’ye lokalize edin.",
+      "primaryCta": "Portal başlat",
+      "secondaryCta": "Demo planla",
+      "trust": [
+        "Veriler Türkiye içinde barındırılır",
+        "SOC2 uyumlu kontroller",
+        "CASE standartlarında analitik"
+      ],
+      "badges": [
+        "Çok dilli altyapı",
+        "Mentorluk ve kariyer seti",
+        "Premium aidiyet modülleri"
+      ]
+    },
+    "metrics": [
+      { "value": "%98", "label": "Üye memnuniyeti" },
+      { "value": "12 bin", "label": "Aktif mezun ve öğrenci" },
+      { "value": "2,4x", "label": "Etkinlik katılım artışı" }
+    ],
+    "featureHighlights": [
+      {
+        "key": "feed",
+        "title": "Birleşik içerik akışı",
+        "description": "Modere edilen, etiketli ve tercüme edilen paylaşımlarla her kohortu bağlamında tutun."
+      },
+      {
+        "key": "mentoring",
+        "title": "Yapılandırılmış mentorluk",
+        "description": "Hedefler, ilerleme takibi ve hızlı mentorluk seansları tek çalışma alanında."
+      },
+      {
+        "key": "analytics",
+        "title": "CASE uyumlu analitik",
+        "description": "Bağış, gönüllülük ve etkileşim için gerçek zamanlı gelişim göstergeleri."
+      }
+    ],
+    "workflows": [
+      {
+        "title": "Kişiselleştirilmiş onboarding",
+        "description": "Mezun, öğrenci ve personel için segmentli karşılama akışları ve bildirimler.",
+        "cta": "Akışları incele",
+        "href": "/admin"
+      },
+      {
+        "title": "Kariyer zekâsı",
+        "description": "İş ilanları, özgeçmiş analizi ve mezun eşleştirme tek panelde.",
+        "cta": "Kariyer merkezini gör",
+        "href": "/careers"
+      },
+      {
+        "title": "Bağış ve bağlılık",
+        "description": "Kampanyalar, ilerleme görselleri, dijital rozetler ve dışa aktarmaya hazır kontroller.",
+        "cta": "Bağış modülünü incele",
+        "href": "/fundraising"
+      }
+    ],
+    "testimonialsHeading": "Mezun ilişkileri liderlerinin tercihi",
+    "testimonials": [
+      {
+        "quote": "İki dilli deneyim ve gizlilik kontrolleri sayesinde onlarca aracı tek mezun merkezinde topladık.",
+        "author": "Dr. Selin Aksoy",
+        "role": "Mezun İlişkileri Direktörü"
+      },
+      {
+        "quote": "Mentorluk eşleşmeleri, kariyer fırsatları ve gönüllülük panosu otomatik; artık stratejiye odaklanıyoruz.",
+        "author": "Başak Demir",
+        "role": "Gelişim Dekan Yardımcısı"
+      }
+    ],
+    "notifications": "Bildirimler"
+  },
+  "feed": {
+    "title": "Topluluk akışı",
+    "subtitle": "Güncellemeleri paylaşın, üyeleri karşılayın ve başarıları kutlayın.",
+    "actions": {
+      "newPost": "Paylaşım oluştur"
+    },
+    "placeholders": {
+      "content": "Bir güncelleme, soru veya kaynak paylaş…",
+      "tags": "Etiket ekle (mentorluk, iş, etkinlik)",
+      "comment": "Destekleyici bir yorum yaz…"
+    },
+    "labels": {
+      "comments": "yorum"
+    },
+    "toasts": {
+      "postPublished": "Paylaşım anında yayınlandı.",
+      "synced": "Paylaşım senkronize edildi.",
+      "syncedDescription": "Akış MSW üzerinden yenilendi.",
+      "commentAdded": "Yorum toplulukla paylaşıldı."
+    },
+    "empty": "Bu filtreye uygun paylaşım yok, ilk siz yazın!"
+  },
+  "forums": {
+    "title": "Mezuna sor forumları",
+    "subtitle": "Sabit başlıklar, doğrulanmış cevaplar ve asenkron destek.",
+    "replies": "yanıt",
+    "placeholders": {
+      "reply": "Deneyimini paylaş ve Ctrl+Enter ile gönder…"
+    },
+    "hints": {
+      "shortcut": "Ctrl+Enter ile hızlı gönder."
+    },
+    "toasts": {
+      "replyPosted": "Yanıt paylaşımı tamamlandı."
+    },
+    "actions": {
+      "newThread": "Yeni başlık aç"
+    },
+    "empty": "Henüz konu yok. İlk soruyu sen sor!"
+  },
+  "messages": {
+    "title": "Doğrudan mesajlar",
+    "subtitle": "Tip yazısı, okundu bilgisi ve güvenli iletişim.",
+    "typing": "yazıyor…",
+    "secure": "Demo için uçtan uca şifreli",
+    "actions": {
+      "call": "Ara",
+      "video": "Görüntülü"
+    },
+    "status": {
+      "seen": "Görüldü"
+    },
+    "placeholder": "Bir mesaj yaz ve Enter’a bas…",
+    "toasts": {
+      "sent": "Mesaj gönderildi",
+      "delivered": "Mesaj teslim edildi"
+    }
+  },
+  "directory": {
+    "title": "Üye dizini",
+    "subtitle": "Mezunları sınıf yılı, konum, sektör ve yetkinliğe göre bulun.",
+    "searchPlaceholder": "Kişi, yetkinlik veya ilgi alanı ara…",
+    "filters": {
+      "title": "Üyeleri filtrele",
+      "subtitle": "Hedefli listeler oluşturmak için filtreleri birleştir.",
+      "classYear": "Sınıf yılı",
+      "location": "Konum",
+      "industry": "Sektör",
+      "skill": "Yetkinlik"
+    },
+    "labels": {
+      "location": "Konum",
+      "classYear": "Sınıf yılı",
+      "skills": "Yetkinlikler",
+      "interests": "İlgi alanları"
+    },
+    "actions": {
+      "viewProfile": "Profili görüntüle",
+      "connect": "Tanışma isteği gönder"
+    },
+    "empty": "Filtreleri değiştirerek tekrar deneyin."
+  },
+  "groups": {
+    "title": "Aidiyet grupları",
+    "subtitle": "Premium ve açık gruplar için özel akışlar, etkinlikler ve ayrıcalıklar.",
+    "labels": {
+      "membership": "Premium erişim",
+      "members": "{{count}} üye",
+      "upcomingEvents": "Yaklaşan etkinlikler",
+      "recentPosts": "Güncel paylaşımlar",
+      "premium": "Premium",
+      "standard": "Standard"
+    },
+    "feedDescription": "{{group}} için özel akış ve kaynaklara erişiyorsunuz.",
+    "actions": {
+      "join": "Gruba katıl",
+      "leave": "Gruptan ayrıl",
+      "view": "Detayları gör"
+    },
+    "toasts": {
+      "left": "Grup erişimi kaldırıldı.",
+      "joined": "{{group}} grubuna hoş geldiniz."
+    },
+    "emptyEvents": "Etkinlik yok. Hemen bir etkinlik planlayın.",
+    "emptyFeed": "Bu grup ilk paylaşımını bekliyor.",
+    "empty": "Premium içerik için bir grup seçin.",
+    "success": {
+      "title": "Grup erişimi tanımlandı",
+      "subtitle": "Akış ve etkinliklere erişim açıldı.",
+      "access": "Artık özel paylaşımları, kaynakları ve mentorluk slotlarını görebilirsiniz.",
+      "badge": "Profilinize premium rozeti eklendi."
+    }
+  },
+  "mentoring": {
+    "title": "Mentorluk merkezi",
+    "subtitle": "Yapılandırılmış mentorluk, hızlı seanslar ve otomatik ilerleme takibi.",
+    "labels": {
+      "availableMentors": "Uygun mentorlar",
+      "pickMentor": "Mentor seçerek eşleşme isteği gönderin.",
+      "matchOverview": "Mevcut eşleşme",
+      "flash15": "Hızlı mentorluk",
+      "goals": "Gelişim hedefleri",
+      "smartSummary": "Son görüşmelerin akıllı özeti.",
+      "requests": "Mentor talepleri",
+      "queue": "Otomatik işlem kuyruğu",
+      "flashTitle": "Hızlı mentorluk zamanları",
+      "flashSubtitle": "10 dakikalık görüşmelerle hızla destek alın.",
+      "startsAt": "{{time}} başlangıç",
+      "match": "Mentor ilişkisi",
+      "progress": "%{{progress}} tamamlandı"
+    },
+    "actions": {
+      "request": "Mentor iste",
+      "flash": "Hızlı mentorluk planla"
+    },
+    "goals": {
+      "strategy": {
+        "title": "Kariyer stratejisi",
+        "description": "Bir sonraki adımınızı netleştirin ve uygulanabilir hedefler belirleyin."
+      },
+      "network": {
+        "title": "Ağ geliştirme",
+        "description": "Sıcak tanışmalar ve takip hatırlatıcıları."
+      },
+      "leadership": {
+        "title": "Liderlik becerileri",
+        "description": "İletişim, koçluk ve etki odaklı seanslar."
+      }
+    },
+    "status": {
+      "pending": "Beklemede",
+      "accepted": "Kabul edildi",
+      "scheduled": "Planlandı"
+    },
+    "emptyRequests": "Bekleyen mentor talebi yok. Yukarıdan yeni bir talep başlatın.",
+    "toasts": {
+      "requested": "Mentor talebiniz iletildi.",
+      "matchConfirmed": "Mentor talebinizi kabul etti.",
+      "flashScheduled": "Hızlı mentorluk seansı planlandı."
+    }
+  },
+  "careers": {
+    "title": "Kariyer merkezi",
+    "subtitle": "İş ilanları, stajlar, özgeçmiş analizi ve mezun desteği tek noktada.",
+    "labels": {
+      "openRoles": "Açık pozisyonlar",
+      "openRolesSubtitle": "Mezun ve öğrencileriniz için seçildi.",
+      "roles": "pozisyon",
+      "resume": "Akıllı özgeçmiş analizi",
+      "resumeSubtitle": "CV yükleyin, puan ve tavsiye alın.",
+      "tracker": "Başvuru takibi",
+      "trackerSubtitle": "Tüm başvurularınızı tek panelde izleyin."
+    },
+    "resume": {
+      "score": "Özgeçmiş puanı",
+      "highlights": {
+        "title": "Öne çıkanlar",
+        "impact": "Somut etki vurguları",
+        "community": "Mentorluk ve topluluk katkısı"
+      },
+      "suggestions": {
+        "title": "Öneriler",
+        "metrics": "Deneyimlerinize ölçülebilir sonuçlar ekleyin.",
+        "keywords": "ATS uyumu için sektör anahtar kelimelerini ekleyin."
+      },
+      "empty": "Analizi çalıştırarak önerileri görün."
+    },
+    "actions": {
+      "uploadResume": "Özgeçmiş yükle (demo)",
+      "apply": "Hemen başvur",
+      "share": "Paylaş"
+    },
+    "toasts": {
+      "resumeAnalyzed": "Özgeçmiş incelendi.",
+      "applicationSent": "Başvurunuz iletildi."
+    },
+    "status": {
+      "applied": "Başvuruldu",
+      "review": "İncelemede",
+      "interview": "Mülakat",
+      "offer": "Teklif"
+    },
+    "tracker": {
+      "empty": "Bir pozisyona başvurduğunuzda durum değişimleri burada listelenir."
+    }
+  },
+  "events": {
+    "title": "Etkinlikler ve kayıtlar",
+    "subtitle": "Hibrit dostu takvim, kayıt, bilet ve entegrasyon yönetimi.",
+    "views": {
+      "list": "Liste görünümü",
+      "calendar": "Takvim görünümü"
+    },
+    "actions": {
+      "register": "Kayıt ol",
+      "registered": "Kayıt tamam",
+      "schedule": "Calendly ile planla"
+    },
+    "labels": {
+      "location": "Konum"
+    },
+    "integrations": {
+      "title": "Etkinlik entegrasyonları",
+      "subtitle": "Video, planlama ve SSO bağlantılarını tek tıkla açın.",
+      "connectTitle": "Entegrasyon bağla",
+      "connectSubtitle": "Bu bir demo onayıdır, gerçek bağlantı yapılmaz.",
+      "placeholder": "{{provider}} bağlantısı başarıyla kuruldu."
+    },
+    "toasts": {
+      "registered": "Etkinlik kaydınız tamamlandı."
+    }
+  },
+  "fundraising": {
+    "title": "Bağış ve destek",
+    "subtitle": "Kampanyalar, ilerleme grafikleri, bağışçı rozetleri ve ihracata hazır kontroller.",
+    "actions": {
+      "launch": "Kampanya oluştur",
+      "donate": "Bağış yap",
+      "confirmDonation": "Bağışı onayla"
+    },
+    "labels": {
+      "raised": "Toplanan ₺{{amount}}",
+      "goal": "Hedef ₺{{goal}}",
+      "donors": "Bağışçı"
+    },
+    "dialog": {
+      "title": "{{name}} kampanyasına bağış yapın",
+      "copy": "Demo ödeme ekranıdır; tutarı girip onaylayın."
+    },
+    "admin": {
+      "title": "Yeni kampanya başlat",
+      "name": "Kampanya adı",
+      "description": "Etkisini anlatın",
+      "goal": "Hedef tutar (TL)",
+      "create": "Kampanya oluştur"
+    },
+    "toasts": {
+      "donated": "Bağış kaydedildi ve ilerleme güncellendi.",
+      "campaignCreated": "Kampanya yönetici görünümü için eklendi."
+    }
+  },
+  "analytics": {
+    "title": "Etkileşim analitiği",
+    "subtitle": "CASE standartlarında gösterge panoları ve trendler.",
+    "months": {
+      "0": "Oca",
+      "1": "Şub",
+      "2": "Mar",
+      "3": "Nis",
+      "4": "May",
+      "5": "Haz"
+    },
+    "charts": {
+      "engagement": {
+        "title": "Etkileşim ivmesi",
+        "subtitle": "Aylık benzersiz katkıda bulunanlar"
+      },
+      "retention": {
+        "title": "Tutundurma trendi",
+        "subtitle": "Aylık aktif üyeler (rolling)"
+      }
+    }
+  },
+  "admin": {
+    "title": "Yönetim konsolu",
+    "subtitle": "Roller, marka ayarları ve veri kontrolleri tek panelde.",
+    "tabs": {
+      "users": "Kullanıcılar",
+      "branding": "Markalama",
+      "privacy": "Gizlilik"
+    },
+    "users": {
+      "title": "Rol yönetimi",
+      "subtitle": "Mentor onaylayın, yöneticileri atayın ve elçileri yükseltin.",
+      "actions": {
+        "upgrade": "Rol değiştir"
+      }
+    },
+    "moderation": {
+      "title": "Moderatör kuyruğu",
+      "subtitle": "Akışta işaretlenen içerikleri görüntüleyin.",
+      "placeholder": "İşaretlenen paylaşım linkini yapıştırın…",
+      "actions": {
+        "resolve": "Çözüldü olarak işaretle"
+      }
+    },
+    "branding": {
+      "title": "Tema ve marka şablonları",
+      "subtitle": "Renkleri ve aksanları tek tıkla değiştirin."
+    },
+    "privacy": {
+      "title": "Veri gizliliği kontrolleri",
+      "subtitle": "Demo verisini dışa aktarın veya test kullanıcısını sıfırlayın.",
+      "actions": {
+        "export": "Veriyi dışa aktar (JSON)",
+        "delete": "Demo kullanıcıyı sıfırla"
+      }
+    },
+    "toasts": {
+      "roleUpdated": "Rol güncellendi.",
+      "flagResolved": "İşaretli içerik çözüldü.",
+      "exported": "Dışa aktarma başlatıldı.",
+      "userDeleted": "Demo kullanıcısı sıfırlandı."
+    }
+  },
+  "premium": {
+    "title": "Premium grup paketi",
+    "subtitle": "Aidiyet gruplarına özel panolar, ayrıcalıklar ve analitik sağlayın.",
+    "labels": {
+      "membership": "Premium erişim",
+      "members": "{{count}} üye"
+    },
+    "actions": {
+      "manage": "Grubu yönet"
+    },
+    "jobs": {
+      "title": "Premium iş panosu",
+      "subtitle": "Premium üyeler için seçilmiş ilanlar"
+    },
+    "stats": {
+      "title": "İstatistikler",
+      "subtitle": "Premium üyeler için etkileşim verileri"
+    }
+  },
+  "perks": {
+    "title": "Ayrıcalık pazarı",
+    "subtitle": "Mezunlara özel indirim ve avantajları alın.",
+    "actions": {
+      "claim": "Ayrıcalığı al",
+      "claimed": "Alındı"
+    },
+    "toasts": {
+      "claimed": "Ayrıcalık kodu hazır."
+    }
+  },
+  "podcast": {
+    "title": "Podcast ve blog",
+    "subtitle": "Haftalık mezun sohbetleri ve yazılı öne çıkanlar.",
+    "tabs": {
+      "podcast": "Podcast bölümleri",
+      "blog": "Blog yazıları"
+    },
+    "actions": {
+      "listen": "Dinle",
+      "read": "Oku"
+    }
+  },
+  "volunteer": {
+    "title": "Gönüllülük ve sosyal sorumluluk",
+    "subtitle": "Impact kaydedin, gönüllüleri yönetin ve görünür kılın.",
+    "labels": {
+      "hours": "{{count}} gönüllülük saati kaydedildi",
+      "participants": "{{count}} katılımcı",
+      "hoursShort": "{{count}} saat"
+    },
+    "actions": {
+      "join": "Katıl",
+      "joined": "Kayıtlı"
+    },
+    "toasts": {
+      "registered": "Gönüllülük kaydınız onaylandı."
+    }
+  },
+  "challenges": {
+    "title": "Topluluk meydan okumaları",
+    "subtitle": "Aylık temalarla etkileşimi oyunlaştırın.",
+    "labels": {
+      "participants": "{{count}} katılımcı",
+      "goal": "Hedef: {{prize}}",
+      "leaderboard": "Liderlik tablosu"
+    },
+    "actions": {
+      "submit": "Kanıt gönder"
+    },
+    "toasts": {
+      "submitted": "Gönderim alındı ve puanlandı."
+    }
+  },
+  "leaderboards": {
+    "title": "Liderlik ve rozetler",
+    "subtitle": "Etkileşimi rozetler ve puanlarla ödüllendirin.",
+    "labels": {
+      "topMembers": "En aktif üyeler",
+      "engagement": "Etkileşim puanı",
+      "badges": "Son rozetler",
+      "badgesSubtitle": "Kilometre taşlarına göre otomatik rozetler"
+    }
+  },
+  "integrations": {
+    "title": "Entegrasyonlar ve SSO",
+    "subtitle": "Takvim, video araçları ve üniversite SSO bağlantıları.",
+    "status": {
+      "connected": "Bağlı",
+      "available": "Kullanıma hazır"
+    },
+    "actions": {
+      "connect": "Bağla",
+      "disconnect": "Bağı kes"
+    },
+    "providers": {
+      "linkedin": "Mezun güncellemelerini otomatik senkronize edin.",
+      "calendly": "Mentorluk ve danışmanlık slotlarını embed edin.",
+      "zoom": "Sanal etkinlikler için bağlantıları otomatik üretin.",
+      "google": "Etkinlikleri Google Calendar’a aktarın.",
+      "teams": "Microsoft Teams canlı seanslarını yönetin.",
+      "sso": "Üniversite kimliği ile SSO demo akışı."
+    },
+    "toasts": {
+      "connected": "{{name}} bağlantısı kuruldu.",
+      "disconnected": "{{name}} bağlantısı kesildi."
+    }
+  },
+  "auth": {
+    "title": "Demo çalışma alanına giriş",
+    "subtitle": "İki dilli arayüz ve sosyal giriş örneği.",
+    "tabs": {
+      "signin": "Giriş yap",
+      "signup": "Hesap oluştur",
+      "forgot": "Şifre sıfırla"
+    },
+    "signin": {
+      "title": "Tekrar hoş geldiniz",
+      "subtitle": "Demo kimlik bilgilerini girin."
+    },
+    "signup": {
+      "title": "Demo hesabı oluştur",
+      "subtitle": "Onboarding akışını deneyimleyin."
+    },
+    "forgot": {
+      "title": "Şifre sıfırlama",
+      "subtitle": "Mock sıfırlama bağlantısı alın."
+    },
+    "labels": {
+      "password": "Şifre",
+      "fullName": "Ad Soyad"
+    },
+    "actions": {
+      "signin": "Giriş yap",
+      "signup": "Hesap oluştur",
+      "reset": "Sıfırlama bağlantısı gönder",
+      "google": "Google ile devam et"
+    },
+    "toasts": {
+      "missing": "Lütfen tüm alanları doldurun.",
+      "success": "Mock kimlik doğrulama başarılı."
+    }
+  },
+  "static": {
+    "contact": "Kurumsal demo talepleri için hello@koprumezun.com adresine ulaşabilirsiniz.",
+    "privacy": "Bu demo, verileri tarayıcınızda saklar ve sahte API kullanır; dışarıya veri aktarılmaz.",
+    "terms": "Bu çalışma alanı yalnızca tanıtım amaçlıdır. Tüm içerikler kurgudur ve ana senaryoları göstermek için tasarlanmıştır."
+  }
+}
