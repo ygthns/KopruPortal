@@ -134,7 +134,7 @@ type DemoActions = {
     applicationId: string,
   ) => GroupApplication | undefined;
   requestMentor: (mentorId: string, goals: string[]) => MentorRequest;
-  processMentorQueue: () => void;
+  completeMentorRequest: (requestId: string) => MentorRequest | undefined;
   scheduleFlashSession: (mentorId: string, topic: string) => FlashSession;
   applyToJob: (jobId: string) => JobApplication;
   toggleSaveJob: (jobId: string) => void;
@@ -374,37 +374,59 @@ export const useDemoStore = create<DemoStore>()(
         set((state) => ({
           mentorRequests: [request, ...state.mentorRequests],
         }));
+        if (typeof window !== 'undefined') {
+          window.setTimeout(() => {
+            get().completeMentorRequest(request.id);
+          }, 1500);
+        }
         return request;
       },
-      processMentorQueue: () => {
-        set((state) => {
-          const updatedRequests = state.mentorRequests.map<MentorRequest>(
-            (request) => {
-              if (request.status !== 'pending') return request;
-              const accepted = booleanRandom(0.8);
-              return {
-                ...request,
-                status: accepted ? 'accepted' : 'scheduled',
-              };
-            },
-          );
+      completeMentorRequest: (requestId) => {
+        let updatedRequest: MentorRequest | undefined;
+        const nextStatus: MentorRequest['status'] = booleanRandom(0.8)
+          ? 'accepted'
+          : 'scheduled';
 
-          const newMatches: MentorshipMatch[] = state.mentorRequests
-            .filter((request) => request.status === 'pending')
-            .map((request) => ({
-              id: nanoid(),
-              mentorId: request.mentorId,
-              menteeId: state.viewerId,
-              goals: request.goals,
-              progress: 25,
-              status: 'in_progress' as const,
-            }));
+        set((state) => {
+          const mentorRequests = state.mentorRequests.map((request) => {
+            if (request.id !== requestId) {
+              return request;
+            }
+
+            updatedRequest = {
+              ...request,
+              status: nextStatus,
+            };
+
+            return updatedRequest;
+          });
+
+          if (!updatedRequest) {
+            return { mentorRequests };
+          }
+
+          const mentorships =
+            nextStatus === 'accepted'
+              ? [
+                  {
+                    id: nanoid(),
+                    mentorId: updatedRequest.mentorId,
+                    menteeId: state.viewerId,
+                    goals: updatedRequest.goals,
+                    progress: 32,
+                    status: 'in_progress' as const,
+                  },
+                  ...state.mentorships,
+                ]
+              : state.mentorships;
 
           return {
-            mentorRequests: updatedRequests,
-            mentorships: [...newMatches, ...state.mentorships],
+            mentorRequests,
+            mentorships,
           };
         });
+
+        return updatedRequest;
       },
       scheduleFlashSession: (mentorId, topic) => {
         const session: FlashSession = {
