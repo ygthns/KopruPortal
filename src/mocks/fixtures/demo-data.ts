@@ -485,7 +485,6 @@ export const demoData: Partial<DemoStore> = {
     },
   ],
   podcastEpisodes: [],
-  premiumInsights: [],
   digitalCards: [
     {
       id: 'card-1',

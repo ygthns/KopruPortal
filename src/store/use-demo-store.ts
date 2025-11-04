@@ -16,6 +16,7 @@ import {
   type FundraisingCampaign,
   type Group,
   type IntegrationStub,
+  type MembershipStatus,
   type JobPosting,
   type LeaderboardEntry,
   type Comment,
@@ -251,7 +252,7 @@ export const useDemoStore = create<DemoStore>()(
             }
             updated = {
               ...group,
-              membershipStatus: 'member',
+              membershipStatus: 'member' as MembershipStatus,
               memberCount: group.memberCount + 1,
             };
             return updated;
@@ -266,7 +267,7 @@ export const useDemoStore = create<DemoStore>()(
             if (group.id !== groupId) return group;
             updated = {
               ...group,
-              membershipStatus: 'invited',
+              membershipStatus: 'invited' as MembershipStatus,
               memberCount: Math.max(0, group.memberCount - 1),
             };
             return updated;
@@ -304,8 +305,8 @@ export const useDemoStore = create<DemoStore>()(
                   ...group,
                   membershipStatus:
                     group.membershipStatus === 'member'
-                      ? 'member'
-                      : 'pending',
+                      ? ('member' as MembershipStatus)
+                      : ('pending' as MembershipStatus),
                 }
               : group,
           ),
@@ -345,11 +346,11 @@ export const useDemoStore = create<DemoStore>()(
           const groups = state.groups.map((group) => {
             if (group.id !== approvedApplication!.groupId) return group;
             if (group.membershipStatus === 'member') {
-              return { ...group, membershipStatus: 'member' };
+              return { ...group, membershipStatus: 'member' as MembershipStatus };
             }
             return {
               ...group,
-              membershipStatus: 'member',
+              membershipStatus: 'member' as MembershipStatus,
               memberCount: group.memberCount + 1,
             };
           });
