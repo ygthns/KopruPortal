@@ -13,11 +13,14 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useDemoStore } from '@/store/use-demo-store';
 import { useToast } from '@/components/ui/use-toast';
+import type { UserProfile } from '@/types';
 
 export default function MentoringPage() {
   const { t } = useTranslation();
-  const mentors = useDemoStore((state) =>
-    state.users.filter((user) => user.role === 'mentor'),
+  const users = useDemoStore((state) => state.users);
+  const mentors = useMemo<UserProfile[]>(
+    () => users.filter((user) => user.role === 'mentor'),
+    [users],
   );
   const mentorships = useDemoStore((state) => state.mentorships);
   const mentorRequests = useDemoStore((state) => state.mentorRequests);
@@ -26,9 +29,7 @@ export default function MentoringPage() {
   const scheduleFlashSession = useDemoStore(
     (state) => state.scheduleFlashSession,
   );
-  const [selectedMentor, setSelectedMentor] = useState<string>(
-    mentors[0]?.id ?? '',
-  );
+  const [selectedMentor, setSelectedMentor] = useState<string>('');
   const { toast } = useToast();
 
   useEffect(() => {
