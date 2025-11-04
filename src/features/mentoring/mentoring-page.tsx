@@ -23,9 +23,6 @@ export default function MentoringPage() {
   const mentorRequests = useDemoStore((state) => state.mentorRequests);
   const flashSessions = useDemoStore((state) => state.flashSessions);
   const requestMentor = useDemoStore((state) => state.requestMentor);
-  const completeMentorRequest = useDemoStore(
-    (state) => state.completeMentorRequest,
-  );
   const scheduleFlashSession = useDemoStore(
     (state) => state.scheduleFlashSession,
   );
@@ -41,69 +38,37 @@ export default function MentoringPage() {
     setSelectedMentor(mentors[0].id);
   }, [mentors, selectedMentor]);
 
-  const pendingTimersRef = useRef(new Map<string, number>());
-  const scheduledRequestsRef = useRef(new Set<string>());
-  const notifiedRequestsRef = useRef(new Set<string>());
+  const notifiedRequestsRef = useRef(new Map<string, string>());
 
   useEffect(() => {
     mentorRequests.forEach((request) => {
       if (request.status === 'pending') {
-        const existingTimer = pendingTimersRef.current.get(request.id);
-        if (existingTimer) {
-          window.clearTimeout(existingTimer);
-          pendingTimersRef.current.delete(request.id);
-        }
         notifiedRequestsRef.current.delete(request.id);
-        if (scheduledRequestsRef.current.has(request.id)) {
-          return;
-        }
-
-        scheduledRequestsRef.current.add(request.id);
-        const timer = window.setTimeout(() => {
-          completeMentorRequest(request.id);
-        }, 1500);
-        pendingTimersRef.current.set(request.id, timer);
         return;
       }
 
-      const timer = pendingTimersRef.current.get(request.id);
-      if (timer) {
-        window.clearTimeout(timer);
-        pendingTimersRef.current.delete(request.id);
-      }
-      scheduledRequestsRef.current.delete(request.id);
-
-      if (notifiedRequestsRef.current.has(request.id)) {
+      const lastStatus = notifiedRequestsRef.current.get(request.id);
+      if (lastStatus === request.status) {
         return;
       }
 
-      notifiedRequestsRef.current.add(request.id);
+      notifiedRequestsRef.current.set(request.id, request.status);
+
       if (request.status === 'accepted') {
         toast({
           variant: 'success',
           title: t('mentoring.toasts.matchConfirmed'),
         });
-      } else if (request.status === 'scheduled') {
+      }
+
+      if (request.status === 'scheduled') {
         toast({
           variant: 'success',
           title: t('mentoring.toasts.flashScheduled'),
         });
       }
     });
-  }, [mentorRequests, completeMentorRequest, toast, t]);
-
-  useEffect(() => {
-    const timers = pendingTimersRef.current;
-    const scheduled = scheduledRequestsRef.current;
-    const notified = notifiedRequestsRef.current;
-
-    return () => {
-      timers.forEach((timer) => window.clearTimeout(timer));
-      timers.clear();
-      scheduled.clear();
-      notified.clear();
-    };
-  }, []);
+  }, [mentorRequests, toast, t]);
 
   const selectedMentorProfile = useMemo(
     () => mentors.find((mentor) => mentor.id === selectedMentor),
