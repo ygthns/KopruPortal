@@ -1,153 +1,136 @@
-﻿# KöprüMezun Demo Portal
+# KöprüMezun Demo Portal
 
-Frontend-only, bilingual (EN/TR) demo of the KöprüMezun community management platform. Every route is populated with mock data, lightweight workflows, and subtle animations so stakeholders can record walkthroughs or click through the experience without a backend.
+Frontend-only, bilingual (EN/TR) demo of the KöprüMezun community management platform. Every route is backed by mock data, optimistic workflows, and subtle motion so stakeholders can record walkthroughs or click through features without any backend dependencies.
 
 ## Quick Start · English
 
-1. Install dependencies: 
-pm install
-2. Start the dev server: 
-pm run dev
-3. Visit http://localhost:5173
-4. (Optional) Reset demo state in devtools: window.resetDemoState()
+1. Install dependencies: `npm install`
+2. Start the dev server: `npm run dev`
+3. Open http://localhost:5173 in your browser
+4. (Optional) Restore fixtures in DevTools: `window.resetDemoState()`
 
 ### Scripts
 
-- 
-pm run dev – Vite dev server with MSW mocks
-- 
-pm run build – Type-check & production bundle
-- 
-pm run lint – ESLint type-aware linting
-- 
-pm run format:write – Prettier with Tailwind plugin
-- 
-pm run msw:init – Copy service worker (already ran once)
+- `npm run dev` — Vite dev server with MSW mocks enabled
+- `npm run build` — Type-check and create the production bundle
+- `npm run lint` — ESLint with type information
+- `npm run format:write` — Prettier + Tailwind formatting
+- `npm run msw:init` — Copies the MSW service worker (already done)
 
 ### Mock API & Data
 
-- Mock Service Worker starts automatically in dev and production bundles.
-- Endpoints live in src/mocks/handlers.ts; fixtures in src/mocks/fixtures/demo-data.ts.
-- Responses include optional benign warnings to mimic real-world latency/noise.
-- All mutable state persists via Zustand + localStorage (koprumezun.demo).
+- Mock Service Worker starts automatically in dev and in the production preview bundle (`npm run build && npm run preview`).
+- Endpoints live in `src/mocks/handlers.ts`; fixtures and seeds sit in `src/mocks/fixtures/demo-data.ts`.
+- Responses intentionally include gentle warnings/latency to mimic real-world systems while never hard-failing.
+- Zustand stores plus `localStorage` (`koprumezun.demo`) persist key demo state such as feed posts, club membership, and profile edits.
 
 ### Internationalisation
 
-- Config in src/i18n/i18n.ts, language JSON at src/i18n/en.json & src/i18n/tr.json.
-- Add strings to both files using the same key path. Nested objects are encouraged.
-- Language toggle persists in localStorage (koprumezun.lang).
-- useTranslation and helper useLocale drive page copy.
+- i18next configuration is in `src/i18n/i18n.ts`; copy lives in `src/i18n/en.json` and `src/i18n/tr.json`.
+- Always add new strings to both files using the same key path. Feel free to nest common groups.
+- The language toggle (US/🇹🇷) sits inside the top-right quick actions menu and persists in `koprumezun.lang`.
 
 ### Theming & Branding
 
-- Theme presets in src/lib/theme.ts with CSS variable overrides.
-- Admin console exposes the presets; selection persists via useSettingsStore.
-- Tailwind tokens live in 	ailwind.config.ts; utilities merged with cn() helper.
+- Theme presets and white-label tokens reside in `src/lib/theme.ts`; Tailwind design tokens are in `tailwind.config.ts`.
+- The theme toggle lives in the top-right quick actions dropdown (sun/moon icon) and syncs via `useSettingsStore`.
+- Components follow the shadcn/ui pattern with class merging helpers in `src/lib/utils.ts`.
 
 ### Recommended Demo Flow (EN)
 
-1. Landing page hero → highlight bilingual CTA badges.
-2. Switch language to Turkish in the navbar.
-3. Feed: create a post, add a comment, watch optimistic toast.
-4. Groups: join a premium group, observe unlock modal.
-5. Mentoring: request mentor & schedule flash session.
-6. Careers: run resume analyzer, apply to a role, review tracker.
-7. Events: register for hybrid event + open Calendly placeholder.
-8. Fundraising: create campaign as admin and donate to existing one.
-9. Analytics & Admin: adjust theme preset, export privacy data.
-10. Premium perks → Volunteer board → Leaderboards for badges.
+1. Land directly on the community feed, flip the language toggle, then create a post and reply to a thread to show optimistic toasts.
+2. Open Messages to browse seeded direct conversations and send a quick reply.
+3. Head to the Member Directory, apply filters (class year, location) and open a profile card.
+4. Visit Clubs, join a community, post an update on the club wall, and skim upcoming events for that club.
+5. In Mentoring, request a mentor and book a flash mentoring slot to trigger progress updates.
+6. Run the Smart Résumé Analyzer in Careers, apply to a role, and review the application tracker.
+7. Register for an event, then launch a Zoom/Calendly placeholder from the integrations drawer.
+8. Create a new fundraising campaign, make a donation, and note the progress bar update.
+9. Claim an offer in the Perks Marketplace and capture the generated coupon code.
+10. Update the Profile page by uploading an avatar and editing bio/skills; refresh to confirm persistence.
+11. Finish in Integrations by connecting and disconnecting a provider stub.
 
 ### Netlify Deployment (English)
 
-1. Create a new Netlify site, connect the repository.
-2. Build command: 
-pm run build
-3. Publish directory: dist/
-4. Environment variable: VITE_ENABLE_MSW=true (optional if you want to force mocks in prod; otherwise MSW auto-enables)
-5. Enable SPA redirects (already provided via 
-etlify.toml).
+1. Create a new Netlify site and connect this repository.
+2. Build command: `npm run build`
+3. Publish directory: `dist/`
+4. Optional env var: `VITE_ENABLE_MSW=true` (forces mocks in production previews)
+5. SPA redirects are already configured through `netlify.toml`.
 
 ---
 
 ## Hızlı Başlangıç · Türkçe
 
-1. Bağımlılıkları yükleyin: 
-pm install
-2. Geliştirme sunucusunu başlatın: 
-pm run dev
-3. http://localhost:5173 adresini açın
-4. (Opsiyonel) Demo verisini sıfırlamak için konsolda window.resetDemoState() çalıştırın
+1. Bağımlılıkları yükleyin: `npm install`
+2. Geliştirme sunucusunu başlatın: `npm run dev`
+3. Tarayıcıda http://localhost:5173 adresini açın
+4. (İsteğe bağlı) Demo verisini sıfırlamak için konsolda `window.resetDemoState()` çalıştırın
 
 ### Komutlar
 
-- 
-pm run dev – MSW mock’larıyla geliştirme sunucusu
-- 
-pm run build – Tip kontrolü + prod derleme
-- 
-pm run lint – ESLint tip kontrollü kurallar
-- 
-pm run format:write – Prettier + Tailwind düzeni
-- 
-pm run msw:init – Service worker kopyalama
+- `npm run dev` — MSW mock’larıyla Vite geliştirme sunucusu
+- `npm run build` — Tip kontrolü + üretim derlemesi
+- `npm run lint` — Tip destekli ESLint kuralları
+- `npm run format:write` — Prettier ve Tailwind biçimlendirmesi
+- `npm run msw:init` — MSW service worker dosyasını kopyalar (ilk kurulumda çalıştırıldı)
 
 ### Sahte API & Veri
 
-- MSW hem geliştirme hem de prod paketlerinde otomatik başlar.
-- Uç noktalar src/mocks/handlers.ts, veri setleri src/mocks/fixtures/demo-data.ts içinde.
-- Yanıtlar, gerçekçi gecikme/uyarı hissi için uyarı metası içerebilir.
-- Tüm durum verileri Zustand + localStorage (koprumezun.demo) ile saklanır.
+- MSW, geliştirme ve üretim önizleme modlarında otomatik olarak başlar (`npm run build && npm run preview`).
+- Uç noktalar `src/mocks/handlers.ts`, veri setleri ve senaryolar `src/mocks/fixtures/demo-data.ts` içindedir.
+- Yanıtlar, gerçekçi gecikme ve uyarı hissi için zararsız bildirimler döndürür; hiçbir çağrı hatayla sonuçlanmaz.
+- Zustand + `localStorage` (`koprumezun.demo`), akış gönderileri, kulüp üyelikleri ve profil düzenlemeleri gibi durumları kalıcı tutar.
 
 ### Çok Dilli Yapı
 
-- Yapılandırma src/i18n/i18n.ts, metin dosyaları src/i18n/en.json ve src/i18n/tr.json altında.
-- Aynı anahtar yapısı ile iki dilde içerik ekleyin.
-- Dil seçimi navbar’daki düğme ile değişir ve kalıcıdır.
+- i18next ayarları `src/i18n/i18n.ts`, metin dosyaları `src/i18n/en.json` ve `src/i18n/tr.json` klasörlerinde.
+- Yeni içerik eklerken aynı anahtar yapısını iki dilde de güncelleyin.
+- Dil değiştirici üst bardaki hızlı işlemler menüsündedir ve `koprumezun.lang` anahtarında saklanır.
 
 ### Tema & Kurumsal Kimlik
 
-- src/lib/theme.ts içindeki preset’ler CSS değişkenlerini günceller.
-- Yönetim konsolu temaları gösterir; seçim useSettingsStore ile saklanır.
-- Tailwind tema ayarları 	ailwind.config.ts dosyasında.
+- Tema preset’leri ve beyaz etiket değişkenleri `src/lib/theme.ts` içinde, Tailwind teması `tailwind.config.ts` dosyasında tanımlıdır.
+- Tema geçişi sağ üstteki hızlı işlemler menüsünde bulunur ve `useSettingsStore` ile kalıcıdır.
+- Bileşenler shadcn/ui yaklaşımını takip eder; sınıf birleştirme yardımcıları `src/lib/utils.ts` dosyasındadır.
 
 ### Önerilen Demo Akışı (TR)
 
-1. Açılış sayfası → iki dilli CTA ve güven rozetleri.
-2. Üst menüden dili Türkçe’ye alın.
-3. Akışta paylaşım oluşturun, yorum yapın ve toast bildirimini gözlemleyin.
-4. Premium gruba katılın, açılan modal ile erişimi anlatın.
-5. Mentorluk merkezinde mentor isteyin ve hızlı seans planlayın.
-6. Kariyer merkezinde özgeçmiş analizini çalıştırın, başvuru yapın.
-7. Etkinliklere kayıt olun, Calendly/Zoom placeholder’larını açın.
-8. Bağış sekmesinde yeni kampanya oluşturup bağış yapın.
-9. Analitik ve yönetim sekmesinde tema değiştirin, veriyi dışa aktarın.
-10. Ayrıcalıklar, gönüllülük panosu ve rozetli liderlik listesini gösterin.
+1. Topluluk akışında dili değiştirin, bir gönderi oluşturup yorumlayarak iyimser bildirimleri gösterin.
+2. Mesajlar sekmesinde mevcut sohbetlere göz atın ve hızlı bir yanıt gönderin.
+3. Üye Dizini’nde filtreler uygulayıp bir profili açın.
+4. Kulüpler sayfasında bir kulübe katılın, kulüp duvarına paylaşım yapın ve kulübe bağlı etkinlikleri inceleyin.
+5. Mentorluk merkezinde mentor isteği gönderip hızlı mentorluk oturumu planlayın.
+6. Kariyer merkezinde özgeçmiş analizini çalıştırın, bir ilana başvurun ve takip kartını inceleyin.
+7. Etkinlikler bölümünde kayıt olun, ardından Zoom/Calendly düzmece bağlantılarını açın.
+8. Bağış alanında yeni kampanya oluşturun, bağış yapın ve ilerleme çubuğunun güncellendiğini vurgulayın.
+9. Ayrıcalıklar pazarından bir fırsat alın ve oluşturulan kuponu gösterin.
+10. Profil sayfasında avatar yükleyip biyografi/becerileri güncelleyin; sayfayı yenileyerek kaydın korunduğunu doğrulayın.
+11. Entegrasyonlar sekmesinde bir sağlayıcıyı bağlayıp bağlantıyı kesin.
 
 ### Netlify Dağıtımı (Türkçe)
 
-1. Netlify’da yeni site → repoyu bağlayın.
-2. Build komutu: 
-pm run build
-3. Yayın klasörü: dist/
-4. Ortam değişkeni (isteğe bağlı): VITE_ENABLE_MSW=true
-5. 
-etlify.toml içindeki SPA yönlendirmeleri aktif.
+1. Netlify’da yeni bir site açın ve bu depoyu bağlayın.
+2. Derleme komutu: `npm run build`
+3. Yayın klasörü: `dist/`
+4. Opsiyonel ortam değişkeni: `VITE_ENABLE_MSW=true`
+5. SPA yönlendirmeleri `netlify.toml` dosyasında tanımlı olduğundan ek ayar gerekmez.
 
 ## Project Structure Highlights
 
-`
+```
 src/
-  components/        // Shared UI & layout primitives (shadcn-style)
-  features/          // Route-level feature modules
-  mocks/             // MSW handlers + fixtures
-  i18n/              // Language files & config
-  store/             // Zustand stores
-  providers/         // App scaffolding (theme, mocks, demo data)
-`
+  components/        // Paylaşılan UI bileşenleri ve düzen parçaları
+  features/          // Her rota için özellik modülleri
+  mocks/             // MSW uç noktaları ve sabitler
+  i18n/              // Dil dosyaları ve yapılandırma
+  store/             // Zustand store'ları
+  providers/         // Tema, i18n ve demo verisi sağlayıcıları
+```
 
 ## Notes
 
-- Framer Motion powers subtle entrance/hover animations. Keep them fast and non-blocking.
-- window.resetDemoState() is available in dev to restore original fixture data.
-- Large chunk warning is expected; Netlify handles the static bundle, but you can tweak chunking in ite.config.ts if needed.
-- All assets are local; no external fonts beyond Google Fonts preconnect.
+- Framer Motion mikro animasyonları hafif ve kesintisiz tutar.
+- `window.resetDemoState()` geliştirme sırasında demoyu varsayılan verilere döndürür.
+- Büyük JS parçaları Netlify tarafından servis edilir; gerekirse dinamik importlarla boyutu azaltabilirsiniz.
+- Tüm statik varlıklar yereldir; dış fontlar için yalnızca gerekli ön bağlantılar kullanılır.

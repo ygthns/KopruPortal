@@ -1,4 +1,6 @@
-import { Bell, Video } from 'lucide-react';
+import { useMemo } from 'react';
+import { Bell, MoreHorizontal, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BrandLogo } from '@/components/shared/brand-logo';
 import { LanguageToggle } from '@/components/shared/language-toggle';
@@ -6,86 +8,81 @@ import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from '@/components/ui/tooltip';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useDemoStore } from '@/store/use-demo-store';
+import { cn, getInitials } from '@/lib/utils';
 
 export function TopNav() {
   const { t } = useTranslation();
   const viewer = useDemoStore((state) =>
     state.users.find((user) => user.id === state.viewerId),
   );
+  const initials = useMemo(
+    () => (viewer ? getInitials(viewer.name) : 'KM'),
+    [viewer],
+  );
 
   return (
-    <TooltipProvider>
-      <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
-          <div className="flex items-center gap-3">
-            <BrandLogo />
-            <div className="hidden md:block">
-              <span className="rounded-full bg-muted px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {t('common.tagline')}
-              </span>
-            </div>
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 md:gap-6">
+        <BrandLogo />
+        <div className="flex flex-1 items-center gap-2 md:gap-4">
+          <div className="relative hidden w-full md:block">
+            <Input
+              type="search"
+              placeholder={t('common.labels.search')}
+              className="h-11 w-full rounded-full bg-muted/60 pl-11"
+            />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           </div>
-
-          <div className="hidden flex-1 items-center justify-center md:flex">
-            <div className="relative w-full max-w-xl">
-              <Input
-                type="search"
-                placeholder={t('common.labels.search')}
-                className="pl-10"
-              />
-              <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-                ⌘K
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hidden h-10 w-10 rounded-full md:inline-flex"
-                  aria-label="Notifications"
-                >
-                  <Bell className="h-5 w-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{t('home.notifications')}</TooltipContent>
-            </Tooltip>
-            <LanguageToggle />
-            <ThemeToggle />
-            <Button
-              variant="secondary"
-              className="hidden items-center gap-2 rounded-full px-4 md:inline-flex"
-            >
-              <Video className="h-4 w-4" />
-              {t('common.actions.bookDemo')}
-            </Button>
-            {viewer && (
-              <div className="hidden items-center gap-2 rounded-full border border-border/60 bg-muted/60 px-3 py-1.5 md:flex">
-                <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  {viewer.role}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            aria-label={t('common.labels.search')}
+          >
+            <Search className="h-5 w-5" />
+          </Button>
+        </div>
+        <div className="flex items-center gap-2 md:gap-3">
+          <Button variant="ghost" size="icon" aria-label="Notifications">
+            <Bell className="h-5 w-5" />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Quick actions">
+                <MoreHorizontal className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 space-y-3 p-3">
+              <div className="flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2">
+                <span className="text-sm font-medium text-muted-foreground">
+                  {t('common.language.tr')}
                 </span>
-                <span className="text-sm font-medium">{viewer.name}</span>
+                <LanguageToggle />
               </div>
+              <div className="flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2">
+                <span className="text-sm font-medium text-muted-foreground">
+                  Theme
+                </span>
+                <ThemeToggle />
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Link
+            to="/profile"
+            className={cn(
+              'flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary transition hover:bg-primary/20',
             )}
-          </div>
+            aria-label="Profile"
+          >
+            {initials}
+          </Link>
         </div>
-        <div className="block border-t border-border/60 px-4 py-2 md:hidden">
-          <Input
-            type="search"
-            placeholder={t('common.labels.search')}
-            className="pl-10"
-          />
-        </div>
-      </header>
-    </TooltipProvider>
+      </div>
+    </header>
   );
 }

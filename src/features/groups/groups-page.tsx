@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Users, CalendarDays, Trophy } from 'lucide-react';
+import { CalendarDays, MessageSquare } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -10,16 +10,9 @@ import {
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useDemoStore } from '@/store/use-demo-store';
+import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { useDemoStore } from '@/store/use-demo-store';
 import { Separator } from '@/components/ui/separator';
 
 export default function GroupsPage() {
@@ -29,34 +22,34 @@ export default function GroupsPage() {
   const posts = useDemoStore((state) => state.posts);
   const joinGroup = useDemoStore((state) => state.joinGroup);
   const leaveGroup = useDemoStore((state) => state.leaveGroup);
+  const createPost = useDemoStore((state) => state.createPost);
+  const { toast } = useToast();
+
   const [activeGroupId, setActiveGroupId] = useState<string | null>(
     groups[0]?.id ?? null,
   );
-  const [successGroupId, setSuccessGroupId] = useState<string | null>(null);
-  const { toast } = useToast();
+  const [messageDraft, setMessageDraft] = useState('');
 
   const activeGroup = useMemo(
     () => groups.find((group) => group.id === activeGroupId),
     [groups, activeGroupId],
   );
 
-  const groupEvents = useMemo(
-    () =>
-      events.filter((event) =>
-        event.tags.some(
-          (tag) => tag === activeGroup?.id || tag === activeGroup?.category,
-        ),
+  const groupEvents = useMemo(() => {
+    if (!activeGroup) return [];
+    return events.filter((event) =>
+      event.tags.some(
+        (tag) => tag === activeGroup.id || tag === activeGroup.category,
       ),
-    [events, activeGroup],
-  );
+    );
+  }, [events, activeGroup]);
 
-  const groupPosts = useMemo(
-    () =>
-      posts
-        .filter((post) => post.tags.includes(activeGroup?.id ?? ''))
-        .slice(0, 3),
-    [posts, activeGroup],
-  );
+  const groupPosts = useMemo(() => {
+    if (!activeGroup) return [];
+    return posts
+      .filter((post) => post.tags.includes(activeGroup.id))
+      .slice(0, 5);
+  }, [posts, activeGroup]);
 
   return (
     <div className="space-y-8">
@@ -76,27 +69,21 @@ export default function GroupsPage() {
                 group.id === activeGroupId ? 'border-primary shadow-card' : ''
               }
             >
-              <CardHeader className="flex-row items-center justify-between gap-4">
+              <CardHeader className="flex-row items-start justify-between gap-4">
                 <div>
                   <CardTitle className="text-lg">{group.name}</CardTitle>
                   <CardDescription>{group.category}</CardDescription>
                 </div>
-                <Badge variant={group.isPremium ? 'default' : 'muted'}>
-                  {group.isPremium
-                    ? t('groups.labels.premium')
-                    : t('groups.labels.standard')}
+                <Badge variant="muted">
+                  {group.memberCount} {t('groups.labels.members')}
                 </Badge>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground">
                   {group.description}
                 </p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <Users className="h-4 w-4" />
-                  {group.memberCount} {t('groups.labels.members')}
-                </div>
-                <div className="flex gap-2">
-                  {group.tags.slice(0, 3).map((tag) => (
+                <div className="flex gap-2 text-xs text-muted-foreground">
+                  {group.tags.slice(0, 4).map((tag) => (
                     <Badge key={tag} variant="secondary">
                       #{tag}
                     </Badge>
@@ -118,16 +105,13 @@ export default function GroupsPage() {
                           variant: 'warning',
                           title: t('groups.toasts.left'),
                         });
-                        return;
-                      }
-                      const updated = joinGroup(group.id);
-                      if (updated) {
-                        setActiveGroupId(updated.id);
-                        setSuccessGroupId(updated.id);
+                      } else {
+                        joinGroup(group.id);
+                        setActiveGroupId(group.id);
                         toast({
                           variant: 'success',
                           title: t('groups.toasts.joined', {
-                            group: updated.name,
+                            group: group.name,
                           }),
                         });
                       }
@@ -180,7 +164,7 @@ export default function GroupsPage() {
                             {event.title}
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            {event.date} · {event.location}
+                            {event.date} � {event.location}
                           </p>
                         </div>
                         <Badge
@@ -200,11 +184,38 @@ export default function GroupsPage() {
                 )}
               </div>
               <Separator />
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                  <Trophy className="h-4 w-4" />
-                  {t('groups.labels.recentPosts')}
+                  <MessageSquare className="h-4 w-4" />
+                  {t('groups.labels.wall')}
                 </h3>
+                <form
+                  className="space-y-3 rounded-2xl border border-dashed border-border/60 bg-background/80 p-4"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    if (!messageDraft.trim()) return;
+                    createPost({
+                      content: messageDraft,
+                      tags: [activeGroup.id],
+                    });
+                    setMessageDraft('');
+                    toast({
+                      variant: 'success',
+                      title: t('groups.toasts.messagePosted'),
+                    });
+                  }}
+                >
+                  <Textarea
+                    value={messageDraft}
+                    onChange={(event) => setMessageDraft(event.target.value)}
+                    placeholder={t('groups.placeholders.message')}
+                  />
+                  <div className="flex justify-end">
+                    <Button type="submit" className="rounded-full px-6">
+                      {t('groups.actions.post')}
+                    </Button>
+                  </div>
+                </form>
                 {groupPosts.length > 0 ? (
                   groupPosts.map((post) => (
                     <div
@@ -235,32 +246,6 @@ export default function GroupsPage() {
           )}
         </div>
       </div>
-
-      <Dialog
-        open={Boolean(successGroupId)}
-        onOpenChange={(open) => !open && setSuccessGroupId(null)}
-      >
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{t('groups.success.title')}</DialogTitle>
-            <DialogDescription>
-              {t('groups.success.subtitle')}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-3 rounded-2xl border border-border/60 bg-muted/30 p-4 text-sm text-muted-foreground">
-            <p>{t('groups.success.access')}</p>
-            <p>{t('groups.success.badge')}</p>
-          </div>
-          <DialogFooter>
-            <Button
-              className="rounded-full"
-              onClick={() => setSuccessGroupId(null)}
-            >
-              {t('common.actions.close')}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

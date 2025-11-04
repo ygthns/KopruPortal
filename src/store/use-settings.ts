@@ -33,7 +33,7 @@ const defaultState: Omit<
   | 'setHydrated'
 > = {
   language: 'en',
-  themeMode: 'system',
+  themeMode: 'light',
   themePresetId: THEME_PRESETS[0].id,
   onboardingComplete: false,
   hydrated: false,

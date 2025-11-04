@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "KöprüMezun",
+    "appName": "Koprumezun",
     "tagline": "Connect alumni, inspire mentorship, fuel lifelong belonging.",
     "actions": {
       "viewAll": "View all",
@@ -51,9 +51,7 @@
     }
   },
   "nav": {
-    "home": "Home",
     "feed": "Feed",
-    "forums": "Forums",
     "messages": "Messages",
     "directory": "Directory",
     "groups": "Groups",
@@ -61,15 +59,9 @@
     "careers": "Careers",
     "events": "Events",
     "fundraising": "Fundraising",
-    "analytics": "Analytics",
-    "admin": "Admin Console",
-    "premium": "Premium Groups",
     "perks": "Perks",
-    "podcast": "Podcast & Blog",
-    "volunteer": "Volunteer",
-    "challenges": "Challenges",
-    "leaderboards": "Leaderboards",
     "integrations": "Integrations",
+    "profile": "Profile",
     "auth": "Sign In"
   },
   "footer": {
@@ -237,35 +229,33 @@
     "empty": "No members match these filters yet—try adjusting your search."
   },
   "groups": {
-    "title": "Affinity groups",
-    "subtitle": "Premium and open groups with dedicated feeds, events, and premium perks.",
+    "title": "Club community hub",
+    "subtitle": "Coordinate university clubs with shared feeds, announcements, and events.",
     "labels": {
-      "membership": "Premium",
+      "membership": "Membership",
       "members": "members",
       "upcomingEvents": "Upcoming events",
-      "recentPosts": "Recent feed highlights",
-      "premium": "Premium",
-      "standard": "Standard"
+      "recentPosts": "Recent posts",
+      "wall": "Club wall"
     },
-    "feedDescription": "Exclusive feed, resources, and perks for {{group}}.",
+    "feedDescription": "Announcements, wins, and resources from {{group}} live here.",
     "actions": {
-      "join": "Join group",
-      "leave": "Leave group",
-      "view": "View insights"
+      "join": "Join club",
+      "leave": "Leave club",
+      "view": "Open hub",
+      "post": "Share update"
+    },
+    "placeholders": {
+      "message": "Share an update with your club…"
     },
     "toasts": {
-      "left": "Group access removed.",
-      "joined": "Welcome to {{group}}."
+      "left": "You left the club hub.",
+      "joined": "Welcome to {{group}}.",
+      "messagePosted": "Message shared with the club."
     },
-    "emptyEvents": "No upcoming events—plan one now.",
-    "emptyFeed": "This group is ready for its first post.",
-    "empty": "Select a group to preview premium content.",
-    "success": {
-      "title": "Group access granted",
-      "subtitle": "Feed and event access unlocked.",
-      "access": "You now see exclusive posts, resources, and mentoring slots.",
-      "badge": "A premium badge has been added to your profile."
-    }
+    "emptyEvents": "No upcoming events—add one to get started.",
+    "emptyFeed": "This club is ready for its first update.",
+    "empty": "Select a club to see its activity."
   },
   "mentoring": {
     "title": "Mentoring hub",
@@ -562,6 +552,32 @@
       "engagement": "Engagement score",
       "badges": "Recent badges",
       "badgesSubtitle": "Automatic awards for key milestones"
+    }
+  },
+  "profile": {
+    "missing": "Profile not found in demo data.",
+    "updated": "Profile updated.",
+    "avatarUpdated": "Profile photo refreshed.",
+    "empty": "Add a few items to showcase your experience.",
+    "summary": "Profile overview",
+    "editTitle": "Edit your profile",
+    "actions": {
+      "changePhoto": "Update photo",
+      "save": "Save changes"
+    },
+    "labels": {
+      "skills": "Skills",
+      "interests": "Interests"
+    },
+    "placeholders": {
+      "name": "Full name",
+      "title": "Role or headline",
+      "location": "Location",
+      "classYear": "Class year",
+      "industry": "Industry",
+      "bio": "Tell the community about yourself…",
+      "skills": "Separate skills with commas (product, mentorship, fundraising)",
+      "interests": "Separate interests with commas (startups, culture, volunteering)"
     }
   },
   "integrations": {

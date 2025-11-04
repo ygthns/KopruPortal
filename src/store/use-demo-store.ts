@@ -152,6 +152,7 @@ type DemoActions = {
   ) => void;
   exportUserData: () => Blob;
   deleteDemoUser: () => void;
+  updateViewer: (updates: Partial<UserProfile>) => void;
 };
 
 export type DemoStore = DemoDataState & DemoActions;
@@ -491,6 +492,23 @@ export const useDemoStore = create<DemoStore>()(
             user.id === anonymised.id ? anonymised : user,
           ),
         }));
+      },
+      updateViewer: (updates) => {
+        set((state) => {
+          const viewerIndex = state.users.findIndex(
+            (user) => user.id === state.viewerId,
+          );
+          if (viewerIndex === -1) {
+            return state;
+          }
+          const updatedUser = {
+            ...state.users[viewerIndex],
+            ...updates,
+          };
+          const users = [...state.users];
+          users[viewerIndex] = updatedUser;
+          return { users };
+        });
       },
     }),
     {
