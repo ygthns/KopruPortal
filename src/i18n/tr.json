@@ -232,7 +232,6 @@
     "title": "Kulüp topluluk merkezi",
     "subtitle": "Üniversite kulüplerini ortak akışlar, duyurular ve etkinliklerle yönetin.",
     "labels": {
-      "membership": "Üyelik",
       "members": "üye",
       "upcomingEvents": "Yaklaşan etkinlikler",
       "recentPosts": "Son paylaşımlar",
@@ -240,7 +239,7 @@
     },
     "feedDescription": "{{group}} paylaşımları, başarıları ve kaynakları burada toplanır.",
     "actions": {
-      "join": "Kulübe katıl",
+      "join": "Kulübe başvur",
       "leave": "Kulüpten ayrıl",
       "view": "Merkezi aç",
       "post": "Güncelleme paylaş"
@@ -251,7 +250,41 @@
     "toasts": {
       "left": "Kulüp merkezinden ayrıldın.",
       "joined": "{{group}} kulübüne hoş geldin.",
-      "messagePosted": "Mesaj kulüp duvarıyla paylaşıldı."
+      "messagePosted": "Mesaj kulüp duvarıyla paylaşıldı.",
+      "applicationSubmitted": "Başvurun kulüp liderlerine iletildi.",
+      "applicationSubmittedDescription": "İletişim bilgilerin lider ekiple paylaşıldı.",
+      "applicationApproved": "{{group}} liderleri başvurunu onayladı.",
+      "applicationApprovedDescription": "Kulüp akışı ve etkinliklere erişimin açıldı.",
+      "applicationValidationError": "Lütfen tüm alanları doldurun.",
+      "applicationValidationDescription": "Ad, e-posta ve telefon bilgilerinin paylaşılması liderlerin hızlıca ulaşmasını sağlar."
+    },
+    "status": {
+      "member": "Üye",
+      "pending": "Onay bekleniyor",
+      "open": "Başvuruya açık"
+    },
+    "statusMessages": {
+      "pending": "Başvurun kulüp liderlerine ulaştı. Genellikle birkaç dakika içinde yanıt verirler.",
+      "pendingDetails": "{{email}} adresine bilgilendirme gönderdik. Gerekirse {{phone}} üzerinden seninle iletişime geçilecek.",
+      "member": "Kulüp içerikleri ve etkinlikleri artık sana açık. Haberlerini toplulukla paylaşmayı unutma."
+    },
+    "application": {
+      "title": "{{group}} başvurusu",
+      "subtitle": "Kulüp liderlerinin değerlendirmesi için iletişim bilgilerini paylaş.",
+      "fields": {
+        "name": "Ad Soyad",
+        "email": "E-posta adresi",
+        "phone": "Telefon numarası"
+      },
+      "placeholders": {
+        "name": "Ayşe Yılmaz",
+        "email": "ayse@example.com",
+        "phone": "+90 5xx xxx xx xx"
+      },
+      "notice": "Bu demoda onay süreci kısa bir gecikme sonrası otomatik gerçekleşir.",
+      "actions": {
+        "submit": "Başvuruyu gönder"
+      }
     },
     "emptyEvents": "Yaklaşan etkinlik yok—ilkini ekleyin.",
     "emptyFeed": "Bu kulüp ilk paylaşımını bekliyor.",

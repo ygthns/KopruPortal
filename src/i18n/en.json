@@ -232,7 +232,6 @@
     "title": "Club community hub",
     "subtitle": "Coordinate university clubs with shared feeds, announcements, and events.",
     "labels": {
-      "membership": "Membership",
       "members": "members",
       "upcomingEvents": "Upcoming events",
       "recentPosts": "Recent posts",
@@ -240,7 +239,7 @@
     },
     "feedDescription": "Announcements, wins, and resources from {{group}} live here.",
     "actions": {
-      "join": "Join club",
+      "join": "Apply to join",
       "leave": "Leave club",
       "view": "Open hub",
       "post": "Share update"
@@ -251,7 +250,41 @@
     "toasts": {
       "left": "You left the club hub.",
       "joined": "Welcome to {{group}}.",
-      "messagePosted": "Message shared with the club."
+      "messagePosted": "Message shared with the club.",
+      "applicationSubmitted": "Application sent to club leaders.",
+      "applicationSubmittedDescription": "We notified the leadership team with your details.",
+      "applicationApproved": "{{group}} leaders approved your application.",
+      "applicationApprovedDescription": "Club feed and events are now unlocked for you.",
+      "applicationValidationError": "Please complete all fields.",
+      "applicationValidationDescription": "Name, email, and phone help leaders follow up quickly."
+    },
+    "status": {
+      "member": "Member",
+      "pending": "Pending review",
+      "open": "Applications open"
+    },
+    "statusMessages": {
+      "pending": "Your application reached the club leaders. They typically approve requests within minutes.",
+      "pendingDetails": "Confirmation sent to {{email}}. Leaders will reach out via {{phone}} if they need more details.",
+      "member": "You have full access to club updates, events, and discussions—share your news below."
+    },
+    "application": {
+      "title": "{{group}} application",
+      "subtitle": "Add your contact details so club leaders can review and welcome you.",
+      "fields": {
+        "name": "Full name",
+        "email": "Email address",
+        "phone": "Phone number"
+      },
+      "placeholders": {
+        "name": "Ayşe Yılmaz",
+        "email": "ayse@example.com",
+        "phone": "+90 5xx xxx xx xx"
+      },
+      "notice": "In this demo the approval is simulated after a short delay, mirroring a quick leader response.",
+      "actions": {
+        "submit": "Send application"
+      }
     },
     "emptyEvents": "No upcoming events—add one to get started.",
     "emptyFeed": "This club is ready for its first update.",

@@ -108,10 +108,19 @@ export type Group = {
   category: string;
   coverImage?: string;
   memberCount: number;
-  isPremium?: boolean;
   membershipStatus: MembershipStatus;
   tags: string[];
   events: Event[];
+};
+
+export type GroupApplication = {
+  id: string;
+  groupId: string;
+  name: string;
+  email: string;
+  phone: string;
+  status: 'pending' | 'approved';
+  submittedAt: string;
 };
 
 export type MentorshipMatch = {
@@ -262,14 +271,6 @@ export type PodcastEpisode = {
   guest: string;
   releaseDate: string;
   type: 'podcast' | 'blog';
-};
-
-export type PremiumInsight = {
-  id: string;
-  metric: string;
-  value: number;
-  delta: number;
-  description: string;
 };
 
 export type DigitalCard = {

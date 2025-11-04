@@ -6,6 +6,7 @@ import {
   type AnalyticsMetric,
   type Badge,
   type Challenge,
+  type GroupApplication,
   type DigitalCard,
   type Event,
   type FeedPost,
@@ -25,7 +26,6 @@ import {
   type ResumeAnalysis,
   type UserProfile,
   type VolunteerOpportunity,
-  type PremiumInsight,
 } from '@/types';
 import { booleanRandom, randomItem } from '@/lib/utils';
 
@@ -55,6 +55,7 @@ type DemoDataState = {
   mentorships: MentorshipMatch[];
   mentorRequests: MentorRequest[];
   flashSessions: FlashSession[];
+  groupApplications: GroupApplication[];
   jobs: JobPosting[];
   resumeAnalyses: ResumeAnalysis[];
   jobApplications: JobApplication[];
@@ -68,7 +69,6 @@ type DemoDataState = {
   challenges: Challenge[];
   volunteer: VolunteerOpportunity[];
   perks: Perk[];
-  premiumInsights: PremiumInsight[];
   podcastEpisodes: PodcastEpisode[];
   digitalCards: DigitalCard[];
 };
@@ -84,6 +84,7 @@ const defaultState: DemoDataState = {
   mentorships: [],
   mentorRequests: [],
   flashSessions: [],
+  groupApplications: [],
   jobs: [],
   resumeAnalyses: [],
   jobApplications: [],
@@ -97,7 +98,6 @@ const defaultState: DemoDataState = {
   challenges: [],
   volunteer: [],
   perks: [],
-  premiumInsights: [],
   podcastEpisodes: [],
   digitalCards: [],
 };
@@ -123,6 +123,15 @@ type DemoActions = {
   ) => void;
   joinGroup: (groupId: string) => Group | undefined;
   leaveGroup: (groupId: string) => Group | undefined;
+  submitGroupApplication: (payload: {
+    groupId: string;
+    name: string;
+    email: string;
+    phone: string;
+  }) => GroupApplication | undefined;
+  approveGroupApplication: (
+    applicationId: string,
+  ) => GroupApplication | undefined;
   requestMentor: (mentorId: string, goals: string[]) => MentorRequest;
   processMentorQueue: () => void;
   scheduleFlashSession: (mentorId: string, topic: string) => FlashSession;
@@ -236,6 +245,10 @@ export const useDemoStore = create<DemoStore>()(
         set((state) => ({
           groups: state.groups.map((group) => {
             if (group.id !== groupId) return group;
+            if (group.membershipStatus === 'member') {
+              updated = group;
+              return group;
+            }
             updated = {
               ...group,
               membershipStatus: 'member',
@@ -258,8 +271,96 @@ export const useDemoStore = create<DemoStore>()(
             };
             return updated;
           }),
+          groupApplications: state.groupApplications.filter(
+            (application) => application.groupId !== groupId,
+          ),
         }));
         return updated;
+      },
+      submitGroupApplication: ({ groupId, name, email, phone }) => {
+        const targetGroup = get().groups.find((group) => group.id === groupId);
+        if (!targetGroup) return undefined;
+
+        const application: GroupApplication = {
+          id: nanoid(),
+          groupId,
+          name,
+          email,
+          phone,
+          status: 'pending',
+          submittedAt: new Date().toISOString(),
+        };
+
+        set((state) => ({
+          groupApplications: [
+            application,
+            ...state.groupApplications.filter(
+              (item) => !(item.groupId === groupId && item.status === 'pending'),
+            ),
+          ],
+          groups: state.groups.map((group) =>
+            group.id === groupId
+              ? {
+                  ...group,
+                  membershipStatus:
+                    group.membershipStatus === 'member'
+                      ? 'member'
+                      : 'pending',
+                }
+              : group,
+          ),
+        }));
+
+        if (typeof window !== 'undefined') {
+          window.setTimeout(() => {
+            const current = get().groupApplications.find(
+              (item) => item.id === application.id,
+            );
+            if (current?.status === 'pending') {
+              get().approveGroupApplication(application.id);
+            }
+          }, 2000);
+        }
+
+        return application;
+      },
+      approveGroupApplication: (applicationId) => {
+        let approvedApplication: GroupApplication | undefined;
+        set((state) => {
+          const groupApplications = state.groupApplications.map(
+            (application) => {
+              if (application.id !== applicationId) return application;
+              approvedApplication = {
+                ...application,
+                status: 'approved',
+              };
+              return approvedApplication;
+            },
+          );
+
+          if (!approvedApplication) {
+            return { groupApplications };
+          }
+
+          const groups = state.groups.map((group) => {
+            if (group.id !== approvedApplication!.groupId) return group;
+            if (group.membershipStatus === 'member') {
+              return { ...group, membershipStatus: 'member' };
+            }
+            return {
+              ...group,
+              membershipStatus: 'member',
+              memberCount: group.memberCount + 1,
+            };
+          });
+
+          return {
+            groupApplications,
+            groups,
+          };
+        });
+
+        return approvedApplication;
       },
       requestMentor: (mentorId, goals) => {
         const request: MentorRequest = {

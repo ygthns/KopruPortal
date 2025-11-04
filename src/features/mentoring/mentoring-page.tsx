@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrainCircuit, Clock, CheckCircle2 } from 'lucide-react';
 import {
@@ -33,17 +33,43 @@ export default function MentoringPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (mentorRequests.some((request) => request.status === 'pending')) {
-      const timer = setTimeout(() => {
-        processMentorQueue();
-        toast({
-          variant: 'success',
-          title: t('mentoring.toasts.matchConfirmed'),
-        });
-      }, 1500);
-      return () => clearTimeout(timer);
+    if (selectedMentor || mentors.length === 0) {
+      return;
     }
-    return undefined;
+    setSelectedMentor(mentors[0].id);
+  }, [mentors, selectedMentor]);
+
+  const isProcessingRef = useRef(false);
+
+  useEffect(() => {
+    const hasPending = mentorRequests.some(
+      (request) => request.status === 'pending',
+    );
+
+    if (!hasPending) {
+      isProcessingRef.current = false;
+      return undefined;
+    }
+
+    if (isProcessingRef.current) {
+      return undefined;
+    }
+
+    isProcessingRef.current = true;
+
+    const timer = window.setTimeout(() => {
+      processMentorQueue();
+      toast({
+        variant: 'success',
+        title: t('mentoring.toasts.matchConfirmed'),
+      });
+      isProcessingRef.current = false;
+    }, 1500);
+
+    return () => {
+      window.clearTimeout(timer);
+      isProcessingRef.current = false;
+    };
   }, [mentorRequests, processMentorQueue, toast, t]);
 
   const selectedMentorProfile = useMemo(
