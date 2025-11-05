@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { ComponentType, SVGProps } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   BrainCircuit,
   Briefcase,
@@ -55,137 +56,142 @@ interface ProfileCampaign {
   summary: string;
 }
 
+type ProfileExperienceType = 'work' | 'education';
+
+interface ProfileExperience {
+  id: string;
+  type: ProfileExperienceType;
+  role: string;
+  company: string;
+  period: string;
+  location: string;
+  description: string;
+  achievements: string[];
+}
+
+type QuickLinkKey = 'linkedin' | 'mentorPortfolio' | 'calendly' | 'personalSite';
+
+const quickLinkIconMap: Record<QuickLinkKey, ComponentType<SVGProps<SVGSVGElement>>> = {
+  linkedin: LinkIcon,
+  mentorPortfolio: ExternalLink,
+  calendly: ExternalLink,
+  personalSite: ExternalLink,
+};
+
+const experienceIconMap: Record<ProfileExperienceType, ComponentType<SVGProps<SVGSVGElement>>> = {
+  work: Briefcase,
+  education: GraduationCap,
+};
+
 export default function ProfilePage() {
+  const { t } = useTranslation();
   const viewer = useDemoStore((state) =>
     state.users.find((user) => user.id === state.viewerId),
   );
 
   const profile = useMemo(
-    () => ({
-      name: viewer?.name ?? 'Ece Korkmaz',
-      headline:
-        viewer?.title ?? 'Director of Alumni Relations · Community Builder',
-      location: viewer?.location ?? 'Istanbul, Türkiye',
-      gradYear: viewer?.classYear ?? '2008',
-      school: 'KöprüMezun University',
-      department: 'Communications & Media Studies',
-      company: viewer?.organization ?? 'KöprüMezun University',
-      role: viewer?.title ?? 'Director of Alumni Relations',
-      photo:
-        viewer?.avatar ??
-        'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=320&q=80',
-      summary:
-        'Designing alumni experiences that unite graduates, students, and mentors around real outcomes.',
-      resume: {
-        fileName: 'ece-korkmaz-resume.pdf',
-        updatedAt: 'Updated Apr 2, 2025',
-        highlights: [
-          '15+ years leading advancement and mentoring programs',
-          'Scaled alumni-led fundraising campaigns by 34%',
-          'Certified ScrumMaster® · CASE Executive Leadership Cohort alumnus',
-        ],
-      },
-      interests: [
-        'Mentorship design',
-        'Hybrid events',
-        'Storytelling',
-        'Impact analytics',
-      ],
-      certifications: [
-        'CASE Alumni Relations Leadership Certificate',
-        'Scrum Alliance Certified ScrumMaster®',
-        'Diversity, Equity & Inclusion for Leaders (2024)',
-      ],
-      skills: [
-        'Community Strategy',
-        'Stakeholder Engagement',
-        'Program Operations',
-        'Data Storytelling',
-        'Fundraising Campaigns',
-      ],
-      quickLinks: [
-        {
-          label: 'LinkedIn',
-          href: 'https://www.linkedin.com/in/ecekorkmaz',
-          icon: LinkIcon,
-        },
-        {
-          label: 'Mentor Portfolio',
-          href: 'https://mentorhub.koprumezun.com/ece',
-          icon: ExternalLink,
-        },
-        {
-          label: 'Calendly',
-          href: 'https://calendly.com/ecekorkmaz',
-          icon: ExternalLink,
-        },
-        {
-          label: 'Personal Site',
-          href: 'https://ece.community',
-          icon: ExternalLink,
-        },
-      ] as ProfileQuickLink[],
-      posts: [
-        {
-          id: 'post-mentorship',
-          title: 'Launching the 2025 Flash Mentorship Sprint',
-          excerpt:
-            'We now match alumni and students in under four minutes with opt-in sprint coaching windows.',
-          date: 'April 10, 2025',
-          highlights: [
-            'Introduced matching dashboards for alumni mentors',
-            'Piloted 10-minute calendar slots with Calendly + Teams integration',
-            'Target: 150 mentor conversations in the first month',
-          ],
-        },
-        {
-          id: 'post-fundraising',
-          title: 'KöprüMezun Alumni Impact Fund hits ₺1.2M',
-          excerpt:
-            'Thank you to everyone who contributed stories, video shout-outs, and micro-pledges.',
-          date: 'March 27, 2025',
-          highlights: [
-            'Activated 42 volunteer ambassadors in three cities',
-            'Produced bilingual video updates for donor stewardship',
-          ],
-        },
-      ] as ProfilePost[],
-      events: [
-        {
-          id: 'event-1',
-          name: 'Alumni Leadership Forum – Spring Summit',
-          date: 'May 16, 2025 · Hybrid',
-          location: 'KöprüMezun Innovation Hub',
-          role: 'Host & Moderator',
-        },
-        {
-          id: 'event-2',
-          name: 'Mentor Speed Networking Evening',
-          date: 'June 4, 2025 · Virtual',
-          location: 'Microsoft Teams',
-          role: 'Facilitator',
-        },
-      ] as ProfileEvent[],
-      campaigns: [
-        {
-          id: 'campaign-1',
-          name: 'Alumni Mentorship Access Fund',
-          goal: 'Goal ₺500K · Raised ₺340K',
-          progress: '68% to goal',
-          summary:
-            'Expanding travel grants and diagnostic tools so every mentee can access professional coaching.',
-        },
-        {
-          id: 'campaign-2',
-          name: 'Media Lab Podcast Studio Upgrade',
-          goal: 'Goal ₺250K · Raised ₺198K',
-          progress: '79% to goal',
-          summary:
-            'Co-leading alumni storytelling infrastructure with real-time captioning and bilingual workflows.',
-        },
-      ] as ProfileCampaign[],
-    }),
-    [viewer],
+    () => {
+      const header = t('profile.page.header', {
+        returnObjects: true,
+      }) as {
+        name: string;
+        headline: string;
+        location: string;
+        gradYear: string;
+        school: string;
+        company: string;
+        role: string;
+        photo: string;
+      };
+      const summary = t('profile.page.summary');
+      const resume = t('profile.page.resume', {
+        returnObjects: true,
+      }) as {
+        uploadedLabel: string;
+        fileName: string;
+        updatedAt: string;
+        download: string;
+        highlights: string[];
+      };
+      const quickLinksContent = t('profile.page.quickLinks', {
+        returnObjects: true,
+      }) as Array<
+        Omit<ProfileQuickLink, 'icon'> & { iconKey?: QuickLinkKey }
+      >;
+      const snapshot = t('profile.page.snapshot', {
+        returnObjects: true,
+      }) as {
+        labels: {
+          interests: string;
+          certifications: string;
+          skills: string;
+        };
+        interests: string[];
+        certifications: string[];
+        skills: string[];
+      };
+      const timeline = t('profile.page.timeline', {
+        returnObjects: true,
+      }) as {
+        tabs: {
+          posts: string;
+          events: string;
+          campaigns: string;
+        };
+        posts: ProfilePost[];
+        events: ProfileEvent[];
+        campaigns: ProfileCampaign[];
+      };
+      const about = t('profile.page.about.content', {
+        returnObjects: true,
+      }) as string[];
+      const experience = t('profile.page.experience', {
+        returnObjects: true,
+      }) as ProfileExperience[];
+      const actions = t('profile.page.actions', {
+        returnObjects: true,
+      }) as {
+        sendMessage: string;
+        connect: string;
+      };
+      const cards = t('profile.page.cards', {
+        returnObjects: true,
+      }) as {
+        aboutMe: string;
+        resumeHighlights: string;
+        quickLinks: string;
+        professionalSnapshot: string;
+        experience: string;
+        engagementTimeline: string;
+      };
+
+      return {
+        name: viewer?.name ?? header.name,
+        headline: viewer?.title ?? header.headline,
+        location: viewer?.location ?? header.location,
+        gradYear: viewer?.classYear ?? header.gradYear,
+        school: header.school,
+        company: viewer?.organization ?? header.company,
+        role: viewer?.title ?? header.role,
+        photo:
+          viewer?.avatar ??
+          header.photo ??
+            'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=320&q=80',
+        summary,
+        resume,
+        quickLinks: quickLinksContent.map(({ iconKey, ...link }) => ({
+          ...link,
+          icon: iconKey ? quickLinkIconMap[iconKey] : undefined,
+        })),
+        snapshot,
+        timeline,
+        about,
+        experience,
+        actions,
+        cards,
+      };
+    },
+    [t, viewer],
   );
 
   return (
@@ -226,11 +232,11 @@ export default function ProfilePage() {
           <div className="flex flex-col gap-3 md:ml-auto md:flex-row">
             <Button className="rounded-full px-6 py-5">
               <MessageCircle className="mr-2 h-4 w-4" />
-              Send Message
+              {profile.actions.sendMessage}
             </Button>
             <Button variant="outline" className="rounded-full px-6 py-5">
               <UserPlus className="mr-2 h-4 w-4" />
-              Connect
+              {profile.actions.connect}
             </Button>
           </div>
         </div>
@@ -240,7 +246,20 @@ export default function ProfilePage() {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Résumé Highlights</CardTitle>
+              <CardTitle>{profile.cards.aboutMe}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {profile.about.map((paragraph) => (
+                <p key={paragraph} className="text-sm text-muted-foreground">
+                  {paragraph}
+                </p>
+              ))}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{profile.cards.resumeHighlights}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">{profile.summary}</p>
@@ -249,14 +268,16 @@ export default function ProfilePage() {
                   <div className="flex items-center gap-3">
                     <FileText className="h-5 w-5 text-primary" />
                     <div>
-                      <p className="font-semibold text-foreground">Uploaded résumé</p>
+                      <p className="font-semibold text-foreground">
+                        {profile.resume.uploadedLabel}
+                      </p>
                       <p className="text-sm text-muted-foreground">
                         {profile.resume.fileName}
                       </p>
                     </div>
                   </div>
                   <Button variant="outline" size="sm" className="rounded-full">
-                    Download
+                    {profile.resume.download}
                   </Button>
                 </div>
                 <Separator className="my-4" />
@@ -277,7 +298,7 @@ export default function ProfilePage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Quick Links</CardTitle>
+              <CardTitle>{profile.cards.quickLinks}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {profile.quickLinks.map(({ label, href, icon: Icon }) => (
@@ -301,16 +322,16 @@ export default function ProfilePage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Professional Snapshot</CardTitle>
+              <CardTitle>{profile.cards.professionalSnapshot}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="space-y-3">
                 <h3 className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                   <BrainCircuit className="h-4 w-4" />
-                  Interests
+                  {profile.snapshot.labels.interests}
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {profile.interests.map((interest) => (
+                  {profile.snapshot.interests.map((interest) => (
                     <Badge key={interest} variant="secondary" className="rounded-full">
                       {interest}
                     </Badge>
@@ -319,10 +340,10 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-3">
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Certifications
+                  {profile.snapshot.labels.certifications}
                 </h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  {profile.certifications.map((cert) => (
+                  {profile.snapshot.certifications.map((cert) => (
                     <li key={cert} className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary" />
                       <span>{cert}</span>
@@ -332,10 +353,10 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-3">
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Skills
+                  {profile.snapshot.labels.skills}
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {profile.skills.map((skill) => (
+                  {profile.snapshot.skills.map((skill) => (
                     <Badge key={skill} variant="outline" className="rounded-full border-border/50">
                       {skill}
                     </Badge>
@@ -346,33 +367,89 @@ export default function ProfilePage() {
           </Card>
         </div>
 
-        <Card className="overflow-hidden">
-          <CardHeader>
-            <CardTitle>Engagement Timeline</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="posts" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3 rounded-full bg-muted/60 p-1">
-                <TabsTrigger value="posts" className="rounded-full">Posts</TabsTrigger>
-                <TabsTrigger value="events" className="rounded-full">Events</TabsTrigger>
-                <TabsTrigger value="campaigns" className="rounded-full">Campaigns</TabsTrigger>
-              </TabsList>
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>{profile.cards.experience}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              {profile.experience.map((item) => {
+                const Icon = experienceIconMap[item.type] ?? Briefcase;
 
-              <TabsContent value="posts">
-                <div className="space-y-4">
-                  {profile.posts.map((post) => (
-                    <div
-                      key={post.id}
-                      className="rounded-3xl border border-border/60 bg-background/80 p-5 shadow-sm"
-                    >
+                return (
+                  <div
+                    key={item.id}
+                    className="flex flex-col gap-4 rounded-3xl border border-border/60 bg-background/80 p-5 shadow-sm"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted/60">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="space-y-2">
+                        <div>
+                          <h3 className="text-base font-semibold text-foreground">
+                            {item.role}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">{item.company}</p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                          <span>{item.period}</span>
+                          <span className="hidden h-3 w-px bg-border/60 sm:block" />
+                          <span className="inline-flex items-center gap-1">
+                            <MapPin className="h-4 w-4" />
+                            {item.location}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        {item.achievements.map((achievement) => (
+                          <li key={achievement} className="flex items-start gap-2">
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary" />
+                            <span>{achievement}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </CardContent>
+          </Card>
+
+          <Card className="overflow-hidden">
+            <CardHeader>
+              <CardTitle>{profile.cards.engagementTimeline}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="posts" className="space-y-6">
+                <TabsList className="grid w-full grid-cols-3 rounded-full bg-muted/60 p-1">
+                  <TabsTrigger value="posts" className="rounded-full">
+                    {profile.timeline.tabs.posts}
+                  </TabsTrigger>
+                  <TabsTrigger value="events" className="rounded-full">
+                    {profile.timeline.tabs.events}
+                  </TabsTrigger>
+                  <TabsTrigger value="campaigns" className="rounded-full">
+                    {profile.timeline.tabs.campaigns}
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="posts">
+                  <div className="space-y-4">
+                    {profile.timeline.posts.map((post) => (
+                      <div
+                        key={post.id}
+                        className="rounded-3xl border border-border/60 bg-background/80 p-5 shadow-sm"
+                      >
                       <div className="flex items-start justify-between gap-4">
                         <div>
                           <h3 className="text-base font-semibold text-foreground">
                             {post.title}
                           </h3>
-                          <p className="mt-1 text-sm text-muted-foreground">
-                            {post.excerpt}
-                          </p>
+                          <p className="mt-1 text-sm text-muted-foreground">{post.excerpt}</p>
                         </div>
                         <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                           {post.date}
@@ -387,17 +464,17 @@ export default function ProfilePage() {
                         ))}
                       </ul>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
+                    ))}
+                  </div>
+                </TabsContent>
 
-              <TabsContent value="events">
-                <div className="space-y-4">
-                  {profile.events.map((event) => (
-                    <div
-                      key={event.id}
-                      className="rounded-3xl border border-border/60 bg-background/80 p-5 shadow-sm"
-                    >
+                <TabsContent value="events">
+                  <div className="space-y-4">
+                    {profile.timeline.events.map((event) => (
+                      <div
+                        key={event.id}
+                        className="rounded-3xl border border-border/60 bg-background/80 p-5 shadow-sm"
+                      >
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                         <div>
                           <h3 className="text-base font-semibold text-foreground">
@@ -414,17 +491,17 @@ export default function ProfilePage() {
                         {event.location}
                       </div>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
+                    ))}
+                  </div>
+                </TabsContent>
 
-              <TabsContent value="campaigns">
-                <div className="space-y-4">
-                  {profile.campaigns.map((campaign) => (
-                    <div
-                      key={campaign.id}
-                      className="rounded-3xl border border-border/60 bg-background/80 p-5 shadow-sm"
-                    >
+                <TabsContent value="campaigns">
+                  <div className="space-y-4">
+                    {profile.timeline.campaigns.map((campaign) => (
+                      <div
+                        key={campaign.id}
+                        className="rounded-3xl border border-border/60 bg-background/80 p-5 shadow-sm"
+                      >
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                         <div>
                           <h3 className="text-base font-semibold text-foreground">
@@ -441,12 +518,13 @@ export default function ProfilePage() {
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
+                    ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

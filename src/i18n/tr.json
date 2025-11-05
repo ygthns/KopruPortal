@@ -611,6 +611,201 @@
       "bio": "Topluluğa kendinden bahset…",
       "skills": "Becerileri virgülle ayır (ürün, mentorluk, bağış)",
       "interests": "İlgi alanlarını virgülle ayır (startuplar, kültür, gönüllülük)"
+    },
+    "page": {
+      "header": {
+        "name": "Ece Korkmaz",
+        "headline": "Mezun İlişkileri Direktörü · Topluluk Kurucusu",
+        "location": "İstanbul, Türkiye",
+        "gradYear": "2008",
+        "school": "KöprüMezun Üniversitesi",
+        "company": "KöprüMezun Üniversitesi",
+        "role": "Mezun İlişkileri Direktörü",
+        "photo": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=320&q=80"
+      },
+      "summary": "Mezunları, öğrencileri ve mentorları gerçek çıktılar etrafında buluşturan mezun deneyimleri tasarlıyorum.",
+      "actions": {
+        "sendMessage": "Mesaj Gönder",
+        "connect": "Bağlantı Kur"
+      },
+      "cards": {
+        "aboutMe": "Hakkımda",
+        "resumeHighlights": "Özgeçmişten Öne Çıkanlar",
+        "quickLinks": "Hızlı Bağlantılar",
+        "professionalSnapshot": "Profesyonel Özet",
+        "experience": "Deneyim",
+        "engagementTimeline": "Etkileşim Zaman Çizelgesi"
+      },
+      "resume": {
+        "uploadedLabel": "Yüklenen özgeçmiş",
+        "fileName": "ece-korkmaz-resume.pdf",
+        "updatedAt": "2 Nisan 2025 güncellendi",
+        "download": "İndir",
+        "highlights": [
+          "15+ yıl mezun ilişkileri ve mentorluk programları yönettim",
+          "Mezun liderliğindeki bağış kampanyalarını %34 büyüttüm",
+          "ScrumMaster® sertifikalı · CASE Yönetici Liderlik Programı mezunu"
+        ]
+      },
+      "quickLinks": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/ecekorkmaz",
+          "iconKey": "linkedin"
+        },
+        {
+          "label": "Mentor Portföyü",
+          "href": "https://mentorhub.koprumezun.com/ece",
+          "iconKey": "mentorPortfolio"
+        },
+        {
+          "label": "Calendly",
+          "href": "https://calendly.com/ecekorkmaz",
+          "iconKey": "calendly"
+        },
+        {
+          "label": "Kişisel Site",
+          "href": "https://ece.community",
+          "iconKey": "personalSite"
+        }
+      ],
+      "snapshot": {
+        "labels": {
+          "interests": "İlgi Alanları",
+          "certifications": "Sertifikalar",
+          "skills": "Yetenekler"
+        },
+        "interests": [
+          "Mentorluk tasarımı",
+          "Hibrit etkinlikler",
+          "Hikâye anlatımı",
+          "Etki analitiği"
+        ],
+        "certifications": [
+          "CASE Mezun İlişkileri Liderlik Sertifikası",
+          "Scrum Alliance Sertifikalı ScrumMaster®",
+          "Liderler için Çeşitlilik, Eşitlik ve Kapsayıcılık (2024)"
+        ],
+        "skills": [
+          "Topluluk Stratejisi",
+          "Paydaş Katılımı",
+          "Program Operasyonları",
+          "Veri Anlatıcılığı",
+          "Bağış Kampanyaları"
+        ]
+      },
+      "about": {
+        "content": [
+          "Veri odaklı erişimi insan odaklı hikâye anlatımıyla birleştiren mezun, öğrenci ve mentor ekosistemleri kuruyorum.",
+          "Bugün KöprüMezun Üniversitesi için çift dilli topluluk yolculukları tasarlarken kampanya tasarımı ve gönüllü etkinleştirme konusunda gelişim ekiplerine koçluk yapıyorum."
+        ]
+      },
+      "experience": [
+        {
+          "id": "exp-advancement",
+          "type": "work",
+          "role": "Mezun İlişkileri Direktörü",
+          "company": "KöprüMezun Üniversitesi",
+          "period": "2021 – Günümüz",
+          "location": "İstanbul, Türkiye",
+          "description": "Mezun etkileşimi, mentorluk ve bağış programlarını hayata geçiren çapraz fonksiyonlu bir ekibi yönetiyorum.",
+          "achievements": [
+            "18 bin üyeli ve KVKK uyumlu çift dilli mezun portalını hayata geçirdim.",
+            "Sprint koçluğu modeliyle mentor-menti eşleşmelerini %42 artırdım.",
+            "12 bin mezun tarafından izlenen yıllık etki hikâyeleri serisini birlikte tasarladım."
+          ]
+        },
+        {
+          "id": "exp-consulting",
+          "type": "work",
+          "role": "Kıdemli Etkileşim Stratejisti",
+          "company": "Bridge & Co. Advancement Studio",
+          "period": "2016 – 2021",
+          "location": "Ankara, Türkiye",
+          "description": "Üniversiteler ve STK'larla topluluk platformları ile bağışçı yolculuklarını tasarladım.",
+          "achievements": [
+            "Dokuz aydan kısa sürede üç kurum için entegre CRM ve etkinlik altyapısı kurdum.",
+            "120'den fazla gönüllü lider tarafından kullanılan mentorluk oyun kitapları ürettim.",
+            "Dijital bağlılık pilotlarıyla ₺750 bin tutarında yeni düzenli bağış sağladım."
+          ]
+        },
+        {
+          "id": "exp-education",
+          "type": "education",
+          "role": "İletişim ve Medya Çalışmaları Lisans",
+          "company": "KöprüMezun Üniversitesi",
+          "period": "2004 – 2008",
+          "location": "İstanbul, Türkiye",
+          "description": "Radyo-televizyon gazeteciliği, topluluk hikâye anlatımı ve dijital medya üretimine odaklandım.",
+          "achievements": [
+            "Alumni Voices öğrenci medya kolektifini kurdum.",
+            "Topluluk liderliği için Rektör Ödülü aldım.",
+            "Boğaziçi Üniversitesi'nde Erasmus değişim programını tamamladım."
+          ]
+        }
+      ],
+      "timeline": {
+        "tabs": {
+          "posts": "Gönderiler",
+          "events": "Etkinlikler",
+          "campaigns": "Kampanyalar"
+        },
+        "posts": [
+          {
+            "id": "post-mentorship",
+            "title": "2025 Hızlı Mentorluk Sprintini Başlattık",
+            "excerpt": "Artık mezun ve öğrencileri dört dakikanın altında eşleştiriyor, isteğe bağlı sprint koçluk oturumları sunuyoruz.",
+            "date": "10 Nisan 2025",
+            "highlights": [
+              "Mezun mentorlar için eşleştirme panoları tanıttık",
+              "Calendly + Teams entegrasyonu ile 10 dakikalık zaman bloklarını pilotladık",
+              "Hedef: İlk ayda 150 mentor görüşmesi"
+            ]
+          },
+          {
+            "id": "post-fundraising",
+            "title": "KöprüMezun Mezun Etki Fonu ₺1,2M'ye ulaştı",
+            "excerpt": "Hikâyeleri, video mesajlarını ve mikro bağışları paylaşan herkese teşekkürler.",
+            "date": "27 Mart 2025",
+            "highlights": [
+              "Üç şehirde 42 gönüllü elçiyi aktive ettik",
+              "Bağışçıları bilgilendirmek için iki dilli video güncellemeleri ürettik"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "id": "event-1",
+            "name": "Mezun Liderlik Forumu – Bahar Zirvesi",
+            "date": "16 Mayıs 2025 · Hibrit",
+            "location": "KöprüMezun İnovasyon Merkezi",
+            "role": "Sunucu ve Kolaylaştırıcı"
+          },
+          {
+            "id": "event-2",
+            "name": "Mentor Hızlı Networking Akşamı",
+            "date": "4 Haziran 2025 · Çevrim içi",
+            "location": "Microsoft Teams",
+            "role": "Kolaylaştırıcı"
+          }
+        ],
+        "campaigns": [
+          {
+            "id": "campaign-1",
+            "name": "Mezun Mentorluk Erişim Fonu",
+            "goal": "Hedef ₺500 bin · Toplanan ₺340 bin",
+            "progress": "Hedefin %68'i tamamlandı",
+            "summary": "Her mentinin profesyonel koçluğa erişebilmesi için seyahat bursları ve tanı araçlarını genişletiyoruz."
+          },
+          {
+            "id": "campaign-2",
+            "name": "Medya Lab Podcast Stüdyosu Yükseltmesi",
+            "goal": "Hedef ₺250 bin · Toplanan ₺198 bin",
+            "progress": "Hedefin %79'u tamamlandı",
+            "summary": "Gerçek zamanlı altyazı ve çift dilli iş akışlarıyla mezun hikâye anlatımı altyapısını birlikte yönetiyoruz."
+          }
+        ]
+      }
     }
   },
   "integrations": {

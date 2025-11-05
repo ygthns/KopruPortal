@@ -611,6 +611,201 @@
       "bio": "Tell the community about yourself…",
       "skills": "Separate skills with commas (product, mentorship, fundraising)",
       "interests": "Separate interests with commas (startups, culture, volunteering)"
+    },
+    "page": {
+      "header": {
+        "name": "Ece Korkmaz",
+        "headline": "Director of Alumni Relations · Community Builder",
+        "location": "Istanbul, Türkiye",
+        "gradYear": "2008",
+        "school": "KöprüMezun University",
+        "company": "KöprüMezun University",
+        "role": "Director of Alumni Relations",
+        "photo": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=320&q=80"
+      },
+      "summary": "Designing alumni experiences that unite graduates, students, and mentors around real outcomes.",
+      "actions": {
+        "sendMessage": "Send Message",
+        "connect": "Connect"
+      },
+      "cards": {
+        "aboutMe": "About Me",
+        "resumeHighlights": "Résumé Highlights",
+        "quickLinks": "Quick Links",
+        "professionalSnapshot": "Professional Snapshot",
+        "experience": "Experience",
+        "engagementTimeline": "Engagement Timeline"
+      },
+      "resume": {
+        "uploadedLabel": "Uploaded résumé",
+        "fileName": "ece-korkmaz-resume.pdf",
+        "updatedAt": "Updated Apr 2, 2025",
+        "download": "Download",
+        "highlights": [
+          "15+ years leading advancement and mentoring programs",
+          "Scaled alumni-led fundraising campaigns by 34%",
+          "Certified ScrumMaster® · CASE Executive Leadership Cohort alumnus"
+        ]
+      },
+      "quickLinks": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/ecekorkmaz",
+          "iconKey": "linkedin"
+        },
+        {
+          "label": "Mentor Portfolio",
+          "href": "https://mentorhub.koprumezun.com/ece",
+          "iconKey": "mentorPortfolio"
+        },
+        {
+          "label": "Calendly",
+          "href": "https://calendly.com/ecekorkmaz",
+          "iconKey": "calendly"
+        },
+        {
+          "label": "Personal Site",
+          "href": "https://ece.community",
+          "iconKey": "personalSite"
+        }
+      ],
+      "snapshot": {
+        "labels": {
+          "interests": "Interests",
+          "certifications": "Certifications",
+          "skills": "Skills"
+        },
+        "interests": [
+          "Mentorship design",
+          "Hybrid events",
+          "Storytelling",
+          "Impact analytics"
+        ],
+        "certifications": [
+          "CASE Alumni Relations Leadership Certificate",
+          "Scrum Alliance Certified ScrumMaster®",
+          "Diversity, Equity & Inclusion for Leaders (2024)"
+        ],
+        "skills": [
+          "Community Strategy",
+          "Stakeholder Engagement",
+          "Program Operations",
+          "Data Storytelling",
+          "Fundraising Campaigns"
+        ]
+      },
+      "about": {
+        "content": [
+          "I build alumni, student, and mentor ecosystems that combine data-informed outreach with deeply human storytelling.",
+          "Today I lead bilingual community journeys for KöprüMezun University while coaching advancement teams on campaign design and volunteer enablement."
+        ]
+      },
+      "experience": [
+        {
+          "id": "exp-advancement",
+          "type": "work",
+          "role": "Director of Alumni Relations",
+          "company": "KöprüMezun University",
+          "period": "2021 – Present",
+          "location": "Istanbul, Türkiye",
+          "description": "Leading a cross-functional team delivering alumni engagement, mentoring, and fundraising programs.",
+          "achievements": [
+            "Launched bilingual alumni portal with 18k members and GDPR-compliant workflows.",
+            "Increased mentor-mentee matches by 42% with sprint coaching models.",
+            "Co-created annual impact storytelling series viewed by 12k alumni."
+          ]
+        },
+        {
+          "id": "exp-consulting",
+          "type": "work",
+          "role": "Senior Engagement Strategist",
+          "company": "Bridge & Co. Advancement Studio",
+          "period": "2016 – 2021",
+          "location": "Ankara, Türkiye",
+          "description": "Partnered with universities and NGOs to design community platforms and donor journeys.",
+          "achievements": [
+            "Implemented integrated CRM and event stack for three institutions in under nine months.",
+            "Produced mentor playbooks adopted by 120+ volunteer leaders.",
+            "Drove ₺750K in new recurring gifts through digital stewardship pilots."
+          ]
+        },
+        {
+          "id": "exp-education",
+          "type": "education",
+          "role": "B.A. Communications & Media Studies",
+          "company": "KöprüMezun University",
+          "period": "2004 – 2008",
+          "location": "Istanbul, Türkiye",
+          "description": "Focused on broadcast journalism, community storytelling, and digital media production.",
+          "achievements": [
+            "Founded the Alumni Voices student media collective.",
+            "Received Rector’s Award for community leadership.",
+            "Completed Erasmus exchange at Boğaziçi University."
+          ]
+        }
+      ],
+      "timeline": {
+        "tabs": {
+          "posts": "Posts",
+          "events": "Events",
+          "campaigns": "Campaigns"
+        },
+        "posts": [
+          {
+            "id": "post-mentorship",
+            "title": "Launching the 2025 Flash Mentorship Sprint",
+            "excerpt": "We now match alumni and students in under four minutes with opt-in sprint coaching windows.",
+            "date": "April 10, 2025",
+            "highlights": [
+              "Introduced matching dashboards for alumni mentors",
+              "Piloted 10-minute calendar slots with Calendly + Teams integration",
+              "Target: 150 mentor conversations in the first month"
+            ]
+          },
+          {
+            "id": "post-fundraising",
+            "title": "KöprüMezun Alumni Impact Fund hits ₺1.2M",
+            "excerpt": "Thank you to everyone who contributed stories, video shout-outs, and micro-pledges.",
+            "date": "March 27, 2025",
+            "highlights": [
+              "Activated 42 volunteer ambassadors in three cities",
+              "Produced bilingual video updates for donor stewardship"
+            ]
+          }
+        ],
+        "events": [
+          {
+            "id": "event-1",
+            "name": "Alumni Leadership Forum – Spring Summit",
+            "date": "May 16, 2025 · Hybrid",
+            "location": "KöprüMezun Innovation Hub",
+            "role": "Host & Moderator"
+          },
+          {
+            "id": "event-2",
+            "name": "Mentor Speed Networking Evening",
+            "date": "June 4, 2025 · Virtual",
+            "location": "Microsoft Teams",
+            "role": "Facilitator"
+          }
+        ],
+        "campaigns": [
+          {
+            "id": "campaign-1",
+            "name": "Alumni Mentorship Access Fund",
+            "goal": "Goal ₺500K · Raised ₺340K",
+            "progress": "68% to goal",
+            "summary": "Expanding travel grants and diagnostic tools so every mentee can access professional coaching."
+          },
+          {
+            "id": "campaign-2",
+            "name": "Media Lab Podcast Studio Upgrade",
+            "goal": "Goal ₺250K · Raised ₺198K",
+            "progress": "79% to goal",
+            "summary": "Co-leading alumni storytelling infrastructure with real-time captioning and bilingual workflows."
+          }
+        ]
+      }
     }
   },
   "integrations": {
