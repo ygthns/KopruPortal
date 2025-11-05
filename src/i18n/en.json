@@ -40,7 +40,8 @@
       "all": "All",
       "date": "Date",
       "location": "Location",
-      "category": "Category"
+      "category": "Category",
+      "language": "Language"
     },
     "validation": {
       "required": "This field is required.",
@@ -241,7 +242,7 @@
     "actions": {
       "join": "Apply to join",
       "leave": "Leave club",
-      "view": "Görüntüle / View",
+      "view": "View",
       "post": "Share update"
     },
     "placeholders": {

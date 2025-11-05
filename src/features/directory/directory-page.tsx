@@ -1,6 +1,12 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Search, MapPin, Briefcase, GraduationCap } from 'lucide-react';
+import {
+  Search,
+  MapPin,
+  Briefcase,
+  GraduationCap,
+  ChevronDown,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
   Card,
@@ -12,6 +18,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
+import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -84,6 +91,51 @@ const mockDirectoryMembers: UserProfile[] = [
     languages: ['tr', 'en'],
     badges: [],
   },
+  {
+    id: 'mock-member-5',
+    name: 'Aylin Karaca',
+    role: 'alumni',
+    title: 'Founder, Marmara Social Studio',
+    organization: 'Marmara Social Studio',
+    bio: 'Alumni founder scaling creative social enterprises across Istanbul and beyond.',
+    classYear: '2010',
+    location: 'Istanbul',
+    industry: 'Creative',
+    skills: ['Brand Strategy', 'Community Building', 'Workshops'],
+    interests: ['Design Thinking', 'Startup Mentoring'],
+    languages: ['tr', 'en'],
+    badges: [],
+  },
+  {
+    id: 'mock-member-6',
+    name: 'Emre Taş',
+    role: 'mentor',
+    title: 'CTO, Kapadokya Robotics',
+    organization: 'Kapadokya Robotics',
+    bio: 'Mentor helping robotics and aerospace teams scale across Anatolia.',
+    classYear: '2005',
+    location: 'Kayseri',
+    industry: 'Engineering',
+    skills: ['Embedded Systems', 'Robotics', 'Team Leadership'],
+    interests: ['Hardware', 'Mentoring'],
+    languages: ['tr', 'en'],
+    badges: [],
+  },
+  {
+    id: 'mock-member-7',
+    name: 'Leyla Öz',
+    role: 'student',
+    title: 'Marketing Chair, Aegean Alumni Club',
+    organization: 'Aegean Alumni Club',
+    bio: 'Student leader organizing hybrid programming for regional alumni.',
+    classYear: '2026',
+    location: 'Izmir',
+    industry: 'Marketing',
+    skills: ['Content Strategy', 'Event Planning', 'Public Speaking'],
+    interests: ['Community Building', 'Volunteerism'],
+    languages: ['tr', 'en'],
+    badges: [],
+  },
 ];
 
 export default function DirectoryPage() {
@@ -117,10 +169,10 @@ export default function DirectoryPage() {
       member.skills.forEach((skill) => skills.add(skill));
     });
     return {
-      classYears: Array.from(classYears),
-      locations: Array.from(locations),
-      industries: Array.from(industries),
-      skills: Array.from(skills),
+      classYears: Array.from(classYears).sort((a, b) => Number(b) - Number(a)),
+      locations: Array.from(locations).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
+      industries: Array.from(industries).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
+      skills: Array.from(skills).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
     };
   }, [directoryMembers]);
 
@@ -170,37 +222,48 @@ export default function DirectoryPage() {
               ['industry', facets.industries, Briefcase],
               ['skill', facets.skills, Search],
             ] as const
-          ).map(([key, values, Icon]) => {
-            const current = filters[key as keyof typeof filters];
-            return (
-              <div key={key} className="space-y-2">
-                <div className="flex items-center gap-2 font-semibold text-muted-foreground">
-                  <Icon className="h-4 w-4" />
-                  {t(`directory.filters.${key}`)}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <Badge
-                    key="all"
-                    variant={current === 'all' ? 'default' : 'muted'}
-                    className="cursor-pointer"
-                    onClick={() => updateFilter(key, 'all')}
-                  >
-                    {t('common.labels.all')}
-                  </Badge>
+          ).map(([key, values, Icon]) => (
+            <div key={key} className="space-y-2">
+              <Label
+                htmlFor={`${key}-filter`}
+                className="flex items-center gap-2 text-sm font-medium text-muted-foreground"
+              >
+                <Icon className="h-4 w-4" />
+                {t(`directory.filters.${key}`)}
+              </Label>
+              <div className="relative">
+                <select
+                  id={`${key}-filter`}
+                  value={filters[key as keyof typeof filters]}
+                  onChange={(event) => updateFilter(key, event.target.value)}
+                  className="w-full appearance-none rounded-full border border-border/60 bg-background px-4 py-2 pr-10 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                >
+                  <option value="all">{t('common.labels.all')}</option>
                   {values.map((value) => (
-                    <Badge
-                      key={value}
-                      variant={current === value ? 'default' : 'muted'}
-                      className="cursor-pointer"
-                      onClick={() => updateFilter(key, value)}
-                    >
+                    <option key={value} value={value}>
                       {value}
-                    </Badge>
+                    </option>
                   ))}
-                </div>
+                </select>
+                <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               </div>
-            );
-          })}
+            </div>
+          ))}
+          <Button
+            variant="ghost"
+            className="w-full justify-center rounded-full text-sm"
+            onClick={() => {
+              setFilters({
+                classYear: 'all',
+                location: 'all',
+                industry: 'all',
+                skill: 'all',
+              });
+              setQuery('');
+            }}
+          >
+            {t('common.actions.clear')}
+          </Button>
         </div>
       </aside>
 

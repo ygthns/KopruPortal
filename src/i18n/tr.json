@@ -40,7 +40,8 @@
       "all": "Tümü",
       "date": "Tarih",
       "location": "Konum",
-      "category": "Kategori"
+      "category": "Kategori",
+      "language": "Dil"
     },
     "validation": {
       "required": "Bu alan zorunludur.",
@@ -241,7 +242,7 @@
     "actions": {
       "join": "Kulübe başvur",
       "leave": "Kulüpten ayrıl",
-      "view": "Görüntüle / View",
+      "view": "Görüntüle",
       "post": "Güncelleme paylaş"
     },
     "placeholders": {

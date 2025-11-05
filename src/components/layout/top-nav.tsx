@@ -60,10 +60,15 @@ export function TopNav() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 space-y-3 p-3">
-              <div className="flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2">
-                <span className="text-sm font-medium text-muted-foreground">
-                  {t(`common.language.${language}`)}
-                </span>
+              <div className="flex items-center justify-between gap-3 rounded-xl bg-muted/40 px-3 py-2">
+                <div>
+                  <span className="block text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                    {t('common.labels.language')}
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    {t(`common.language.${language}`)}
+                  </span>
+                </div>
                 <LanguageToggle />
               </div>
               <div className="flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2">
