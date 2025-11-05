@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useDemoStore } from '@/store/use-demo-store';
+import { useSettingsStore } from '@/store/use-settings';
 import { cn, getInitials } from '@/lib/utils';
 
 export function TopNav() {
@@ -20,6 +21,7 @@ export function TopNav() {
   const viewer = useDemoStore((state) =>
     state.users.find((user) => user.id === state.viewerId),
   );
+  const language = useSettingsStore((state) => state.language);
   const initials = useMemo(
     () => (viewer ? getInitials(viewer.name) : 'KM'),
     [viewer],
@@ -58,10 +60,15 @@ export function TopNav() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 space-y-3 p-3">
-              <div className="flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2">
-                <span className="text-sm font-medium text-muted-foreground">
-                  {t('common.language.tr')}
-                </span>
+              <div className="flex items-center justify-between gap-3 rounded-xl bg-muted/40 px-3 py-2">
+                <div>
+                  <span className="block text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                    {t('common.labels.language')}
+                  </span>
+                  <span className="text-sm font-semibold text-foreground">
+                    {t(`common.language.${language}`)}
+                  </span>
+                </div>
                 <LanguageToggle />
               </div>
               <div className="flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2">

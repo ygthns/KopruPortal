@@ -53,6 +53,7 @@ export type FeedPost = {
   media?: ContentMedia[];
   comments: Comment[];
   reactions: Partial<Record<ReactionType, number>>;
+  reposts?: number;
   isPinned?: boolean;
   translatedContent?: Record<LanguageCode, string>;
 };

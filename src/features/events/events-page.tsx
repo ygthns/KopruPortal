@@ -29,9 +29,7 @@ export default function EventsPage() {
   const [activeIntegration, setActiveIntegration] = useState<string | null>(
     null,
   );
-  const [selectedEventId, setSelectedEventId] = useState<string | null>(
-    events[0]?.id ?? null,
-  );
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const { toast } = useToast();
 
   const groupedByDate = useMemo(() => {
@@ -82,12 +80,11 @@ export default function EventsPage() {
                       {event.location}
                     </Badge>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <Button
                       className="rounded-full"
                       onClick={() => {
                         registerEvent(event.id);
-                        setSelectedEventId(event.id);
                         toast({
                           variant: 'success',
                           title: t('events.toasts.registered'),
@@ -105,6 +102,13 @@ export default function EventsPage() {
                       onClick={() => setActiveIntegration('calendly')}
                     >
                       {t('events.actions.schedule')}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="rounded-full"
+                      onClick={() => setSelectedEventId(event.id)}
+                    >
+                      {t('events.actions.viewDetails')}
                     </Button>
                   </div>
                 </CardContent>
@@ -197,7 +201,7 @@ export default function EventsPage() {
       </Dialog>
 
       <Dialog
-        open={Boolean(selectedEvent)}
+        open={Boolean(selectedEventId)}
         onOpenChange={(open) => !open && setSelectedEventId(null)}
       >
         <DialogContent className="max-w-lg">

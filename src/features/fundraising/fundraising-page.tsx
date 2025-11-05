@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { HeartHandshake, PiggyBank } from 'lucide-react';
+import { HeartHandshake, Plus } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -52,7 +52,7 @@ export default function FundraisingPage() {
           className="w-fit rounded-full"
           onClick={() => setAdminOpen(true)}
         >
-          <PiggyBank className="mr-2 h-4 w-4" />
+          <Plus className="mr-2 h-4 w-4" />
           {t('fundraising.actions.launch')}
         </Button>
       </header>

@@ -121,6 +121,7 @@ export const demoData: Partial<DemoStore> = {
         },
       ],
       reactions: { like: 18, celebrate: 4 },
+      reposts: 3,
     },
     {
       id: 'post-2',
@@ -132,6 +133,7 @@ export const demoData: Partial<DemoStore> = {
       tags: ['entrepreneurship-club'],
       comments: [],
       reactions: { like: 26, support: 7 },
+      reposts: 5,
     },
     {
       id: 'post-3',
@@ -143,6 +145,7 @@ export const demoData: Partial<DemoStore> = {
       tags: ['volunteer-society'],
       comments: [],
       reactions: { like: 22, celebrate: 5 },
+      reposts: 2,
     },
   ],
   topics: [],
