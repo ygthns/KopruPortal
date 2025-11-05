@@ -241,7 +241,7 @@
     "actions": {
       "join": "Apply to join",
       "leave": "Leave club",
-      "view": "Open hub",
+      "view": "Görüntüle / View",
       "post": "Share update"
     },
     "placeholders": {
@@ -395,7 +395,8 @@
     "actions": {
       "register": "Register now",
       "registered": "Registered",
-      "schedule": "Schedule with Calendly"
+      "schedule": "Schedule with Calendly",
+      "viewDetails": "View details"
     },
     "labels": {
       "location": "Location"

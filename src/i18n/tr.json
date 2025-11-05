@@ -241,7 +241,7 @@
     "actions": {
       "join": "Kulübe başvur",
       "leave": "Kulüpten ayrıl",
-      "view": "Merkezi aç",
+      "view": "Görüntüle / View",
       "post": "Güncelleme paylaş"
     },
     "placeholders": {
@@ -395,7 +395,8 @@
     "actions": {
       "register": "Hemen kaydol",
       "registered": "Kayıt edildi",
-      "schedule": "Calendly ile planla"
+      "schedule": "Calendly ile planla",
+      "viewDetails": "Detayları gör"
     },
     "labels": {
       "location": "Konum"

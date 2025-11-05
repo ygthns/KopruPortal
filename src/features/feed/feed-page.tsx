@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Hash, Send, SmilePlus } from 'lucide-react';
+import { Hash, Plus, Repeat2, Send, Smile, ThumbsUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,6 +25,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useDemoStore } from '@/store/use-demo-store';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
+import type { ReactionType } from '@/types';
 
 export default function FeedPage() {
   const { t } = useTranslation();
@@ -94,7 +95,7 @@ export default function FeedPage() {
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button className="rounded-full px-4">
-              <SmilePlus className="mr-2 h-4 w-4" />
+              <Plus className="mr-2 h-4 w-4" />
               {t('feed.actions.newPost')}
             </Button>
           </SheetTrigger>
@@ -181,14 +182,33 @@ export default function FeedPage() {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4">
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    {Object.entries(post.reactions ?? {}).map(
-                      ([key, value]) => (
-                        <span key={key} className="flex items-center gap-1">
-                          <SmilePlus className="h-4 w-4" />
-                          {value}
-                        </span>
-                      ),
-                    )}
+                    {(() => {
+                      const reactions = post.reactions ?? {};
+                      const reactionEntries = Object.entries(
+                        reactions as Record<string, number | undefined>,
+                      ) as [ReactionType | string, number | undefined][];
+                      const positiveReactions = reactionEntries.reduce(
+                        (acc, [key, value]) =>
+                          key === 'like' ? acc : acc + (value ?? 0),
+                        0,
+                      );
+                      return (
+                        <>
+                          <span className="flex items-center gap-1">
+                            <Smile className="h-4 w-4" />
+                            {positiveReactions}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <ThumbsUp className="h-4 w-4" />
+                            {reactions.like ?? 0}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Repeat2 className="h-4 w-4" />
+                            {post.reposts ?? 0}
+                          </span>
+                        </>
+                      );
+                    })()}
                     <span>
                       {post.comments.length} {t('feed.labels.comments')}
                     </span>

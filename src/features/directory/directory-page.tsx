@@ -21,10 +21,75 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useDemoStore } from '@/store/use-demo-store';
+import type { UserProfile } from '@/types';
+
+const mockDirectoryMembers: UserProfile[] = [
+  {
+    id: 'mock-member-1',
+    name: 'Ece Demir',
+    role: 'alumni',
+    title: 'Product Manager, TrendyTech',
+    organization: 'TrendyTech',
+    bio: 'Building community-centric product experiences across Türkiye.',
+    classYear: '2015',
+    location: 'Istanbul',
+    industry: 'Technology',
+    skills: ['Product Strategy', 'UX Research', 'Agile'],
+    interests: ['Mentoring', 'Design Systems'],
+    languages: ['tr', 'en'],
+    badges: [],
+  },
+  {
+    id: 'mock-member-2',
+    name: 'Kerem Yıldız',
+    role: 'alumni',
+    title: 'Corporate Partnerships Lead, ImpactBridge',
+    organization: 'ImpactBridge',
+    bio: 'Connecting alumni founders with social impact opportunities.',
+    classYear: '2012',
+    location: 'Ankara',
+    industry: 'Nonprofit',
+    skills: ['Partnerships', 'Fundraising', 'Storytelling'],
+    interests: ['Volunteerism', 'Sustainability'],
+    languages: ['tr', 'en'],
+    badges: [],
+  },
+  {
+    id: 'mock-member-3',
+    name: 'Selin Arslan',
+    role: 'student',
+    title: 'Data Science Intern, Anatolia Analytics',
+    organization: 'Anatolia Analytics',
+    bio: 'Student ambassador researching machine learning for civic tech.',
+    classYear: '2024',
+    location: 'Izmir',
+    industry: 'Data & AI',
+    skills: ['Python', 'Machine Learning', 'Data Storytelling'],
+    interests: ['Hackathons', 'Career Mentoring'],
+    languages: ['tr', 'en'],
+    badges: [],
+  },
+  {
+    id: 'mock-member-4',
+    name: 'Mert Kaya',
+    role: 'mentor',
+    title: 'Engineering Director, Bosphorus Labs',
+    organization: 'Bosphorus Labs',
+    bio: 'Mentor supporting alumni and students with engineering leadership.',
+    classYear: '2008',
+    location: 'Bursa',
+    industry: 'Manufacturing',
+    skills: ['Leadership', 'Cloud Architecture', 'Operations'],
+    interests: ['Mentoring', 'Operations'],
+    languages: ['tr', 'en'],
+    badges: [],
+  },
+];
 
 export default function DirectoryPage() {
   const { t } = useTranslation();
   const members = useDemoStore((state) => state.users);
+  const directoryMembers = members.length > 0 ? members : mockDirectoryMembers;
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState({
     classYear: 'all',
@@ -45,7 +110,7 @@ export default function DirectoryPage() {
     const locations = new Set<string>();
     const industries = new Set<string>();
     const skills = new Set<string>();
-    members.forEach((member) => {
+    directoryMembers.forEach((member) => {
       classYears.add(member.classYear);
       locations.add(member.location);
       industries.add(member.industry);
@@ -57,10 +122,10 @@ export default function DirectoryPage() {
       industries: Array.from(industries),
       skills: Array.from(skills),
     };
-  }, [members]);
+  }, [directoryMembers]);
 
   const filteredMembers = useMemo(() => {
-    return members.filter((member) => {
+    return directoryMembers.filter((member) => {
       const matchesQuery =
         !query ||
         member.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -84,7 +149,7 @@ export default function DirectoryPage() {
         matchesSkill
       );
     });
-  }, [filters, members, query]);
+  }, [directoryMembers, filters, query]);
 
   return (
     <div className="grid gap-8 lg:grid-cols-[280px,1fr]">

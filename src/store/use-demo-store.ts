@@ -203,6 +203,7 @@ export const useDemoStore = create<DemoStore>()(
           media,
           comments: [],
           reactions: { like: 1 },
+          reposts: 0,
         };
         set((state) => ({
           posts: [newPost, ...state.posts],
