@@ -176,7 +176,7 @@ export default function ProfilePage() {
         photo:
           viewer?.avatar ??
           header.photo ??
-            'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=320&q=80',
+            'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=format&fit=crop&w=320&q=80',
         summary,
         resume,
         quickLinks: quickLinksContent.map(({ iconKey, ...link }) => ({
