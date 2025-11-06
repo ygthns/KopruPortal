@@ -210,12 +210,12 @@
     "subtitle": "Mezunları mezuniyet yılı, konum, sektör ve becerilere göre bulun.",
     "searchPlaceholder": "Kişi, beceri veya ilgi alanı ara…",
     "filters": {
-      "title": "Üyeleri filtrele",
-      "subtitle": "Hedefli erişim listeleri oluşturmak için filtreleri katmanlayın.",
       "classYear": "Mezuniyet yılı",
       "location": "Konum",
       "industry": "Sektör",
-      "skill": "Beceri"
+      "skill": "Beceri",
+      "any": "Hepsi",
+      "clear": "Filtreleri sıfırla"
     },
     "labels": {
       "location": "Konum",
@@ -224,8 +224,8 @@
       "interests": "İlgi alanları"
     },
     "actions": {
-      "viewProfile": "Profili görüntüle",
-      "connect": "Tanıştırma iste"
+      "message": "Mesaj gönder",
+      "connect": "Bağlantı kur"
     },
     "empty": "Bu filtrelerle eşleşen üye yok—aramayı genişletmeyi deneyin."
   },
@@ -349,7 +349,8 @@
       "resume": "Akıllı özgeçmiş analizörü",
       "resumeSubtitle": "Puan almak ve rehberlik almak için CV yükleyin.",
       "tracker": "Başvuru takipçisi",
-      "trackerSubtitle": "Pozisyonlar arasında durumları izleyin."
+      "trackerSubtitle": "Pozisyonlar arasında durumları izleyin.",
+      "posted": "İlan tarihi"
     },
     "resume": {
       "score": "Özgeçmiş puanı",
@@ -388,30 +389,52 @@
   },
   "events": {
     "title": "Etkinlikler ve kayıtlar",
-    "subtitle": "Kayıt, bilet ve entegrasyonlarla hibrit dostu takvim.",
-    "views": {
-      "list": "Liste görünümü",
-      "calendar": "Takvim görünümü"
+    "subtitle": "Buluşmalar, atölyeler, hackathonlar ve mentorluk kampları için merkezi.",
+    "tabs": {
+      "discover": "Keşfet",
+      "registered": "Kayıtlarım",
+      "create": "Etkinlik oluştur"
     },
     "actions": {
-      "register": "Hemen kaydol",
-      "registered": "Kayıt edildi",
-      "schedule": "Calendly ile planla",
-      "viewDetails": "Detayları gör"
+      "register": "Kaydol",
+      "registered": "Kayıtlı",
+      "buyTicket": "Bilet al",
+      "ticketPurchased": "Bilet alındı",
+      "ticketSoldOut": "Tükendi",
+      "create": "Etkinlik oluştur"
     },
     "labels": {
-      "location": "Konum"
+      "ticket": "Bilet",
+      "free": "Ücretsiz",
+      "location": "Konum",
+      "category": "Kategori",
+      "attending": "{{count}} katılıyor"
     },
-    "integrations": {
-      "title": "Etkinlik entegrasyonları",
-      "subtitle": "Video odalarını, planlamayı ve SSO'yu tek tıkla açın.",
-      "connectTitle": "Entegrasyonu bağla",
-      "connectSubtitle": "Sahte onay—bu demoda veri paylaşımı yok.",
-      "placeholder": "{{provider}} ile sahte bağlantı kuruldu."
+    "ticketStatus": {
+      "available": "Biletler mevcut",
+      "purchased": "Bilet alındı",
+      "sold_out": "Tükendi"
+    },
+    "form": {
+      "title": "Etkinlik başlığı",
+      "description": "Açıklama",
+      "date": "Tarih",
+      "time": "Saat",
+      "location": "Konum",
+      "type": "Format",
+      "ticket": "Bilet fiyatı",
+      "currency": "Para birimi",
+      "tags": "Etiketler (virgülle ayır)",
+      "submit": "Etkinliği yayınla",
+      "success": "Etkinlik takvime eklendi.",
+      "subtitle": "Yaklaşan buluşmaları, mentorluk sprintlerini veya atölyeleri paylaş—form yalnızca demo için yerel kaydedilir."
     },
     "toasts": {
-      "registered": "Kayıt onaylandı."
-    }
+      "registered": "Kayıt onaylandı.",
+      "created": "Demo için etkinlik oluşturuldu."
+    },
+    "empty": "Henüz etkinlik yok—ilkini sen planla!",
+    "emptyRegistered": "Henüz kayıt olduğun bir etkinlik yok."
   },
   "fundraising": {
     "title": "Bağış ve destek",
@@ -419,11 +442,12 @@
     "actions": {
       "launch": "Kampanya oluştur",
       "donate": "Bağış yap",
-      "confirmDonation": "Şimdi bağışla"
+      "confirmDonation": "Şimdi bağışla",
+      "share": "Paylaş"
     },
     "labels": {
-      "raised": "Toplanan ₺{{amount}}",
-      "goal": "Hedef ₺{{goal}}",
+      "raised": "Toplanan {{amount}}",
+      "goal": "Hedef {{goal}}",
       "donors": "Bağışçı"
     },
     "dialog": {

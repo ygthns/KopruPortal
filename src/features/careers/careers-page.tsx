@@ -19,9 +19,24 @@ import { Button } from '@/components/ui/button';
 import { useDemoStore } from '@/store/use-demo-store';
 import { useToast } from '@/components/ui/use-toast';
 import { Progress } from '@/components/ui/progress';
+import type { JobPosting, LanguageCode } from '@/types';
+
+const getLocale = (language: string): LanguageCode =>
+  (language.slice(0, 2).toLowerCase() === 'tr' ? 'tr' : 'en') as LanguageCode;
+
+const getJobContent = (job: JobPosting, locale: LanguageCode) => {
+  const localized = job.translations?.[locale];
+  return {
+    title: localized?.title ?? job.title,
+    location: localized?.location ?? job.location,
+    type: localized?.type ?? job.type,
+    description: localized?.description ?? job.description,
+    tags: localized?.tags ?? job.tags,
+  };
+};
 
 export default function CareersPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const jobs = useDemoStore((state) => state.jobs);
   const jobApplications = useDemoStore((state) => state.jobApplications);
   const resumeAnalyses = useDemoStore((state) => state.resumeAnalyses);
@@ -30,10 +45,19 @@ export default function CareersPage() {
   const analyzeResume = useDemoStore((state) => state.analyzeResume);
   const [selectedJobId, setSelectedJobId] = useState<string>(jobs[0]?.id ?? '');
   const { toast } = useToast();
+  const locale = useMemo(() => getLocale(i18n.language), [i18n.language]);
 
   const selectedJob = useMemo(
     () => jobs.find((job) => job.id === selectedJobId),
     [jobs, selectedJobId],
+  );
+  const selectedJobContent = selectedJob
+    ? getJobContent(selectedJob, locale)
+    : undefined;
+
+  const appliedJobIds = useMemo(
+    () => new Set(jobApplications.map((application) => application.jobId)),
+    [jobApplications],
   );
 
   return (
@@ -61,39 +85,43 @@ export default function CareersPage() {
             </Badge>
           </div>
           <div className="grid gap-3">
-            {jobs.map((job) => (
-              <button
-                key={job.id}
-                onClick={() => setSelectedJobId(job.id)}
-                className={`rounded-2xl border px-4 py-3 text-left transition ${
-                  job.id === selectedJobId
-                    ? 'border-primary bg-primary/10'
-                    : 'border-border/60 bg-muted/30'
-                }`}
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">
-                      {job.title}
-                    </p>
-                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                      <Building className="h-3 w-3" />
-                      {job.company}
-                      <MapPin className="h-3 w-3" />
-                      {job.location}
+            {jobs.map((job) => {
+              const jobContent = getJobContent(job, locale);
+              const isSelected = job.id === selectedJobId;
+              return (
+                <button
+                  key={job.id}
+                  onClick={() => setSelectedJobId(job.id)}
+                  className={`rounded-2xl border px-4 py-3 text-left transition ${
+                    isSelected
+                      ? 'border-primary bg-primary/10'
+                      : 'border-border/60 bg-muted/30'
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">
+                        {jobContent.title}
+                      </p>
+                      <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                        <Building className="h-3 w-3" />
+                        {job.company}
+                        <MapPin className="h-3 w-3" />
+                        {jobContent.location}
+                      </div>
                     </div>
+                    <Badge variant="muted">{jobContent.type}</Badge>
                   </div>
-                  <Badge variant="muted">{job.type}</Badge>
-                </div>
-                <div className="mt-2 flex flex-wrap gap-2 text-xs text-muted-foreground">
-                  {job.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      #{tag}
-                    </Badge>
-                  ))}
-                </div>
-              </button>
-            ))}
+                  <div className="mt-2 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                    {jobContent.tags.map((tag) => (
+                      <Badge key={tag} variant="secondary">
+                        #{tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </Card>
 
@@ -179,7 +207,7 @@ export default function CareersPage() {
         <Card>
           <CardHeader className="flex flex-row items-start justify-between">
             <div>
-              <CardTitle>{selectedJob?.title}</CardTitle>
+              <CardTitle>{selectedJobContent?.title}</CardTitle>
               <CardDescription>{selectedJob?.company}</CardDescription>
             </div>
             <Button
@@ -187,20 +215,39 @@ export default function CareersPage() {
               onClick={() => selectedJob && toggleSaveJob(selectedJob.id)}
             >
               <Bookmark
-                className={`h-5 w-5 ${selectedJob?.saved ? 'fill-primary text-primary' : 'text-muted-foreground'}`}
+                className={`h-5 w-5 ${
+                  selectedJob?.saved
+                    ? 'fill-primary text-primary'
+                    : 'text-muted-foreground'
+                }`}
               />
             </Button>
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
-            <p>{selectedJob?.description}</p>
+            <p>{selectedJobContent?.description}</p>
             <div className="flex flex-wrap gap-2">
-              {selectedJob?.tags.map((tag) => (
+              {selectedJobContent?.tags.map((tag) => (
                 <Badge key={tag} variant="secondary">
                   #{tag}
                 </Badge>
               ))}
             </div>
-            <div className="flex gap-2">
+            <div className="rounded-2xl border border-border/60 bg-muted/30 p-4">
+              <div className="flex flex-wrap gap-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <span className="inline-flex items-center gap-1">
+                  <Building className="h-3 w-3" />
+                  {selectedJob?.company}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <MapPin className="h-3 w-3" />
+                  {selectedJobContent?.location}
+                </span>
+              </div>
+              <div className="mt-3 text-xs text-muted-foreground">
+                {t('careers.labels.posted')} {selectedJob?.postedAt}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
               <Button
                 className="rounded-full"
                 onClick={() => {
@@ -211,59 +258,68 @@ export default function CareersPage() {
                     title: t('careers.toasts.applicationSent'),
                   });
                 }}
+                disabled={!selectedJob || appliedJobIds.has(selectedJob.id)}
               >
-                {t('careers.actions.apply')}
-              </Button>
-              <Button variant="outline" className="rounded-full">
-                {t('careers.actions.share')}
+                {selectedJob && appliedJobIds.has(selectedJob.id)
+                  ? t('careers.status.applied')
+                  : t('careers.actions.apply')}
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('careers.labels.tracker')}</CardTitle>
-            <CardDescription>
+        <Card className="space-y-4 p-5">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">
+              {t('careers.labels.tracker')}
+            </h2>
+            <p className="text-sm text-muted-foreground">
               {t('careers.labels.trackerSubtitle')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {jobApplications.map((application) => {
-              const job = jobs.find((item) => item.id === application.jobId);
-              if (!job) return null;
-              const progress =
-                application.status === 'applied'
-                  ? 30
-                  : application.status === 'review'
-                    ? 55
-                    : application.status === 'interview'
-                      ? 80
-                      : 100;
-              return (
-                <div
-                  key={application.id}
-                  className="rounded-2xl border border-border/60 bg-muted/30 p-4 text-sm"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-foreground">
-                      {job.title}
-                    </span>
-                    <Badge variant="default">
-                      {t(`careers.status.${application.status}`)}
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{job.company}</p>
-                  <Progress className="mt-2" value={progress} />
-                </div>
-              );
-            })}
+            </p>
+          </div>
+          <div className="space-y-4">
             {jobApplications.length === 0 && (
               <div className="rounded-2xl border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
                 {t('careers.tracker.empty')}
               </div>
             )}
-          </CardContent>
+            {jobApplications.map((application) => {
+              const job = jobs.find((item) => item.id === application.jobId);
+              if (!job) return null;
+              const jobContent = getJobContent(job, locale);
+              return (
+                <div
+                  key={application.id}
+                  className="space-y-2 rounded-2xl border border-border/60 bg-muted/30 p-4"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">
+                        {jobContent.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {job.company}
+                      </p>
+                    </div>
+                    <Badge variant="outline" className="rounded-full">
+                      {t(`careers.status.${application.status}`)}
+                    </Badge>
+                  </div>
+                  <Progress
+                    value={
+                      application.status === 'applied'
+                        ? 25
+                        : application.status === 'review'
+                          ? 50
+                          : application.status === 'interview'
+                            ? 75
+                            : 100
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
         </Card>
       </div>
     </div>

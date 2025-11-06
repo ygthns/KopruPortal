@@ -142,6 +142,21 @@ type DemoActions = {
     highlights: string[];
     suggestions: string[];
   }) => ResumeAnalysis;
+  createEvent: (payload: {
+    title: string;
+    description: string;
+    date: string;
+    time: string;
+    location: string;
+    type: Event['type'];
+    tags: string[];
+    capacity?: number;
+    currency?: Event['currency'];
+    ticketPrice?: number;
+    ticketStatus?: Event['ticketStatus'];
+    category?: string;
+    translations?: Event['translations'];
+  }) => Event;
   registerEvent: (eventId: string) => Event | undefined;
   donateToCampaign: (
     campaignId: string,
@@ -483,15 +498,64 @@ export const useDemoStore = create<DemoStore>()(
         }));
         return analysis;
       },
+      createEvent: ({
+        title,
+        description,
+        date,
+        time,
+        location,
+        type,
+        tags,
+        capacity,
+        currency,
+        ticketPrice,
+        ticketStatus,
+        category,
+        translations,
+      }) => {
+        const event: Event = {
+          id: nanoid(),
+          title,
+          description,
+          date,
+          time,
+          location,
+          type,
+          tags,
+          registered: false,
+          capacity: capacity ?? 100,
+          attendees: 0,
+          organizerId: get().viewerId || 'user-1',
+          currency: currency ?? 'TRY',
+          ticketPrice,
+          ticketStatus:
+            ticketStatus ?? (ticketPrice && ticketPrice > 0 ? 'available' : 'available'),
+          category,
+          translations,
+        };
+        set((state) => ({
+          events: [event, ...state.events],
+        }));
+        return event;
+      },
       registerEvent: (eventId) => {
         let updated: Event | undefined;
         set((state) => ({
           events: state.events.map((event) => {
             if (event.id !== eventId) return event;
+            if (event.ticketStatus === 'sold_out') return event;
+            const alreadyRegistered = event.registered;
+            const attendees = alreadyRegistered
+              ? event.attendees
+              : Math.min(event.capacity, event.attendees + 1);
             updated = {
               ...event,
               registered: true,
-              attendees: event.attendees + 1,
+              attendees,
+              ticketStatus:
+                event.ticketStatus === 'available'
+                  ? 'purchased'
+                  : event.ticketStatus,
             };
             return updated;
           }),

@@ -1,147 +1,303 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Search,
-  MapPin,
-  Briefcase,
-  GraduationCap,
-  ChevronDown,
-} from 'lucide-react';
+import { Search, MapPin, Briefcase, GraduationCap, Mail, UserPlus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import { Label } from '@/components/ui/label';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { useDemoStore } from '@/store/use-demo-store';
-import type { UserProfile } from '@/types';
+import type { LanguageCode } from '@/types';
 
-const mockDirectoryMembers: UserProfile[] = [
+type DirectoryLocaleContent = {
+  name: string;
+  title: string;
+  department: string;
+  company: string;
+  location: string;
+  bio: string;
+  industryLabel: string;
+  skills: string[];
+  interests: string[];
+};
+
+type DirectoryEntry = {
+  id: string;
+  avatar: string;
+  classYear: number;
+  industryKey: string;
+  locationKey: string;
+  locales: Record<LanguageCode, DirectoryLocaleContent>;
+};
+
+const DIRECTORY_ENTRIES: DirectoryEntry[] = [
   {
-    id: 'mock-member-1',
-    name: 'Ece Demir',
-    role: 'alumni',
-    title: 'Product Manager, TrendyTech',
-    organization: 'TrendyTech',
-    bio: 'Building community-centric product experiences across Türkiye.',
-    classYear: '2015',
-    location: 'Istanbul',
-    industry: 'Technology',
-    skills: ['Product Strategy', 'UX Research', 'Agile'],
-    interests: ['Mentoring', 'Design Systems'],
-    languages: ['tr', 'en'],
-    badges: [],
+    id: 'elif-kaya',
+    avatar:
+      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=240&q=80',
+    classYear: 2012,
+    industryKey: 'technology',
+    locationKey: 'istanbul',
+    locales: {
+      en: {
+        name: 'Elif Kaya',
+        title: 'Head of Product · Bridge AI',
+        department: 'Computer Engineering',
+        company: 'Bridge AI',
+        location: 'Istanbul, Türkiye',
+        bio: 'Product leader pairing alumni mentors with venture-backed founders.',
+        industryLabel: 'Technology',
+        skills: ['Product Strategy', 'Mentorship', 'OKRs'],
+        interests: ['Flash mentoring', 'Community sprints'],
+      },
+      tr: {
+        name: 'Elif Kaya',
+        title: 'Bridge AI · Ürün Direktörü',
+        department: 'Bilgisayar Mühendisliği',
+        company: 'Bridge AI',
+        location: 'İstanbul, Türkiye',
+        bio: 'Mezun mentorları girişimci kurucularla buluşturan ürün lideri.',
+        industryLabel: 'Teknoloji',
+        skills: ['Ürün Stratejisi', 'Mentorluk', 'OKR'],
+        interests: ['Hızlı mentorluk', 'Topluluk sprintleri'],
+      },
+    },
   },
   {
-    id: 'mock-member-2',
-    name: 'Kerem Yıldız',
-    role: 'alumni',
-    title: 'Corporate Partnerships Lead, ImpactBridge',
-    organization: 'ImpactBridge',
-    bio: 'Connecting alumni founders with social impact opportunities.',
-    classYear: '2012',
-    location: 'Ankara',
-    industry: 'Nonprofit',
-    skills: ['Partnerships', 'Fundraising', 'Storytelling'],
-    interests: ['Volunteerism', 'Sustainability'],
-    languages: ['tr', 'en'],
-    badges: [],
+    id: 'john-anderson',
+    avatar:
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=240&q=80',
+    classYear: 2011,
+    industryKey: 'design',
+    locationKey: 'berlin',
+    locales: {
+      en: {
+        name: 'John Anderson',
+        title: 'Design Director · Atlas Labs',
+        department: 'Industrial Design',
+        company: 'Atlas Labs',
+        location: 'Berlin, Germany',
+        bio: 'Guides distributed design squads creating alumni engagement tools.',
+        industryLabel: 'Design',
+        skills: ['Design Systems', 'Hiring', 'Workshop Facilitation'],
+        interests: ['Remote culture', 'Design critiques'],
+      },
+      tr: {
+        name: 'John Anderson',
+        title: 'Atlas Labs · Tasarım Direktörü',
+        department: 'Endüstriyel Tasarım',
+        company: 'Atlas Labs',
+        location: 'Berlin, Almanya',
+        bio: 'Dağıtık tasarım ekiplerini mezun etkileşimi araçları üretirken yönlendiriyor.',
+        industryLabel: 'Tasarım',
+        skills: ['Tasarım Sistemleri', 'Ekip Kurma', 'Atölye Kolaylaştırma'],
+        interests: ['Uzaktan kültür', 'Tasarım kritikleri'],
+      },
+    },
   },
   {
-    id: 'mock-member-3',
-    name: 'Selin Arslan',
-    role: 'student',
-    title: 'Data Science Intern, Anatolia Analytics',
-    organization: 'Anatolia Analytics',
-    bio: 'Student ambassador researching machine learning for civic tech.',
-    classYear: '2024',
-    location: 'Izmir',
-    industry: 'Data & AI',
-    skills: ['Python', 'Machine Learning', 'Data Storytelling'],
-    interests: ['Hackathons', 'Career Mentoring'],
-    languages: ['tr', 'en'],
-    badges: [],
+    id: 'sinem-aydin',
+    avatar:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=240&q=80',
+    classYear: 2013,
+    industryKey: 'creative',
+    locationKey: 'istanbul',
+    locales: {
+      en: {
+        name: 'Sinem Aydın',
+        title: 'Creative Strategist · Salt Galata',
+        department: 'Visual Communication',
+        company: 'Salt Galata',
+        location: 'Istanbul, Türkiye',
+        bio: 'Curates alumni design circles and experiential learning labs.',
+        industryLabel: 'Creative',
+        skills: ['Brand Strategy', 'Community Design', 'Workshop Design'],
+        interests: ['Art walks', 'Design storytelling'],
+      },
+      tr: {
+        name: 'Sinem Aydın',
+        title: 'Salt Galata · Kreatif Stratejist',
+        department: 'Görsel İletişim',
+        company: 'Salt Galata',
+        location: 'İstanbul, Türkiye',
+        bio: 'Mezun tasarım çemberleri ve deneyimsel öğrenme laboratuvarları kurgular.',
+        industryLabel: 'Kreatif',
+        skills: ['Marka Stratejisi', 'Topluluk Tasarımı', 'Atölye Tasarımı'],
+        interests: ['Sanat yürüyüşleri', 'Tasarım hikayeleri'],
+      },
+    },
   },
   {
-    id: 'mock-member-4',
-    name: 'Mert Kaya',
-    role: 'mentor',
-    title: 'Engineering Director, Bosphorus Labs',
-    organization: 'Bosphorus Labs',
-    bio: 'Mentor supporting alumni and students with engineering leadership.',
-    classYear: '2008',
-    location: 'Bursa',
-    industry: 'Manufacturing',
-    skills: ['Leadership', 'Cloud Architecture', 'Operations'],
-    interests: ['Mentoring', 'Operations'],
-    languages: ['tr', 'en'],
-    badges: [],
+    id: 'ahmet-demir',
+    avatar:
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=240&q=80',
+    classYear: 2015,
+    industryKey: 'software',
+    locationKey: 'ankara',
+    locales: {
+      en: {
+        name: 'Ahmet Demir',
+        title: 'Senior Software Engineer · Trendyol',
+        department: 'Computer Engineering',
+        company: 'Trendyol',
+        location: 'Ankara, Türkiye',
+        bio: 'Builds large-scale marketplace services and mentors campus teams.',
+        industryLabel: 'Software',
+        skills: ['Java', 'Microservices', 'Tech Mentoring'],
+        interests: ['Scalable architecture', 'Student mentoring'],
+      },
+      tr: {
+        name: 'Ahmet Demir',
+        title: 'Kıdemli Yazılım Mühendisi · Trendyol',
+        department: 'Bilgisayar Mühendisliği',
+        company: 'Trendyol',
+        location: 'Ankara, Türkiye',
+        bio: 'Büyük ölçekli pazar yeri servisleri geliştiriyor, kampüs ekiplerine mentorluk yapıyor.',
+        industryLabel: 'Yazılım',
+        skills: ['Java', 'Mikroservisler', 'Teknik Mentorluk'],
+        interests: ['Ölçeklenebilir mimari', 'Öğrenci mentorlukları'],
+      },
+    },
   },
   {
-    id: 'mock-member-5',
-    name: 'Aylin Karaca',
-    role: 'alumni',
-    title: 'Founder, Marmara Social Studio',
-    organization: 'Marmara Social Studio',
-    bio: 'Alumni founder scaling creative social enterprises across Istanbul and beyond.',
-    classYear: '2010',
-    location: 'Istanbul',
-    industry: 'Creative',
-    skills: ['Brand Strategy', 'Community Building', 'Workshops'],
-    interests: ['Design Thinking', 'Startup Mentoring'],
-    languages: ['tr', 'en'],
-    badges: [],
+    id: 'emily-carter',
+    avatar:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80',
+    classYear: 2018,
+    industryKey: 'technology',
+    locationKey: 'london',
+    locales: {
+      en: {
+        name: 'Emily Carter',
+        title: 'Software Engineer · Google',
+        department: 'Computer Science',
+        company: 'Google',
+        location: 'London, United Kingdom',
+        bio: 'Focuses on privacy-first infrastructure and alumni-led ERGs.',
+        industryLabel: 'Technology',
+        skills: ['Python', 'GCP', 'Security'],
+        interests: ['ERGs', 'Public speaking'],
+      },
+      tr: {
+        name: 'Emily Carter',
+        title: 'Yazılım Mühendisi · Google',
+        department: 'Bilgisayar Bilimleri',
+        company: 'Google',
+        location: 'Londra, Birleşik Krallık',
+        bio: 'Gizlilik odaklı altyapı projelerinde çalışıyor, mezun liderli ERG’leri destekliyor.',
+        industryLabel: 'Teknoloji',
+        skills: ['Python', 'GCP', 'Güvenlik'],
+        interests: ['ERG toplulukları', 'Konuşmacılık'],
+      },
+    },
   },
   {
-    id: 'mock-member-6',
-    name: 'Emre Taş',
-    role: 'mentor',
-    title: 'CTO, Kapadokya Robotics',
-    organization: 'Kapadokya Robotics',
-    bio: 'Mentor helping robotics and aerospace teams scale across Anatolia.',
-    classYear: '2005',
-    location: 'Kayseri',
-    industry: 'Engineering',
-    skills: ['Embedded Systems', 'Robotics', 'Team Leadership'],
-    interests: ['Hardware', 'Mentoring'],
-    languages: ['tr', 'en'],
-    badges: [],
+    id: 'david-martinez',
+    avatar:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80',
+    classYear: 2009,
+    industryKey: 'events',
+    locationKey: 'new-york',
+    locales: {
+      en: {
+        name: 'David Martinez',
+        title: 'Global Alumni Engagement Lead · KöprüMezun International',
+        department: 'Public Relations',
+        company: 'KöprüMezun International',
+        location: 'New York, USA',
+        bio: 'Designs reunion experiences for global alumni chapters.',
+        industryLabel: 'Events',
+        skills: ['Event Design', 'Sponsorship', 'Storytelling'],
+        interests: ['Hybrid formats', 'City chapters'],
+      },
+      tr: {
+        name: 'David Martinez',
+        title: 'Küresel Alumni Etkileşim Lideri · KöprüMezun International',
+        department: 'Halkla İlişkiler',
+        company: 'KöprüMezun International',
+        location: 'New York, ABD',
+        bio: 'Küresel mezun toplulukları için buluşmalar tasarlıyor.',
+        industryLabel: 'Etkinlik',
+        skills: ['Etkinlik Tasarımı', 'Sponsorluk', 'Hikaye Anlatımı'],
+        interests: ['Hibrit formatlar', 'Şehir toplulukları'],
+      },
+    },
   },
   {
-    id: 'mock-member-7',
-    name: 'Leyla Öz',
-    role: 'student',
-    title: 'Marketing Chair, Aegean Alumni Club',
-    organization: 'Aegean Alumni Club',
-    bio: 'Student leader organizing hybrid programming for regional alumni.',
-    classYear: '2026',
-    location: 'Izmir',
-    industry: 'Marketing',
-    skills: ['Content Strategy', 'Event Planning', 'Public Speaking'],
-    interests: ['Community Building', 'Volunteerism'],
-    languages: ['tr', 'en'],
-    badges: [],
+    id: 'sarah-uzun',
+    avatar:
+      'https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?auto=format&fit=crop&w=240&q=80',
+    classYear: 2023,
+    industryKey: 'marketing',
+    locationKey: 'izmir',
+    locales: {
+      en: {
+        name: 'Sarah Uzun',
+        title: 'Marketing Associate · Aegean Alumni Club',
+        department: 'Business Administration',
+        company: 'Aegean Alumni Club',
+        location: 'Izmir, Türkiye',
+        bio: 'Student leader organising bilingual programming and newsletters.',
+        industryLabel: 'Marketing',
+        skills: ['Content Strategy', 'Event Ops', 'Email Marketing'],
+        interests: ['Volunteer coordination', 'Hybrid events'],
+      },
+      tr: {
+        name: 'Sarah Uzun',
+        title: 'Pazarlama Uzmanı · Ege Alumni Club',
+        department: 'İşletme',
+        company: 'Ege Alumni Club',
+        location: 'İzmir, Türkiye',
+        bio: 'İki dilli etkinlikler ve bültenler yöneten öğrenci lideri.',
+        industryLabel: 'Pazarlama',
+        skills: ['İçerik Stratejisi', 'Etkinlik Operasyonları', 'E-posta Pazarlama'],
+        interests: ['Gönüllü koordinasyonu', 'Hibrit etkinlikler'],
+      },
+    },
+  },
+  {
+    id: 'maria-gonzalez',
+    avatar:
+      'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=240&q=80',
+    classYear: 2016,
+    industryKey: 'finance',
+    locationKey: 'madrid',
+    locales: {
+      en: {
+        name: 'María González',
+        title: 'Investment Associate · Horizon Impact Fund',
+        department: 'Economics',
+        company: 'Horizon Impact Fund',
+        location: 'Madrid, Spain',
+        bio: 'Supports alumni social enterprises with catalytic funding.',
+        industryLabel: 'Finance',
+        skills: ['Impact Investing', 'Due Diligence', 'Stakeholder Management'],
+        interests: ['Social enterprises', 'Cross-border mentoring'],
+      },
+      tr: {
+        name: 'María González',
+        title: 'Yatırım Uzmanı · Horizon Impact Fund',
+        department: 'Ekonomi',
+        company: 'Horizon Impact Fund',
+        location: 'Madrid, İspanya',
+        bio: 'Mezun sosyal girişimlerini katalitik fonlarla destekliyor.',
+        industryLabel: 'Finans',
+        skills: ['Etki Yatırımı', 'Durum Tespiti', 'Paydaş Yönetimi'],
+        interests: ['Sosyal girişimler', 'Ülke çapı mentorluk'],
+      },
+    },
   },
 ];
 
+const YEAR_OPTIONS = Array.from({ length: 46 }, (_, index) => (1980 + index).toString());
+
+const getLocale = (language: string): LanguageCode =>
+  (language.slice(0, 2).toLowerCase() === 'tr' ? 'tr' : 'en') as LanguageCode;
+
 export default function DirectoryPage() {
-  const { t } = useTranslation();
-  const members = useDemoStore((state) => state.users);
-  const directoryMembers = members.length > 0 ? members : mockDirectoryMembers;
+  const { t, i18n } = useTranslation();
+  const locale = useMemo(() => getLocale(i18n.language), [i18n.language]);
+
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState({
     classYear: 'all',
@@ -150,235 +306,282 @@ export default function DirectoryPage() {
     skill: 'all',
   });
 
-  const updateFilter = (name: keyof typeof filters, value: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const facets = useMemo(() => {
-    const classYears = new Set<string>();
-    const locations = new Set<string>();
-    const industries = new Set<string>();
-    const skills = new Set<string>();
-    directoryMembers.forEach((member) => {
-      classYears.add(member.classYear);
-      locations.add(member.location);
-      industries.add(member.industry);
-      member.skills.forEach((skill) => skills.add(skill));
+  const locationOptions = useMemo(() => {
+    const map = new Map<string, { en: string; tr: string }>();
+    DIRECTORY_ENTRIES.forEach((entry) => {
+      const { locationKey, locales } = entry;
+      map.set(locationKey, {
+        en: locales.en.location,
+        tr: locales.tr.location,
+      });
     });
-    return {
-      classYears: Array.from(classYears).sort((a, b) => Number(b) - Number(a)),
-      locations: Array.from(locations).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
-      industries: Array.from(industries).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
-      skills: Array.from(skills).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
-    };
-  }, [directoryMembers]);
+    return Array.from(map.entries());
+  }, []);
 
-  const filteredMembers = useMemo(() => {
-    return directoryMembers.filter((member) => {
-      const matchesQuery =
-        !query ||
-        member.name.toLowerCase().includes(query.toLowerCase()) ||
-        member.skills.some((skill) =>
-          skill.toLowerCase().includes(query.toLowerCase()),
-        );
-      const matchesClassYear =
-        filters.classYear === 'all' || member.classYear === filters.classYear;
+  const industryOptions = useMemo(() => {
+    const map = new Map<string, { en: string; tr: string }>();
+    DIRECTORY_ENTRIES.forEach((entry) => {
+      const { industryKey, locales } = entry;
+      map.set(industryKey, {
+        en: locales.en.industryLabel,
+        tr: locales.tr.industryLabel,
+      });
+    });
+    return Array.from(map.entries());
+  }, []);
+
+  const skillOptions = useMemo(() => {
+    const set = new Set<string>();
+    DIRECTORY_ENTRIES.forEach((entry) => {
+      entry.locales.en.skills.forEach((skill) => set.add(skill));
+      entry.locales.tr.skills.forEach((skill) => set.add(skill));
+    });
+    return Array.from(set);
+  }, []);
+
+  const filteredEntries = useMemo(() => {
+    return DIRECTORY_ENTRIES.filter((entry) => {
+      const localized = entry.locales[locale] ?? entry.locales.en;
+      const localizedEn = entry.locales.en;
+      const searchSpace = [
+        localized.name,
+        localized.title,
+        localized.department,
+        localized.company,
+        localized.bio,
+        ...localized.skills,
+        ...localized.interests,
+        localizedEn.name,
+        localizedEn.title,
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      const matchesQuery = !query || searchSpace.includes(query.toLowerCase());
+      const matchesYear =
+        filters.classYear === 'all' || entry.classYear.toString() === filters.classYear;
       const matchesLocation =
-        filters.location === 'all' || member.location === filters.location;
+        filters.location === 'all' || entry.locationKey === filters.location;
       const matchesIndustry =
-        filters.industry === 'all' || member.industry === filters.industry;
+        filters.industry === 'all' || entry.industryKey === filters.industry;
       const matchesSkill =
-        filters.skill === 'all' || member.skills.includes(filters.skill);
+        filters.skill === 'all' ||
+        localized.skills.some((skill) => skill.toLowerCase() === filters.skill.toLowerCase()) ||
+        localizedEn.skills.some((skill) => skill.toLowerCase() === filters.skill.toLowerCase());
 
       return (
         matchesQuery &&
-        matchesClassYear &&
+        matchesYear &&
         matchesLocation &&
         matchesIndustry &&
         matchesSkill
       );
     });
-  }, [directoryMembers, filters, query]);
+  }, [filters, locale, query]);
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[280px,1fr]">
-      <aside className="space-y-6 rounded-3xl border border-border/60 bg-muted/20 p-6">
-        <div className="space-y-2">
-          <h2 className="font-semibold text-foreground">
-            {t('directory.filters.title')}
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            {t('directory.filters.subtitle')}
-          </p>
-        </div>
-        <div className="space-y-4 text-sm">
-          {(
-            [
-              ['classYear', facets.classYears, GraduationCap],
-              ['location', facets.locations, MapPin],
-              ['industry', facets.industries, Briefcase],
-              ['skill', facets.skills, Search],
-            ] as const
-          ).map(([key, values, Icon]) => (
-            <div key={key} className="space-y-2">
-              <Label
-                htmlFor={`${key}-filter`}
-                className="flex items-center gap-2 text-sm font-medium text-muted-foreground"
-              >
-                <Icon className="h-4 w-4" />
-                {t(`directory.filters.${key}`)}
+    <div className="space-y-8">
+      <header className="flex flex-col gap-3">
+        <h1 className="font-display text-3xl font-semibold">
+          {t('directory.title')}
+        </h1>
+        <p className="text-muted-foreground">{t('directory.subtitle')}</p>
+      </header>
+
+      <Card className="border-border/60 bg-muted/20">
+        <CardContent className="space-y-6 p-6">
+          <div className="grid gap-4 md:grid-cols-[2fr,1fr]">
+            <div className="space-y-2">
+              <Label htmlFor="directory-search" className="text-xs font-semibold uppercase tracking-wide">
+                {t('directory.searchPlaceholder')}
               </Label>
               <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="directory-search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder={t('directory.searchPlaceholder') ?? ''}
+                  className="pl-9"
+                />
+              </div>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+              <div className="space-y-2">
+                <Label className="text-xs font-semibold uppercase tracking-wide">
+                  {t('directory.filters.classYear')}
+                </Label>
                 <select
-                  id={`${key}-filter`}
-                  value={filters[key as keyof typeof filters]}
-                  onChange={(event) => updateFilter(key, event.target.value)}
-                  className="w-full appearance-none rounded-full border border-border/60 bg-background px-4 py-2 pr-10 text-sm text-foreground shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full rounded-2xl border border-border/60 bg-background px-3 py-2 text-sm"
+                  value={filters.classYear}
+                  onChange={(event) =>
+                    setFilters((prev) => ({ ...prev, classYear: event.target.value }))
+                  }
                 >
-                  <option value="all">{t('common.labels.all')}</option>
-                  {values.map((value) => (
-                    <option key={value} value={value}>
-                      {value}
+                  <option value="all">{t('directory.filters.any')}</option>
+                  {YEAR_OPTIONS.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs font-semibold uppercase tracking-wide">
+                  {t('directory.filters.location')}
+                </Label>
+                <select
+                  className="w-full rounded-2xl border border-border/60 bg-background px-3 py-2 text-sm"
+                  value={filters.location}
+                  onChange={(event) =>
+                    setFilters((prev) => ({ ...prev, location: event.target.value }))
+                  }
+                >
+                  <option value="all">{t('directory.filters.any')}</option>
+                  {locationOptions.map(([key, label]) => (
+                    <option key={key} value={key}>
+                      {locale === 'tr' ? label.tr : label.en}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs font-semibold uppercase tracking-wide">
+                  {t('directory.filters.industry')}
+                </Label>
+                <select
+                  className="w-full rounded-2xl border border-border/60 bg-background px-3 py-2 text-sm"
+                  value={filters.industry}
+                  onChange={(event) =>
+                    setFilters((prev) => ({ ...prev, industry: event.target.value }))
+                  }
+                >
+                  <option value="all">{t('directory.filters.any')}</option>
+                  {industryOptions.map(([key, label]) => (
+                    <option key={key} value={key}>
+                      {locale === 'tr' ? label.tr : label.en}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2 sm:col-span-2 md:col-span-1">
+                <Label className="text-xs font-semibold uppercase tracking-wide">
+                  {t('directory.filters.skill')}
+                </Label>
+                <select
+                  className="w-full rounded-2xl border border-border/60 bg-background px-3 py-2 text-sm"
+                  value={filters.skill}
+                  onChange={(event) =>
+                    setFilters((prev) => ({ ...prev, skill: event.target.value }))
+                  }
+                >
+                  <option value="all">{t('directory.filters.any')}</option>
+                  {skillOptions.map((skill) => (
+                    <option key={skill} value={skill.toLowerCase()}>
+                      {skill}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-          ))}
-          <Button
-            variant="ghost"
-            className="w-full justify-center rounded-full text-sm"
-            onClick={() => {
-              setFilters({
-                classYear: 'all',
-                location: 'all',
-                industry: 'all',
-                skill: 'all',
-              });
-              setQuery('');
-            }}
-          >
-            {t('common.actions.clear')}
-          </Button>
-        </div>
-      </aside>
-
-      <section className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h1 className="font-display text-3xl font-semibold">
-              {t('directory.title')}
-            </h1>
-            <p className="text-muted-foreground">{t('directory.subtitle')}</p>
           </div>
-          <div className="relative w-full max-w-sm">
-            <Input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder={t('directory.searchPlaceholder')}
-              className="pl-10"
-            />
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              className="rounded-full"
+              onClick={() => {
+                setQuery('');
+                setFilters({ classYear: 'all', location: 'all', industry: 'all', skill: 'all' });
+              }}
+            >
+              {t('directory.filters.clear')}
+            </Button>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {filteredMembers.map((member) => (
-            <Card key={member.id} className="flex flex-col justify-between">
-              <CardHeader className="flex-row items-center gap-3">
-                <Avatar name={member.name} />
-                <div>
-                  <CardTitle className="text-lg">{member.name}</CardTitle>
-                  <CardDescription>{member.title}</CardDescription>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {filteredEntries.map((entry) => {
+          const localized = entry.locales[locale] ?? entry.locales.en;
+          return (
+            <Card key={entry.id} className="flex flex-col gap-4 border-border/60 p-5">
+              <div className="flex items-start gap-4">
+                <Avatar src={entry.avatar} name={localized.name} className="h-16 w-16" />
+                <div className="space-y-1">
+                  <CardTitle className="text-lg">{localized.name}</CardTitle>
+                  <CardDescription className="text-sm text-muted-foreground">
+                    {localized.title}
+                  </CardDescription>
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1">
+                      <GraduationCap className="h-3 w-3" />
+                      {localized.department} · {entry.classYear}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Briefcase className="h-3 w-3" />
+                      {localized.company}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin className="h-3 w-3" />
+                      {localized.location}
+                    </span>
+                  </div>
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                  <Badge variant="secondary">{member.location}</Badge>
-                  <Badge variant="secondary">{member.classYear}</Badge>
-                  <Badge variant="secondary">{member.industry}</Badge>
+              </div>
+
+              <p className="text-sm text-muted-foreground">{localized.bio}</p>
+
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    {t('directory.labels.skills')}
+                  </Label>
+                  <div className="flex flex-wrap gap-2">
+                    {localized.skills.map((skill) => (
+                      <Badge key={skill} variant="secondary" className="rounded-full">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {member.skills.slice(0, 4).map((skill) => (
-                    <Badge key={skill} variant="muted">
-                      #{skill}
-                    </Badge>
-                  ))}
+                <div className="space-y-2">
+                  <Label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    {t('directory.labels.interests')}
+                  </Label>
+                  <div className="flex flex-wrap gap-2">
+                    {localized.interests.map((interest) => (
+                      <Badge key={interest} variant="outline" className="rounded-full">
+                        {interest}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-              </CardContent>
-              <CardContent className="flex justify-end">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" className="rounded-full">
-                      {t('directory.actions.viewProfile')}
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-3xl">
-                    <DialogHeader>
-                      <DialogTitle>{member.name}</DialogTitle>
-                      <DialogDescription>{member.title}</DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-6 md:grid-cols-[200px,1fr]">
-                      <div className="space-y-4 rounded-2xl border border-border/60 p-4">
-                        <Avatar name={member.name} className="h-24 w-24" />
-                        <div className="space-y-2 text-sm text-muted-foreground">
-                          <p>{member.bio}</p>
-                          <p>
-                            <strong>{t('directory.labels.location')}:</strong>{' '}
-                            {member.location}
-                          </p>
-                          <p>
-                            <strong>{t('directory.labels.classYear')}:</strong>{' '}
-                            {member.classYear}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="space-y-4">
-                        <div>
-                          <h3 className="font-semibold text-foreground">
-                            {t('directory.labels.skills')}
-                          </h3>
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            {member.skills.map((skill) => (
-                              <Badge key={skill} variant="secondary">
-                                {skill}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-foreground">
-                            {t('directory.labels.interests')}
-                          </h3>
-                          <div className="mt-2 flex flex-wrap gap-2">
-                            {member.interests.map((interest) => (
-                              <Badge key={interest} variant="muted">
-                                {interest}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-                        <Button className="rounded-full">
-                          {t('directory.actions.connect')}
-                        </Button>
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </CardContent>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                <Button variant="default" className="rounded-full px-4">
+                  <Mail className="mr-2 h-4 w-4" />
+                  {t('directory.actions.message')}
+                </Button>
+                <Button variant="outline" className="rounded-full px-4">
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  {t('directory.actions.connect')}
+                </Button>
+                <Badge variant="secondary" className="rounded-full">
+                  {localized.industryLabel}
+                </Badge>
+              </div>
             </Card>
-          ))}
-        </div>
-        {filteredMembers.length === 0 && (
-          <div className="rounded-3xl border border-dashed border-border/60 p-12 text-center text-muted-foreground">
-            {t('directory.empty')}
-          </div>
+          );
+        })}
+        {filteredEntries.length === 0 && (
+          <Card className="col-span-full border-dashed">
+            <CardContent className="p-10 text-center text-sm text-muted-foreground">
+              {t('directory.empty')}
+            </CardContent>
+          </Card>
         )}
-      </section>
+      </div>
     </div>
   );
 }

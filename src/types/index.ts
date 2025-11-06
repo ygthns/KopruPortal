@@ -157,6 +157,18 @@ export type JobPosting = {
   tags: string[];
   description: string;
   saved?: boolean;
+  translations?: Partial<
+    Record<
+      LanguageCode,
+      {
+        title: string;
+        location: string;
+        type: string;
+        description: string;
+        tags?: string[];
+      }
+    >
+  >;
 };
 
 export type ResumeAnalysis = {
@@ -180,7 +192,21 @@ export type Event = {
   capacity: number;
   attendees: number;
   organizerId: string;
-  integrations?: string[];
+  currency?: 'TRY' | 'USD' | 'EUR';
+  ticketPrice?: number;
+  ticketStatus?: 'available' | 'sold_out' | 'purchased';
+  category?: string;
+  translations?: Partial<
+    Record<
+      LanguageCode,
+      {
+        title: string;
+        description: string;
+        location: string;
+        category?: string;
+      }
+    >
+  >;
 };
 
 export type FundraisingCampaign = {
@@ -192,6 +218,17 @@ export type FundraisingCampaign = {
   donors: number;
   progress: number;
   impactHighlights: string[];
+  currency?: 'TRY' | 'USD' | 'EUR';
+  translations?: Partial<
+    Record<
+      LanguageCode,
+      {
+        name: string;
+        description: string;
+        impactHighlights: string[];
+      }
+    >
+  >;
 };
 
 export type AnalyticsMetric = {

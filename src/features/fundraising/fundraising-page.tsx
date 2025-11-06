@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { HeartHandshake, Plus } from 'lucide-react';
+import { HeartHandshake, Plus, Share2 } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -16,40 +16,77 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import { useDemoStore } from '@/store/use-demo-store';
 import { useToast } from '@/components/ui/use-toast';
+import type { FundraisingCampaign, LanguageCode } from '@/types';
+
+const getLocale = (language: string): LanguageCode =>
+  (language.slice(0, 2).toLowerCase() === 'tr' ? 'tr' : 'en') as LanguageCode;
+
+const formatAmount = (
+  amount: number,
+  currency: FundraisingCampaign['currency'],
+  locale: LanguageCode,
+) =>
+  new Intl.NumberFormat(locale === 'tr' ? 'tr-TR' : 'en-US', {
+    style: 'currency',
+    currency: currency ?? (locale === 'tr' ? 'TRY' : 'USD'),
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+const getCampaignContent = (
+  campaign: FundraisingCampaign,
+  locale: LanguageCode,
+) => {
+  const localized = campaign.translations?.[locale];
+  return {
+    name: localized?.name ?? campaign.name,
+    description: localized?.description ?? campaign.description,
+    impactHighlights: localized?.impactHighlights ?? campaign.impactHighlights,
+  };
+};
 
 export default function FundraisingPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const campaigns = useDemoStore((state) => state.campaigns);
   const donateToCampaign = useDemoStore((state) => state.donateToCampaign);
   const createCampaign = useDemoStore((state) => state.createCampaign);
+  const { toast } = useToast();
+
+  const locale = useMemo(() => getLocale(i18n.language), [i18n.language]);
   const [activeCampaignId, setActiveCampaignId] = useState<string | null>(null);
+  const [donationAmount, setDonationAmount] = useState(250);
   const [adminOpen, setAdminOpen] = useState(false);
-  const [amount, setAmount] = useState(250);
   const [newCampaign, setNewCampaign] = useState({
     name: '',
     description: '',
     goal: 50000,
   });
-  const { toast } = useToast();
 
   const activeCampaign = campaigns.find(
     (campaign) => campaign.id === activeCampaignId,
   );
+  const activeCampaignContent = activeCampaign
+    ? getCampaignContent(activeCampaign, locale)
+    : undefined;
 
   return (
     <div className="space-y-8">
-      <header className="flex flex-col gap-3">
-        <h1 className="font-display text-3xl font-semibold">
-          {t('fundraising.title')}
-        </h1>
-        <p className="text-muted-foreground">{t('fundraising.subtitle')}</p>
+      <header className="flex flex-wrap items-start justify-between gap-4">
+        <div className="space-y-2">
+          <h1 className="font-display text-3xl font-semibold">
+            {t('fundraising.title')}
+          </h1>
+          <p className="text-muted-foreground">{t('fundraising.subtitle')}</p>
+        </div>
         <Button
           variant="outline"
-          className="w-fit rounded-full"
+          className="rounded-full"
           onClick={() => setAdminOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
@@ -58,45 +95,62 @@ export default function FundraisingPage() {
       </header>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        {campaigns.map((campaign) => (
-          <Card key={campaign.id}>
-            <CardHeader>
-              <CardTitle>{campaign.name}</CardTitle>
-              <CardDescription>{campaign.description}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between text-sm font-semibold text-foreground">
-                <span>
-                  {t('fundraising.labels.raised', { amount: campaign.raised })}
-                </span>
-                <span>
-                  {t('fundraising.labels.goal', { goal: campaign.goal })}
-                </span>
-              </div>
-              <Progress value={campaign.progress} />
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>
-                  {campaign.donors} {t('fundraising.labels.donors')}
-                </span>
-                <Button
-                  size="sm"
-                  className="rounded-full"
-                  onClick={() => setActiveCampaignId(campaign.id)}
-                >
-                  {t('fundraising.actions.donate')}
-                </Button>
-              </div>
-              <div className="space-y-1 text-xs text-muted-foreground">
-                {campaign.impactHighlights.map((highlight) => (
-                  <div key={highlight} className="flex items-center gap-2">
-                    <HeartHandshake className="h-3 w-3 text-primary" />
-                    {highlight}
+        {campaigns.map((campaign) => {
+          const localized = getCampaignContent(campaign, locale);
+          const raised = formatAmount(campaign.raised, campaign.currency, locale);
+          const goal = formatAmount(campaign.goal, campaign.currency, locale);
+          return (
+            <Card key={campaign.id} className="flex h-full flex-col border-border/60">
+              <CardHeader>
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <CardTitle>{localized.name}</CardTitle>
+                    <CardDescription>{localized.description}</CardDescription>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                  <Badge variant="secondary" className="rounded-full">
+                    {campaign.currency ?? (locale === 'tr' ? 'TRY' : 'USD')}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="flex flex-1 flex-col gap-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm font-semibold text-foreground">
+                    <span>{t('fundraising.labels.raised', { amount: raised })}</span>
+                    <span>{t('fundraising.labels.goal', { goal })}</span>
+                  </div>
+                  <Progress value={campaign.progress} />
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>
+                      {campaign.donors} {t('fundraising.labels.donors')}
+                    </span>
+                    <span>{campaign.progress}%</span>
+                  </div>
+                </div>
+                <div className="space-y-2 text-xs text-muted-foreground">
+                  {localized.impactHighlights.map((highlight) => (
+                    <div key={highlight} className="flex items-center gap-2">
+                      <HeartHandshake className="h-3 w-3 text-primary" />
+                      <span>{highlight}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-auto flex flex-wrap gap-2 pt-2">
+                  <Button
+                    size="sm"
+                    className="rounded-full"
+                    onClick={() => setActiveCampaignId(campaign.id)}
+                  >
+                    {t('fundraising.actions.donate')}
+                  </Button>
+                  <Button size="sm" variant="outline" className="rounded-full">
+                    <Share2 className="mr-2 h-3 w-3" />
+                    {t('fundraising.actions.share') ?? 'Share'}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       <Dialog
@@ -106,16 +160,17 @@ export default function FundraisingPage() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {t('fundraising.dialog.title', { name: activeCampaign?.name })}
+              {t('fundraising.dialog.title', { name: activeCampaignContent?.name })}
             </DialogTitle>
+            <DialogDescription>{activeCampaignContent?.description}</DialogDescription>
           </DialogHeader>
           <div className="space-y-3">
             <Input
               type="number"
               min={50}
               step={50}
-              value={amount}
-              onChange={(event) => setAmount(Number(event.target.value))}
+              value={donationAmount}
+              onChange={(event) => setDonationAmount(Number(event.target.value))}
             />
             <p className="text-sm text-muted-foreground">
               {t('fundraising.dialog.copy')}
@@ -126,7 +181,7 @@ export default function FundraisingPage() {
               className="rounded-full"
               onClick={() => {
                 if (!activeCampaign) return;
-                donateToCampaign(activeCampaign.id, amount);
+                donateToCampaign(activeCampaign.id, donationAmount);
                 toast({
                   variant: 'success',
                   title: t('fundraising.toasts.donated'),
@@ -156,8 +211,8 @@ export default function FundraisingPage() {
                 }))
               }
             />
-            <Input
-              placeholder={t('fundraising.admin.description')}
+            <Textarea
+              placeholder={t('fundraising.admin.description') ?? ''}
               value={newCampaign.description}
               onChange={(event) =>
                 setNewCampaign((prev) => ({

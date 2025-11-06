@@ -210,12 +210,12 @@
     "subtitle": "Find alumni by class year, location, industry, and skills.",
     "searchPlaceholder": "Search people, skills, or interests…",
     "filters": {
-      "title": "Filter members",
-      "subtitle": "Layer filters to build targeted outreach lists.",
       "classYear": "Class year",
       "location": "Location",
       "industry": "Industry",
-      "skill": "Skill"
+      "skill": "Skill",
+      "any": "Any",
+      "clear": "Reset filters"
     },
     "labels": {
       "location": "Location",
@@ -224,8 +224,8 @@
       "interests": "Interests"
     },
     "actions": {
-      "viewProfile": "View profile",
-      "connect": "Request introduction"
+      "message": "Send message",
+      "connect": "Connect"
     },
     "empty": "No members match these filters yet—try adjusting your search."
   },
@@ -349,7 +349,8 @@
       "resume": "Smart resume analyzer",
       "resumeSubtitle": "Upload a CV to score and receive guidance.",
       "tracker": "Application tracker",
-      "trackerSubtitle": "Monitor statuses across roles."
+      "trackerSubtitle": "Monitor statuses across roles.",
+      "posted": "Posted"
     },
     "resume": {
       "score": "Resume score",
@@ -388,30 +389,52 @@
   },
   "events": {
     "title": "Events & registrations",
-    "subtitle": "Hybrid-friendly calendar with registration, ticketing, and integrations.",
-    "views": {
-      "list": "List view",
-      "calendar": "Calendar view"
+    "subtitle": "Discover reunions, workshops, mentoring sprints, and hybrid meetups.",
+    "tabs": {
+      "discover": "Discover",
+      "registered": "My registrations",
+      "create": "Create event"
     },
     "actions": {
-      "register": "Register now",
+      "register": "Register",
       "registered": "Registered",
-      "schedule": "Schedule with Calendly",
-      "viewDetails": "View details"
+      "buyTicket": "Buy ticket",
+      "ticketPurchased": "Ticket purchased",
+      "ticketSoldOut": "Sold out",
+      "create": "Create event"
     },
     "labels": {
-      "location": "Location"
+      "ticket": "Ticket",
+      "free": "Free",
+      "location": "Location",
+      "category": "Category",
+      "attending": "{{count}} attending"
     },
-    "integrations": {
-      "title": "Event integrations",
-      "subtitle": "Launch video rooms, scheduling, or SSO with one click.",
-      "connectTitle": "Connect integration",
-      "connectSubtitle": "Mock confirmation—no data leaves this demo.",
-      "placeholder": "Mock connection established with {{provider}}."
+    "ticketStatus": {
+      "available": "Tickets available",
+      "purchased": "Ticket purchased",
+      "sold_out": "Sold out"
+    },
+    "form": {
+      "title": "Event title",
+      "description": "Description",
+      "date": "Date",
+      "time": "Time",
+      "location": "Location",
+      "type": "Format",
+      "ticket": "Ticket price",
+      "currency": "Currency",
+      "tags": "Tags (comma separated)",
+      "submit": "Publish event",
+      "success": "Event added to the schedule.",
+      "subtitle": "Share upcoming reunions, mentoring sprints, or workshops—entries stay local for the demo."
     },
     "toasts": {
-      "registered": "Registration confirmed."
-    }
+      "registered": "Registration confirmed.",
+      "created": "Event created for the demo."
+    },
+    "empty": "No events match yet—launch the first one!",
+    "emptyRegistered": "You have not registered for any events yet."
   },
   "fundraising": {
     "title": "Fundraising & giving",
@@ -419,11 +442,12 @@
     "actions": {
       "launch": "Create campaign",
       "donate": "Donate",
-      "confirmDonation": "Donate now"
+      "confirmDonation": "Donate now",
+      "share": "Share"
     },
     "labels": {
-      "raised": "Raised ₺{{amount}}",
-      "goal": "Goal ₺{{goal}}",
+      "raised": "Raised {{amount}}",
+      "goal": "Goal {{goal}}",
       "donors": "Donors"
     },
     "dialog": {
