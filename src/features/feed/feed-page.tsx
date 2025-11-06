@@ -1,6 +1,14 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Hash, Plus, Repeat2, Send, Smile, ThumbsUp } from 'lucide-react';
+import {
+  Hash,
+  Link as LinkIcon,
+  Plus,
+  Repeat2,
+  Send,
+  Smile,
+  ThumbsUp,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,10 +33,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { useDemoStore } from '@/store/use-demo-store';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
-import type { ReactionType } from '@/types';
+import type { LanguageCode, ReactionType } from '@/types';
+
+function getLocale(language: string): LanguageCode {
+  const code = language.slice(0, 2).toLowerCase();
+  return (code === 'tr' ? 'tr' : 'en') as LanguageCode;
+}
 
 export default function FeedPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const posts = useDemoStore((state) => state.posts);
   const users = useDemoStore((state) => state.users);
   const createPost = useDemoStore((state) => state.createPost);
@@ -38,6 +51,8 @@ export default function FeedPage() {
   const [content, setContent] = useState('');
   const [tags, setTags] = useState('');
   const { toast } = useToast();
+
+  const locale = useMemo(() => getLocale(i18n.language), [i18n.language]);
 
   const filters = useMemo(() => {
     const uniqueTags = new Set<string>();
@@ -81,6 +96,67 @@ export default function FeedPage() {
       });
     }, 1200);
     return post;
+  };
+
+  const renderMedia = (
+    media?:
+      | {
+          type: 'image' | 'video' | 'document' | 'link';
+          url: string;
+          thumbnail?: string;
+          title?: string;
+          description?: string;
+        }[]
+      | null,
+  ) => {
+    if (!media?.length) return null;
+    return (
+      <div className="grid gap-3 md:grid-cols-2">
+        {media.map((item) => {
+          if (item.type === 'image') {
+            return (
+              <img
+                key={item.url}
+                src={item.url}
+                alt={item.title ?? 'Post media'}
+                className="h-56 w-full rounded-2xl border border-border/60 object-cover"
+              />
+            );
+          }
+          if (item.type === 'link') {
+            return (
+              <a
+                key={item.url}
+                href={item.url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-muted/20 p-4"
+              >
+                {item.thumbnail && (
+                  <img
+                    src={item.thumbnail}
+                    alt={item.title ?? item.url}
+                    className="h-40 w-full rounded-xl object-cover"
+                  />
+                )}
+                <div>
+                  <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                    <LinkIcon className="h-4 w-4" />
+                    {item.title ?? item.url}
+                  </p>
+                  {item.description && (
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  )}
+                </div>
+              </a>
+            );
+          }
+          return null;
+        })}
+      </div>
+    );
   };
 
   return (
@@ -132,7 +208,7 @@ export default function FeedPage() {
             onClick={() => setFilter(item)}
           >
             <Hash className="mr-2 h-4 w-4" />
-            {item === 'all' ? t('common.labels.all') : item}
+            {item === 'all' ? t('common.labels.all') : `#${item}`}
           </Button>
         ))}
       </div>
@@ -140,6 +216,7 @@ export default function FeedPage() {
       <div className="space-y-6">
         {filteredPosts.map((post) => {
           const author = users.find((user) => user.id === post.authorId);
+          const postContent = post.translatedContent?.[locale] ?? post.content;
           return (
             <motion.div
               key={post.id}
@@ -150,7 +227,10 @@ export default function FeedPage() {
               <Card className="overflow-hidden">
                 <CardHeader className="flex-row items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <Avatar name={author?.name ?? 'Member'} />
+                    <Avatar
+                      name={author?.name ?? 'Member'}
+                      src={author?.avatar}
+                    />
                     <div>
                       <CardTitle className="text-lg">
                         {author?.name ?? 'Member'}
@@ -158,7 +238,7 @@ export default function FeedPage() {
                       <CardDescription>{author?.title}</CardDescription>
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
                       <Badge key={tag} variant="muted">
                         #{tag}
@@ -167,18 +247,8 @@ export default function FeedPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-base text-foreground">{post.content}</p>
-                  {post.media && post.media.length > 0 && (
-                    <div className="grid gap-3 md:grid-cols-2">
-                      {post.media.map((media) => (
-                        <div
-                          key={media.url}
-                          className="h-40 rounded-2xl bg-muted/80"
-                          aria-label={media.title}
-                        />
-                      ))}
-                    </div>
-                  )}
+                  <p className="text-base text-foreground">{postContent}</p>
+                  {renderMedia(post.media)}
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4">
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -219,12 +289,14 @@ export default function FeedPage() {
                       onKeyDown={(event) => {
                         if (event.key === 'Enter' && !event.shiftKey) {
                           event.preventDefault();
-                          const value = (event.target as HTMLInputElement)
-                            .value;
+                          const value = (event.target as HTMLInputElement).value;
                           if (!value.trim()) return;
                           addComment(post.id, {
                             authorId: useDemoStore.getState().viewerId,
                             content: value,
+                            translatedContent: {
+                              [locale]: value,
+                            },
                             reactions: {},
                           });
                           (event.target as HTMLInputElement).value = '';
@@ -236,10 +308,13 @@ export default function FeedPage() {
                       }}
                     />
                     <div className="space-y-2">
-                      {post.comments.slice(0, 2).map((comment) => {
+                      {post.comments.slice(0, 3).map((comment) => {
                         const commentAuthor = users.find(
                           (user) => user.id === comment.authorId,
                         );
+                        const commentContent =
+                          comment.translatedContent?.[locale] ??
+                          comment.content;
                         return (
                           <div
                             key={comment.id}
@@ -250,6 +325,7 @@ export default function FeedPage() {
                             <div className="flex items-center gap-3">
                               <Avatar
                                 name={commentAuthor?.name ?? 'Member'}
+                                src={commentAuthor?.avatar}
                                 className="h-8 w-8"
                               />
                               <div>
@@ -257,7 +333,7 @@ export default function FeedPage() {
                                   {commentAuthor?.name}
                                 </div>
                                 <p className="text-sm text-muted-foreground">
-                                  {comment.content}
+                                  {commentContent}
                                 </p>
                               </div>
                             </div>

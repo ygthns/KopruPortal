@@ -8,9 +8,16 @@ import { Avatar } from '@/components/ui/avatar';
 import { useDemoStore } from '@/store/use-demo-store';
 import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
+import type { LanguageCode, Message } from '@/types';
+
+const getLocale = (language: string): LanguageCode =>
+  (language.slice(0, 2).toLowerCase() === 'tr' ? 'tr' : 'en') as LanguageCode;
+
+const getMessageBody = (message: Message | undefined, locale: LanguageCode) =>
+  message ? message.translations?.[locale] ?? message.body : '';
 
 export default function MessagesPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const threads = useDemoStore((state) => state.messageThreads);
   const users = useDemoStore((state) => state.users);
   const viewerId = useDemoStore((state) => state.viewerId);
@@ -19,6 +26,7 @@ export default function MessagesPage() {
   );
   const [draft, setDraft] = useState('');
   const { toast } = useToast();
+  const locale = useMemo(() => getLocale(i18n.language), [i18n.language]);
 
   const activeThread = useMemo(
     () => threads.find((thread) => thread.id === activeThreadId),
@@ -76,6 +84,7 @@ export default function MessagesPage() {
               .map((id) => users.find((user) => user.id === id))
               .filter(Boolean);
             const preview = thread.messages[0];
+            const previewText = getMessageBody(preview, locale);
             return (
               <button
                 key={thread.id}
@@ -101,7 +110,7 @@ export default function MessagesPage() {
                     )}
                   </div>
                   <p className="truncate text-xs text-muted-foreground">
-                    {preview?.body}
+                    {previewText}
                   </p>
                 </div>
                 {thread.unreadCount > 0 && (
@@ -152,6 +161,7 @@ export default function MessagesPage() {
           {activeThread?.messages.map((message) => {
             const sender = users.find((user) => user.id === message.senderId);
             const isOwn = message.senderId === viewerId;
+            const body = getMessageBody(message, locale);
             return (
               <div
                 key={message.id}
@@ -169,7 +179,7 @@ export default function MessagesPage() {
                       : 'bg-muted/60 text-foreground',
                   )}
                 >
-                  <p>{message.body}</p>
+                  <p>{body}</p>
                   <div className="mt-1 text-[10px] text-white/60">
                     {message.status === 'seen'
                       ? t('messages.status.seen')

@@ -13,6 +13,7 @@ export type ContentMedia = {
   url: string;
   thumbnail?: string;
   title?: string;
+  description?: string;
 };
 
 export type UserProfile = {
@@ -41,6 +42,7 @@ export type Comment = {
   content: string;
   createdAt: string;
   reactions: Partial<Record<ReactionType, number>>;
+  translatedContent?: Partial<Record<LanguageCode, string>>;
 };
 
 export type FeedPost = {
@@ -55,7 +57,7 @@ export type FeedPost = {
   reactions: Partial<Record<ReactionType, number>>;
   reposts?: number;
   isPinned?: boolean;
-  translatedContent?: Record<LanguageCode, string>;
+  translatedContent?: Partial<Record<LanguageCode, string>>;
 };
 
 export type ForumTopic = {
@@ -85,6 +87,7 @@ export type Message = {
   sentAt: string;
   attachments?: ContentMedia[];
   status: 'sent' | 'delivered' | 'seen';
+  translations?: Partial<Record<LanguageCode, string>>;
 };
 
 export type MessageThread = {
