@@ -73,7 +73,7 @@ export function TopNav() {
               </div>
               <div className="flex items-center justify-between rounded-xl bg-muted/40 px-3 py-2">
                 <span className="text-sm font-medium text-muted-foreground">
-                  Theme
+                  {t('common.theme.label')}
                 </span>
                 <ThemeToggle />
               </div>
