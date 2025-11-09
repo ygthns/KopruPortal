@@ -10,6 +10,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { useSettingsStore } from '@/store/use-settings';
 
+const languageOptions = [
+  { id: 'en', labelKey: 'common.language.en' },
+  { id: 'tr', labelKey: 'common.language.tr' },
+] as const;
+
 export function LanguageToggle() {
   const { t, i18n } = useTranslation();
   const language = useSettingsStore((state) => state.language);
@@ -26,18 +31,23 @@ export function LanguageToggle() {
         <Button variant="ghost" size="sm" className="gap-2 rounded-full px-3">
           <Globe className="h-4 w-4" />
           <span className="text-sm font-medium uppercase">
-            {language === 'en' ? 'EN' : 'TR'}
+            {language.toUpperCase()}
           </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuLabel>{t('footer.language')}</DropdownMenuLabel>
-        <DropdownMenuItem onSelect={() => handleChange('en')}>
-          🇺🇸 {t('common.language.en')}
-        </DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => handleChange('tr')}>
-          🇹🇷 {t('common.language.tr')}
-        </DropdownMenuItem>
+        {languageOptions.map(({ id, labelKey }) => (
+          <DropdownMenuItem
+            key={id}
+            onSelect={() => handleChange(id)}
+            aria-label={t(labelKey)}
+          >
+            <span className="text-sm font-semibold uppercase">
+              {id.toUpperCase()}
+            </span>
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
