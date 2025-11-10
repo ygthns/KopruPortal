@@ -10,11 +10,56 @@ import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useDemoStore } from '@/store/use-demo-store';
 import { useSettingsStore } from '@/store/use-settings';
 import { cn, getInitials } from '@/lib/utils';
+
+const NOTIFICATION_FEED = {
+  en: [
+    {
+      id: 'mentorship',
+      title: 'New mentorship request',
+      description: 'Aylin Demir would like to connect this week.',
+      time: '2h ago',
+    },
+    {
+      id: 'forum',
+      title: 'Forum reply in Product Guild',
+      description: 'Kerem added a resource to your thread.',
+      time: '5h ago',
+    },
+    {
+      id: 'event',
+      title: 'Tonight’s founders circle',
+      description: 'Seats are limited—confirm if you plan to join.',
+      time: '1d ago',
+    },
+  ],
+  tr: [
+    {
+      id: 'mentorship',
+      title: 'Yeni mentorluk talebi',
+      description: 'Aylin Demir bu hafta seninle bağlantı kurmak istiyor.',
+      time: '2 sa önce',
+    },
+    {
+      id: 'forum',
+      title: 'Ürün Ekibi forum yanıtı',
+      description: 'Kerem başlığına yeni bir kaynak ekledi.',
+      time: '5 sa önce',
+    },
+    {
+      id: 'event',
+      title: 'Bu akşam kurucular buluşması',
+      description: 'Kontenjan sınırlı—katılacaksan lütfen onayla.',
+      time: '1 gün önce',
+    },
+  ],
+} as const;
 
 export function TopNav() {
   const { t } = useTranslation();
@@ -22,6 +67,10 @@ export function TopNav() {
     state.users.find((user) => user.id === state.viewerId),
   );
   const language = useSettingsStore((state) => state.language);
+  const notifications = useMemo(
+    () => NOTIFICATION_FEED[language] ?? NOTIFICATION_FEED.en,
+    [language],
+  );
   const initials = useMemo(
     () => (viewer ? getInitials(viewer.name) : 'KM'),
     [viewer],
@@ -50,9 +99,56 @@ export function TopNav() {
           </Button>
         </div>
         <div className="flex items-center gap-2 md:gap-3">
-          <Button variant="ghost" size="icon" aria-label="Notifications">
-            <Bell className="h-5 w-5" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative"
+                aria-label={t('common.notifications.label')}
+              >
+                <Bell className="h-5 w-5" />
+                {notifications.length > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-primary" />
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80 p-0">
+              <div className="space-y-3 p-4">
+                <DropdownMenuLabel className="px-0 text-base font-semibold">
+                  {t('common.notifications.title')}
+                </DropdownMenuLabel>
+                <div className="space-y-3">
+                  {notifications.length ? (
+                    notifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className="rounded-xl border border-border/60 p-3 text-left"
+                      >
+                        <p className="text-sm font-semibold">{notification.title}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {notification.description}
+                        </p>
+                        <span className="text-xs text-muted-foreground">{notification.time}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      {t('common.notifications.empty')}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <DropdownMenuSeparator />
+              <Button
+                variant="ghost"
+                className="h-11 w-full rounded-none rounded-b-xl"
+                onClick={(event) => event.preventDefault()}
+              >
+                {t('common.notifications.viewAll')}
+              </Button>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="Quick actions">

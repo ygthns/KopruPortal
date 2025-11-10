@@ -40,6 +40,12 @@
       "dark": "Dark",
       "system": "System"
     },
+    "notifications": {
+      "label": "Notifications",
+      "title": "Notifications",
+      "empty": "You're all caught up.",
+      "viewAll": "View inbox"
+    },
     "labels": {
       "search": "Search",
       "filters": "Filters",

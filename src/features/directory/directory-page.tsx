@@ -389,9 +389,9 @@ export default function DirectoryPage() {
       </header>
 
       <Card className="border-border/60 bg-muted/20">
-        <CardContent className="space-y-6 p-6">
-          <div className="grid gap-4 md:grid-cols-[2fr,1fr]">
-            <div className="space-y-2">
+        <CardContent className="p-6">
+          <div className="flex flex-wrap items-end gap-4">
+            <div className="min-w-[240px] flex-1 space-y-2">
               <Label htmlFor="directory-search" className="text-xs font-semibold uppercase tracking-wide">
                 {t('directory.searchPlaceholder')}
               </Label>
@@ -402,12 +402,12 @@ export default function DirectoryPage() {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder={t('directory.searchPlaceholder') ?? ''}
-                  className="pl-9"
+                  className="h-11 rounded-2xl border-border/60 pl-9"
                 />
               </div>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-              <div className="space-y-2">
+            <div className="flex flex-wrap items-end gap-4">
+              <div className="min-w-[140px] space-y-2">
                 <Label className="text-xs font-semibold uppercase tracking-wide">
                   {t('directory.filters.classYear')}
                 </Label>
@@ -426,7 +426,7 @@ export default function DirectoryPage() {
                   ))}
                 </select>
               </div>
-              <div className="space-y-2">
+              <div className="min-w-[140px] space-y-2">
                 <Label className="text-xs font-semibold uppercase tracking-wide">
                   {t('directory.filters.location')}
                 </Label>
@@ -445,7 +445,7 @@ export default function DirectoryPage() {
                   ))}
                 </select>
               </div>
-              <div className="space-y-2">
+              <div className="min-w-[140px] space-y-2">
                 <Label className="text-xs font-semibold uppercase tracking-wide">
                   {t('directory.filters.industry')}
                 </Label>
@@ -464,7 +464,7 @@ export default function DirectoryPage() {
                   ))}
                 </select>
               </div>
-              <div className="space-y-2 sm:col-span-2 md:col-span-1">
+              <div className="min-w-[140px] space-y-2">
                 <Label className="text-xs font-semibold uppercase tracking-wide">
                   {t('directory.filters.skill')}
                 </Label>
@@ -484,11 +484,9 @@ export default function DirectoryPage() {
                 </select>
               </div>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
             <Button
               variant="outline"
-              className="rounded-full"
+              className="rounded-full whitespace-nowrap"
               onClick={() => {
                 setQuery('');
                 setFilters({ classYear: 'all', location: 'all', industry: 'all', skill: 'all' });

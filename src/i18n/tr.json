@@ -40,6 +40,12 @@
       "dark": "Karanlık",
       "system": "Sistem"
     },
+    "notifications": {
+      "label": "Bildirimler",
+      "title": "Bildirimler",
+      "empty": "Her şey güncel.",
+      "viewAll": "Tümünü gör"
+    },
     "labels": {
       "search": "Ara",
       "filters": "Filtreler",
